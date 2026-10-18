@@ -45,3 +45,27 @@ plans:
   - name: Consulting hours
     limit_text: Variable based on project requirements
 note: Cloud services use pay-as-you-go pricing with a calculator available at https://calculator.stackit.cloud/
+x-canonical:
+  generated: '2026-10-18'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Pay-as-you-go
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Colocation
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Consulting
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []

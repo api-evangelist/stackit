@@ -1,0 +1,13 @@
+generated: '2026-10-18'
+method: searched
+source: https://docs.stackit.cloud/developer-tools/stackit-cli/
+install:
+  macOS: Homebrew
+  linux: APT or Snap
+  docs: https://github.com/stackitcloud/stackit-cli/blob/main/INSTALLATION.md
+commands:
+  - stackit --help
+  - stackit config
+  - stackit login
+  - stackit services list
+description: Command-line interface for managing STACKIT services with support for personal user accounts and service account authentication

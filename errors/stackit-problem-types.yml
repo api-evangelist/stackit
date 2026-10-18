@@ -1,0 +1,168 @@
+generated: '2026-10-18'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/stackit-alb-openapi.yml
+- openapi/stackit-alb-waf-openapi.yml
+- openapi/stackit-authorization-openapi.yml
+- openapi/stackit-automation-openapi.yml
+- openapi/stackit-cdn-openapi.yml
+- openapi/stackit-certificates-openapi.yml
+- openapi/stackit-cost-openapi.yml
+- openapi/stackit-dns-openapi.yml
+- openapi/stackit-dremio-openapi.yml
+- openapi/stackit-edge-openapi.yml
+- openapi/stackit-functions-openapi.yml
+- openapi/stackit-git-openapi.yml
+format: rfc9457
+envelope:
+  media_type: application/json
+  schema: Error
+coverage:
+  operations: 1029
+  statuses_declared: 19
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 910
+  media_types:
+  - application/json
+  - application/problem+json
+  - text/csv
+  schema: Error
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  operations: 890
+  media_types:
+  - application/json
+  - text/plain
+  - '*/*'
+  schema: Error
+- status: 403
+  title: Forbidden
+  description: A request which was forbidden.
+  operations: 540
+  media_types:
+  - application/json
+  - text/csv
+  - text/plain
+  schema: Error
+- status: 404
+  title: Not Found
+  description: Not Found
+  operations: 722
+  media_types:
+  - application/json
+  - text/csv
+  - '*/*'
+  schema: Error
+- status: 409
+  title: Conflict
+  description: Conflict. The resource has been modified by some other client. Please try again.
+  operations: 231
+  media_types:
+  - application/json
+  - application/problem+json
+  schema: Error
+- status: 410
+  title: Gone
+  description: Not Found
+  operations: 12
+  media_types:
+  - application/json
+  schema: Error
+- status: 412
+  title: Precondition Failed
+  description: 'Precondition Failed: The precondition for this operation was not met.'
+  operations: 9
+  media_types:
+  - application/json
+  schema: Error
+- status: 413
+  title: Content Too Large
+  description: The request entity is too large.
+  operations: 5
+  media_types:
+  - application/json
+  schema: Error
+- status: 422
+  title: Unprocessable Content
+  description: Request failed due to body validation
+  operations: 62
+  media_types:
+  - application/json
+  schema: ValidationError
+- status: 423
+  title: Locked
+  description: 'Locked: The instance is not yet ready to perform this operation.'
+  operations: 11
+  media_types:
+  - application/json
+  schema: Error
+- status: 425
+  title: Too Early
+  description: 'Too early: The requested resource is not ready to accept connections.'
+  operations: 4
+  media_types:
+  - application/json
+  schema: Error
+- status: 429
+  title: Too Many Requests
+  description: Too many requests. You have exceeded the allowed rate limit.
+  operations: 83
+  media_types:
+  - application/json
+  schema: RateLimitError
+- status: 4XX
+  title: null
+  description: The returned error response object
+  operations: 27
+  media_types:
+  - application/json
+  schema: Error
+- status: 500
+  title: Internal Server Error
+  description: Internal server error. The application experienced some unexpected situation.
+  operations: 651
+  media_types:
+  - application/json
+  - application/problem+json
+  - '*/*'
+  schema: Error
+- status: 501
+  title: Not Implemented
+  description: Endpoint not implemented yet
+  operations: 20
+  media_types:
+  - application/json
+  schema: Error
+- status: 502
+  title: Bad Gateway
+  description: Bad Gateway
+  operations: 27
+  media_types:
+  - application/json
+  schema: Message
+- status: 503
+  title: Service Unavailable
+  description: 'Unavailable Service: A required downstream service is currently unresponsive.'
+  operations: 35
+  media_types:
+  - application/json
+  schema: Error
+- status: 5XX
+  title: null
+  description: The returned error response object
+  operations: 15
+  media_types:
+  - application/json
+  schema: Error
+- status: default
+  title: null
+  description: Default error response
+  operations: 73
+  media_types:
+  - application/json
+  schema: Status

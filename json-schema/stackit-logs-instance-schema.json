@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-logs-instance-schema.json",
+  "title": "logsInstance",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-logs-openapi.yml#/components/schemas/logsInstance",
+  "properties": {
+    "acl": {
+      "description": "The access control list for the Logs instance.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "created": {
+      "description": "The date and time the creation of the Logs instance was triggered.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "datasourceUrl": {
+      "description": "The Logs instance's datasource URL, can be used in Grafana as a datasource URL",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description of the Logs instance.",
+      "maxLength": 100,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The displayed name of the Logs instance.",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z][\\w -]*$",
+      "type": "string"
+    },
+    "id": {
+      "description": "A auto generated unique id which identifies the Logs instance.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "ingestOtlpUrl": {
+      "description": "The Logs instance's ingest logs via OTLP URL",
+      "type": "string"
+    },
+    "ingestUrl": {
+      "description": "The Logs instance's ingest logs URL",
+      "type": "string"
+    },
+    "queryRangeUrl": {
+      "description": "The Logs instance's query range URL",
+      "type": "string"
+    },
+    "queryUrl": {
+      "description": "The Logs instance's query  URL",
+      "type": "string"
+    },
+    "retentionDays": {
+      "description": "The log retention time in days.",
+      "format": "int32",
+      "maximum": 180,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "status": {
+      "description": "The current status of the Logs instance.",
+      "enum": [
+        "active",
+        "deleting",
+        "reconciling"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "displayName",
+    "retentionDays",
+    "status",
+    "created"
+  ]
+}

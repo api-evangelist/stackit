@@ -1,0 +1,605 @@
+generated: '2026-10-18'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 62
+  own: 2
+  other_domain: 57
+  platform: 3
+  roles:
+  - api
+  - docs
+  - other
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: alb-waf.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: alb.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: api.stackit.cloud
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: api.stackit.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: stackit.com
+  role: api
+  relation: own
+- host: argus.api.{region}stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: '{region}stackit.cloud'
+  role: api
+  relation: other-domain
+- host: authorization.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: automation-service.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: cdn.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: certificates.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: cost.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: de.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: dns.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: docs.api.stackit.cloud
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - APIReference
+  serves:
+  - docs
+  registrable_domain: stackit.cloud
+  role: docs
+  relation: other-domain
+- host: docs.stackit.cloud
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - Documentation
+  - GettingStarted
+  - ReleaseNotes
+  serves:
+  - docs
+  registrable_domain: stackit.cloud
+  role: docs
+  relation: other-domain
+- host: dremio.api.{region}stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: '{region}stackit.cloud'
+  role: api
+  relation: other-domain
+- host: edge.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: functions.api.{region}stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: '{region}stackit.cloud'
+  role: api
+  relation: other-domain
+- host: git.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubRepository
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: iaas.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: intake.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: kms.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: lb-ip-lists.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: load-balancer.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: logme.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: logs.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: mariadb.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: model-experiments.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: model-serving.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: mongodb-flex-service.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: mssql-flex-service.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: object-storage.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: opensearch.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: pim.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: portal.stackit.cloud
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - Portal
+  serves:
+  - docs
+  registrable_domain: stackit.cloud
+  role: other
+  relation: other-domain
+- host: postgres-flex-service.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: pubsub.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: rabbitmq.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: redis.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: registry.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: resource-manager.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: run-command.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: sca.api.{region}stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: '{region}stackit.cloud'
+  role: api
+  relation: other-domain
+- host: scf.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: secrets-manager.api.{region}stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: '{region}stackit.cloud'
+  role: api
+  relation: other-domain
+- host: server-backup.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: server-update.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: service-account.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: service-enablement.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: sfs.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: ske.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: stackit-marketplace.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: stackit.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Website
+  - Support
+  - Newsroom
+  - Pricing
+  - Security
+  - Compliance
+  - TermsOfService
+  - PrivacyPolicy
+  - Imprint
+  serves: []
+  registrable_domain: stackit.com
+  role: website
+  relation: own
+- host: status.stackit.cloud
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: stackit.cloud
+  role: status
+  relation: other-domain
+- host: support.stackit.cloud
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - HelpCenter
+  serves: []
+  registrable_domain: stackit.cloud
+  role: support
+  relation: other-domain
+- host: telemetry-link.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: telemetry-router.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: ufw.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: valkey.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: vpn.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: workflows.api.stackit.cloud
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: stackit.cloud
+  role: api
+  relation: other-domain
+- host: www.youtube.com
+  found_by:
+  - pointer
+  types:
+  - YouTube
+  serves: []
+  registrable_domain: youtube.com
+  role: other
+  relation: platform

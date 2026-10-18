@@ -1,0 +1,90 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Cloud Foundry API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-scf-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: scf
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_list_organizations
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_organization
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/organization_manager'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/organization_manager'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_org_manager
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/quotas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_list_organization_quotas
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/quotas/{quotaId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_organization_quota
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/spaces'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_list_spaces
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/spaces/{spaceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/spaces/{spaceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_space
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/organizations/{organizationId}/usage_summary'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_organization_usage_summary
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/platforms'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_list_platforms
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/platforms/{platformId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_platform
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/platforms/{platformId}/quotas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_list_platform_quotas
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/platforms/{platformId}/quotas/{quotaId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: scf_get_platform_quota

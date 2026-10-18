@@ -1,0 +1,7 @@
+generated: '2026-10-18'
+method: searched
+source: https://docs.stackit.cloud/release-notes/
+versioning: semantic
+deprecation: documented
+status_page: https://status.stackit.cloud/
+note: Deprecation policies shown in release notes with grace periods (e.g., 6 months for v1beta endpoints)

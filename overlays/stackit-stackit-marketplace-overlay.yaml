@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Marketplace API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-stackit-marketplace-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: stackit-marketplace
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/consumers/organizations/{organizationId}/subscriptions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_consumers-subscriptions-list-by-organization
+- target: $.paths['/v1/consumers/projects/{projectId}/subscriptions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_consumers-subscriptions-list-by-project
+- target: $.paths['/v1/consumers/projects/{projectId}/subscriptions/{subscriptionId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/consumers/projects/{projectId}/subscriptions/{subscriptionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_consumers-subscriptions-get
+- target: $.paths['/v1/consumers/projects/{projectId}/subscriptions/{subscriptionId}/redirects'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_consumers-subscriptions-redirects-get
+- target: $.paths['/v1/vendors/organizations/{organizationId}/subscriptions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_vendors-subscriptions-list-by-organization
+- target: $.paths['/v1/vendors/projects/{projectId}/subscriptions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_vendors-subscriptions-list-by-project
+- target: $.paths['/v1/vendors/projects/{projectId}/subscriptions/{subscriptionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: stackit_marketplace_vendors-subscriptions-get

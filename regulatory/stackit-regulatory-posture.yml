@@ -1,0 +1,75 @@
+generated: '2026-10-18'
+method: searched
+probe: true
+source:
+- https://stackit.com/en/data-protection-notice
+- https://stackit.com/en/gtc/cloud-services
+- https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+- https://stackit.com/en/contact-authorities-and-dsa
+- https://stackit.com/en/gtc
+- https://stackit.com/en/compliance
+signals:
+  data_subject_request:
+    url: https://stackit.com/en/data-protection-notice
+    section: 9. Your rights as a data subject
+    channel: data protection officer (in writing or by email)
+    evidence:
+    - source: https://stackit.com/en/data-protection-notice
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: In accordance with Art. 15 (1) GDPR, you have the right to receive information about the personal data stored about you free of charge upon request.
+    - source: https://stackit.com/en/data-protection-notice
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: To exercise your rights as a data subject, if you have any questions or complaints, please contact the data protection officer in writing or by email.
+    note: GDPR access, rectification, erasure, restriction, portability (Art. 20) and objection rights are stated; requests go to the DPO. No self-service request API is documented.
+  data_retention:
+    url: https://stackit.com/en/data-protection-notice
+    section: 3. Details of data processing -- Storage period/criteria for the storage period
+    stated_period: 90 days after the final response
+    evidence:
+    - source: https://stackit.com/en/data-protection-notice
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: We will delete or securely anonymize all personal data that you provide to us in the event of inquiries no later than 90 days after the final response to you.
+    note: Retention periods are stated per processing activity; this is the inquiry-handling one. Customer Data under the DPA is erased on termination (DPA clause 10.1) with an erasure report available on request.
+  subprocessors:
+    url: https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+    section: 7. Use of Other Processors; Annex 2 Other Processors
+    evidence:
+    - source: https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: Annex 2 contains an overview of any other processors used at the time of entering into this Agreement.
+    note: DPA version 2.4.2, linked from https://stackit.com/en/gtc/cloud-services. Annex 2 lists named processors (e.g. Anynines GmbH, CGI Deutschland B.V. & Co. KG, Cloud&Heat Technologies GmbH); changes are notified by email, and customers may object via sub-processor-info@digits.schwarz. Quote whitespace normalised from PDF text extraction.
+  data_residency:
+    url: https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+    section: '2.5'
+    regions: [eu, eea]
+    evidence:
+    - source: https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: The Contractor shall process the Customer Data within the European Union or the territory of another signatory to the Agreement on the European Economic Area (EEA).
+    note: Processing outside the EEA is allowed only by express agreement or on the customer's instruction (same clause).
+  incident_notification:
+    url: https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+    section: '9.1'
+    stated_sla: without undue delay
+    evidence:
+    - source: https://stackit.com/en/asset/download/34534/file/STACKIT_data_processing_agreement.pdf?version=12
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: the Contractor shall notify the Customer without undue delay of any reportable events in its area of responsibility.
+    note: The clause covers personal-data breaches reportable under GDPR Articles 33 and 34. No fixed hour count is given.
+  notice_and_action:
+    url: https://stackit.com/en/contact-authorities-and-dsa
+    section: DSA notification
+    channel: DSA.Meldung@stackit.cloud
+    evidence:
+    - source: https://stackit.com/en/contact-authorities-and-dsa
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: Please provide the exact electronic location of the offending information (e.g. the URL) and any other relevant information to identify the illegal content.
+    note: A Digital Services Act notice channel (by email) with the details a notice must include; authorities contact compliance.info@stackit.cloud. Abuse reports go separately to abuse@stackit.de (https://stackit.com/en/abuse).
+note: Pages read were the data protection notice (v5.4), the GTC hub, the cloud-services GTC page and its DPA PDF (v2.4.2), the compliance page, and the authorities/DSA contact page. No SBOM, accessibility conformance statement, AI transparency or training-data disclosure, Global Privacy Control statement, age assurance, transparency report or support-lifetime statement was found on these pages. GDPR data portability is recorded under data_subject_request, not exit_assistance, because no cloud-switching or export provision was found. The training_data_summary candidate line was about handling customer-service phone calls, not AI.

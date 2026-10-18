@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-iplist-response-schema.json",
+  "title": "GetIPListResponse",
+  "description": "GetIPListResponse returns IP list configuration without CIDR entries.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-lb-ip-lists-openapi.yml#/components/schemas/GetIPListResponse",
+  "properties": {
+    "contentHash": {
+      "description": "Unique SHA-256 hex fingerprint used to verify the stored IP list content.",
+      "format": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels represent user-defined metadata as key-value pairs.\nLabel count should not exceed 64 per IP list.\n\n**Key Formatting Rules:**\nLength: 1-63 characters.\nCharacters: Must begin and end with [a-zA-Z0-9]. May contain dashes (-), underscores (_), dots (.), and alphanumerics in between.\nKeys starting with 'stackit-' are system-reserved; users MUST NOT manage them.\n\n**Value Formatting Rules:**\nLength: 0-63 characters (empty string explicitly allowed).\nCharacters (for non-empty values): Must begin and end with [a-zA-Z0-9]. May contain dashes (-), underscores (_), dots (.), and alphanumerics in between.\n",
+      "type": "object"
+    },
+    "name": {
+      "description": "IP list name.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,49}[0-9a-z])?$",
+      "type": "string"
+    },
+    "numberOfIps": {
+      "description": "Number of IPv4 CIDR entries stored in the list.",
+      "format": "int32",
+      "maximum": 50000,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "usage": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/IPListUsage"
+        }
+      ],
+      "description": "Current use of this IP list in load balancers."
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "$defs": {
+    "IPListUsage": {
+      "description": "IPListUsage describes which NLB/ALB currently reference an IP list.",
+      "properties": {
+        "count": {
+          "description": "Number of load balancers currently using this IP list.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "description": "List of load balancers that reference this IP list.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,1582 @@
+openapi: 3.2.0
+info:
+  description: 'Provision and manage STACKIT VPN gateways.
+
+
+    Use this API to establish secure, encrypted IPsec tunnels between your STACKIT Network Area (SNA) and external networks.
+
+    The service supports the following routing architectures:
+
+    - Policy-based IPsec
+
+    - Static route-based IPsec
+
+    - Dynamic BGP IPsec'
+  title: STACKIT VPN V1alpha1 API
+  version: 1alpha1
+servers:
+- url: https://vpn.api.stackit.cloud
+  variables:
+    region:
+      default: global
+security:
+- bearerAuth: []
+tags:
+- name: V1alpha1
+paths:
+  /v1alpha1/projects/{projectId}/regions/{region}/gateways:
+    get:
+      description: 'Retrieve a list of all VPN gateways in a project.
+
+        Filter the results using the `label_selector` query parameter.'
+      operationId: ListGateways
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - description: Filter resources by labels.
+        example: ?label_selector[environment]=production&label_selector[foo]=bar
+        in: query
+        name: label_selector
+        schema:
+          $ref: '#/components/schemas/LabelSelector'
+        style: deepObject
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayList'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List VPN gateways in a project with label filtering
+      x-stackit-authorization:
+        actions:
+        - vpn.gateway.list
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+    post:
+      description: Provision a new VPN gateway.
+      operationId: CreateGateway
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGatewayPayload'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayResponse'
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create a VPN gateway in a project
+      x-stackit-authorization:
+        actions:
+        - vpn.gateway.create
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/projects/{projectId}/regions/{region}/gateways/{gatewayId}:
+    delete:
+      description: 'Permanently remove a VPN gateway and all its associated connections.
+
+        This operation is irreversible.'
+      operationId: DeleteGateway
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Request has been accepted. The task of deletion was initiated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a existing VPN gateway in a project
+      x-stackit-authorization:
+        actions:
+        - vpn.gateway.delete
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+    get:
+      description: Get details of a VPN Gateway in a project.
+      operationId: GetGateway
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details of a VPN Gateway in a project
+      x-stackit-authorization:
+        actions:
+        - vpn.gateway.get
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+    put:
+      description: 'Modify the configuration of an existing VPN gateway.
+
+        Certain changes may trigger infrastructure updates or temporary connection re-negotiations.'
+      operationId: UpdateGateway
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGatewayPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a VPN gateway in a project
+      x-stackit-authorization:
+        actions:
+        - vpn.gateway.update
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections:
+    get:
+      description: List connections for an existing VPN gateway.
+      operationId: ListGatewayConnections
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Filter resources by labels.
+        example: ?label_selector[environment]=production&label_selector[foo]=bar
+        in: query
+        name: label_selector
+        schema:
+          $ref: '#/components/schemas/LabelSelector'
+        style: deepObject
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionList'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List connections for an existing VPN gateway
+      x-stackit-authorization:
+        actions:
+        - vpn.connection.list
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+    post:
+      description: Create a new connection on an existing VPN gateway.
+      operationId: CreateGatewayConnection
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGatewayConnectionPayload'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create a new connection on an existing VPN gateway
+      x-stackit-authorization:
+        actions:
+        - vpn.connection.add
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections/{connectionId}:
+    delete:
+      description: Delete a certain connection from an existing VPN gateway.
+      operationId: DeleteGatewayConnection
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - in: path
+        name: connectionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a certain connection from an existing VPN gateway
+      x-stackit-authorization:
+        actions:
+        - vpn.connection.remove
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+    get:
+      description: Get a certain connection for an existing VPN gateway.
+      operationId: GetGatewayConnection
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - in: path
+        name: connectionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get a certain connection for an existing VPN gateway
+      x-stackit-authorization:
+        actions:
+        - vpn.connection.get
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+    put:
+      description: Updating the configuration of an existing connection.
+      operationId: UpdateGatewayConnection
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - in: path
+        name: connectionId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGatewayConnectionPayload'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a connection on an existing VPN gateway
+      x-stackit-authorization:
+        actions:
+        - vpn.connection.update
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections/{connectionId}/status:
+    get:
+      description: Get the status for a specific connection.
+      operationId: GetGatewayConnectionStatus
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - in: path
+        name: connectionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionStatusResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Gets the status for a specific connection
+      x-stackit-authorization:
+        actions:
+        - vpn.connection.status.get
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/status:
+    get:
+      description: Get the status of a VPN gateway in a project.
+      operationId: GetGatewayStatus
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      - in: path
+        name: gatewayId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayStatusResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get the status of a VPN gateway in a project
+      x-stackit-authorization:
+        actions:
+        - vpn.gateway.status.get
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/projects/{projectId}/regions/{region}/quotas:
+    get:
+      description: Retrieve the resource quotas and current usage for STACKIT VPN within a specific project and region.
+      operationId: ListQuotas
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotaListResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      summary: List project quotas
+      x-stackit-authorization:
+        actions:
+        - vpn.quota.get
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - V1alpha1
+  /v1alpha1/regions/{region}/plans:
+    get:
+      description: 'Retrieve a list of available service plans available for provisioning a VPN in a specific `region`.
+
+        Use this to identify the `planId` required for gateway creation.'
+      operationId: ListPlans
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanList'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      summary: List available service plans for a project
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - V1alpha1
+components:
+  schemas:
+    Plan:
+      properties:
+        maxBandwidth:
+          description: The maximum throughput supported by the gateway in each direction, measured in MBit/s
+          example: 1000
+          format: int32
+          type: integer
+        maxConnections:
+          description: The maximum number of connections supported by the VPN Gateway.
+          example: 5
+          format: int32
+          type: integer
+        name:
+          description: The name of the service plan.
+          example: VPN-IPSec-1000-HA-EU01
+          type: string
+        planId:
+          $ref: '#/components/schemas/PlanID'
+        sku:
+          description: The SKU identifier used for billing.
+          example: ST-0174901
+          type: string
+      type: object
+    ConnectionList:
+      properties:
+        connections:
+          items:
+            $ref: '#/components/schemas/ConnectionResponse'
+          type: array
+      required:
+      - connections
+      type: object
+    RoutingType:
+      description: Once the gateway is created, it is not possible to change this attribute.
+      enum:
+      - POLICY_BASED
+      - ROUTE_BASED
+      - BGP_ROUTE_BASED
+      type: string
+    CreateGatewayPayload:
+      properties:
+        availabilityZones:
+          properties:
+            tunnel1:
+              $ref: '#/components/schemas/AvailabilityZone'
+            tunnel2:
+              $ref: '#/components/schemas/AvailabilityZone'
+          required:
+          - tunnel1
+          - tunnel2
+          type: object
+        bgp:
+          $ref: '#/components/schemas/BGPGatewayConfig'
+        displayName:
+          description: A user-friendly name for the VPN gateway.
+          example: my-vpn
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$
+          type: string
+        labels:
+          $ref: '#/components/schemas/Label'
+        networkConfig:
+          $ref: '#/components/schemas/NetworkConfig'
+        planId:
+          description: The service plan identifier.
+          example: p1000
+          type: string
+        routingType:
+          $ref: '#/components/schemas/RoutingType'
+      required:
+      - displayName
+      - planId
+      - availabilityZones
+      - routingType
+      type: object
+    VPNTunnels:
+      description: Status of the underlying tunnel instances.
+      properties:
+        bgpStatus:
+          $ref: '#/components/schemas/BGPStatus'
+        instanceState:
+          $ref: '#/components/schemas/GatewayStatus'
+        internalNextHopIP:
+          description: The IPv4 address of the endpoint in the SNA.
+          example: 10.0.2.1
+          type: string
+        name:
+          enum:
+          - tunnel1
+          - tunnel2
+          type: string
+        publicIP:
+          description: The public IPv4 address of this endpoint.
+          example: 192.214.168.197
+          type: string
+      type: object
+    GatewayList:
+      properties:
+        gateways:
+          items:
+            $ref: '#/components/schemas/GatewayResponse'
+          type: array
+      required:
+      - gateways
+      type: object
+    BGPStatusPeers:
+      properties:
+        localAs:
+          description: The ASN of the local STACKIT gateway.
+          example: 65521
+          format: int64
+          type: integer
+        peerUptime:
+          description: Duration the session has been established
+          example: 00:36:41
+          type: string
+        pfxRcd:
+          description: Count of prefixes received from the neighbor.
+          example: 1
+          format: int32
+          type: integer
+        pfxSnt:
+          description: Count of prefixes advertised to the neighbor.
+          example: 2
+          format: int32
+          type: integer
+        remoteAs:
+          description: The ASN of the remote neighbor.
+          example: 65510
+          format: int64
+          type: integer
+        remoteIP:
+          description: The IP address of the remote BGP neighbor.
+          example: 169.254.179.245
+          type: string
+        state:
+          description: The current BGP session state.
+          example: Established
+          type: string
+      required:
+      - remoteIP
+      - remoteAs
+      - localAs
+      - peerUptime
+      - pfxRcd
+      - pfxSnt
+      - state
+      type: object
+    GatewayStatus:
+      description: 'The current lifecycle state of the gateway infrastructure.
+
+        - `PENDING`: Provisioning or update is in progress.
+
+        - `READY`: The gateway is fully operational.
+
+        - `ERROR`: A failure occurred.
+
+        - `DELETING`: The resource is being removed.
+
+        '
+      enum:
+      - PENDING
+      - READY
+      - ERROR
+      - DELETING
+      example: READY
+      type: string
+    Phase2Status:
+      properties:
+        bytesIn:
+          description: The total data volume received through this Security Association, measured in bytes.
+          example: '453533'
+          type: string
+        bytesOut:
+          description: The total data volume sent through this Security Association, measured in bytes.
+          example: '46459064'
+          type: string
+        dhGroup:
+          description: The negotiated Diffie-Hellman Group
+          example: MODP2048
+          type: string
+        encap:
+          description: Indicates whether NAT traversal encapsulation is active for the connection.
+          example: 'yes'
+          type: string
+        encryptionAlgorithm:
+          description: The negotiated encryption algorithm.
+          example: AES_GCM_16
+          type: string
+        integrityAlgorithm:
+          description: The negotiated integrity algorithm or pseudo-random-function.
+          example: SHA_256
+          type: string
+        packetsIn:
+          description: The total number of packets received through this IPsec Security Association.
+          example: '1534134'
+          type: string
+        packetsOut:
+          description: The total number of packets sent through this IPsec Security Association
+          example: '65847343'
+          type: string
+        protocol:
+          description: The security protocol used for the tunnel, typically `ESP` (Encapsulating Security Payload).
+          example: ESP
+          type: string
+        state:
+          example: ESTABLISHED
+          type: string
+      type: object
+    LabelSelector:
+      additionalProperties:
+        type: string
+      description: Filter resources by labels.
+      example:
+        key1: value1
+        key2: value2
+      type: object
+    Label:
+      additionalProperties:
+        $ref: '#/components/schemas/LabelValue'
+      description: 'Map of custom labels. Key and values must be a string with max 63 chars, start/end with alphanumeric.
+
+        The key of a label follows the same rules as the `LabelValue` except that it cannot be empty.
+
+        '
+      example:
+        contact: max.mustermann@example.org
+        environment: production
+        foo: bar
+        onsite-target: branch-office-berlin
+        team: netops
+      maxProperties: 64
+      type: object
+    PeeringConfig:
+      description: 'The peering object defines the point-to-point IP configuration for the Tunnel Interface.
+
+        These addresses serve as next-hop identifiers and are used for BGP peering sessions and can be used in Static Route-Based connectivity.
+
+        '
+      properties:
+        localAddress:
+          $ref: '#/components/schemas/IPv4'
+        remoteAddress:
+          $ref: '#/components/schemas/IPv4'
+      type: object
+    TunnelStatus:
+      description: Describes the status of the VPN itself.
+      properties:
+        established:
+          type: boolean
+        name:
+          enum:
+          - tunnel1
+          - tunnel2
+          type: string
+        phase1:
+          $ref: '#/components/schemas/Phase1Status'
+        phase2:
+          $ref: '#/components/schemas/Phase2Status'
+      type: object
+    UpdateGatewayConnectionPayload:
+      properties:
+        displayName:
+          description: A user-friendly name for the connection.
+          example: my-connection
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$
+          type: string
+        enabled:
+          description: This flag decides whether this connection should be enabled or disabled
+          type: boolean
+        labels:
+          $ref: '#/components/schemas/Label'
+        localSubnets:
+          description: Optional. Defaults to 0.0.0.0/0 for Route-based VPN configurations. Mandatory for Policy-based.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          minItems: 1
+          type: array
+        remoteSubnets:
+          description: Optional. Defaults to 0.0.0.0/0 for Route-based VPN configurations. Mandatory for Policy-based.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          minItems: 1
+          type: array
+        staticRoutes:
+          description: Optional. Use this for route-based VPN.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          type: array
+        tunnel1:
+          $ref: '#/components/schemas/TunnelConfiguration'
+        tunnel2:
+          $ref: '#/components/schemas/TunnelConfiguration'
+      required:
+      - displayName
+      - tunnel1
+      - tunnel2
+      type: object
+    BGPGatewayConfig:
+      description: BGP configuration effects all connections. (only for routingMode=BGP_ROUTE_BASED)
+      properties:
+        localAsn:
+          $ref: '#/components/schemas/PrivateASN'
+        overrideAdvertisedRoutes:
+          description: 'A list of IPv4 Prefixes to advertise via BGP.
+
+            If omitted, the SNA network ranges will be advertised.
+
+            '
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          type: array
+      required:
+      - localAsn
+    ConnectionResponse:
+      properties:
+        displayName:
+          description: A user-friendly name for the connection.
+          example: my-connection
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$
+          type: string
+        enabled:
+          description: This flag decides whether this connection should be enabled or disabled
+          type: boolean
+        id:
+          description: UUID of the Gateway instance.
+          format: uuid
+          type: string
+        labels:
+          $ref: '#/components/schemas/Label'
+        localSubnets:
+          description: Optional. Defaults to 0.0.0.0/0 for Route-based VPN configurations. Mandatory for Policy-based.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          minItems: 1
+          type: array
+        remoteSubnets:
+          description: Optional. Defaults to 0.0.0.0/0 for Route-based VPN configurations. Mandatory for Policy-based.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          minItems: 1
+          type: array
+        staticRoutes:
+          description: Optional. Use this for route-based VPN.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          type: array
+        tunnel1:
+          $ref: '#/components/schemas/TunnelConfiguration'
+        tunnel2:
+          $ref: '#/components/schemas/TunnelConfiguration'
+      required:
+      - displayName
+      - tunnel1
+      - tunnel2
+      type: object
+    Phase:
+      properties:
+        dhGroups:
+          description: The Diffie-Hellman Group. Required, except if AEAD algorithms are selected.
+          example:
+          - ecp384
+          items:
+            enum:
+            - modp1024
+            - modp2048
+            - ecp256
+            - ecp384
+            - modp2048s256
+            type: string
+          type: array
+        encryptionAlgorithms:
+          example:
+          - aes256
+          items:
+            enum:
+            - aes256
+            - aes128gcm16
+            - aes256gcm16
+            type: string
+          type: array
+        integrityAlgorithms:
+          description: 'Supported integrity algorithms.
+
+            SHA1 is deprecated and will be removed on 2026-12-31.
+
+            '
+          example:
+          - sha2_384
+          items:
+            enum:
+            - sha1
+            - sha2_256
+            - sha2_384
+            - sha2_512
+            type: string
+          type: array
+      required:
+      - encryptionAlgorithms
+      - integrityAlgorithms
+      type: object
+    BGPStatusRoutes:
+      properties:
+        network:
+          description: The destination network
+          example: 192.168.32.0/20
+          type: string
+        origin:
+          example: IGP
+          type: string
+        path:
+          description: The AS-PATH
+          example: 65510
+          type: string
+        peerId:
+          description: BGP Router ID of the neighbor that advertised this route
+          example: 169.254.179.245
+          type: string
+        weight:
+          example: 0
+          format: int32
+          type: integer
+      required:
+      - network
+      - peerId
+      - path
+      - weight
+      - origin
+      type: object
+    Region:
+      description: 'The region in which the resource is located.
+
+        '
+      enum:
+      - eu01
+      - eu02
+      example: eu01
+      type: string
+    TunnelConfiguration:
+      properties:
+        bgp:
+          $ref: '#/components/schemas/BGPTunnelConfig'
+        peering:
+          $ref: '#/components/schemas/PeeringConfig'
+        phase1:
+          allOf:
+          - $ref: '#/components/schemas/Phase'
+          - properties:
+              rekeyTime:
+                default: 14400
+                description: Time to schedule a IKE re-keying (in seconds).
+                format: int32
+                maximum: 86400
+                minimum: 900
+                type: integer
+            type: object
+        phase2:
+          allOf:
+          - $ref: '#/components/schemas/Phase'
+          - properties:
+              dpdAction:
+                default: restart
+                description: 'Action to perform for this CHILD_SA on DPD timeout.
+
+                  "clear": Closes the CHILD_SA and does not take further action.
+
+                  "restart": immediately tries to re-negotiate the CILD_SA under a fresh IKE_SA.
+
+                  '
+                enum:
+                - clear
+                - restart
+                example: restart
+                type: string
+              rekeyTime:
+                default: 3600
+                description: Time to schedule a Child SA re-keying (in seconds).
+                format: int32
+                maximum: 14400
+                minimum: 900
+                type: integer
+              startAction:
+                default: start
+                description: 'Action to perform after loading the connection configuration.
+
+                  "none": The connection will be loaded but needs to be manually initiated.
+
+                  "start": initiates the connection actively.
+
+                  '
+                enum:
+                - none
+                - start
+                example: start
+                type: string
+            type: object
+        preSharedKey:
+          description: 'A Pre-Shared Key for authentication.
+
+            Required in create-requests, optional in update-requests and omitted in every response.'
+          example: Super1Secret2Shared3Key4
+          minLength: 20
+          type: string
+          writeOnly: true
+        remoteAddress:
+          $ref: '#/components/schemas/IPv4'
+      required:
+      - remoteAddress
+      - phase1
+      - phase2
+      type: object
+    ConnectionStatusResponse:
+      properties:
+        displayName:
+          description: The name of the connection.
+          example: my-ipsec-tunnel
+          type: string
+        enabled:
+          type: boolean
+        id:
+          description: UUID of the connection.
+          format: uuid
+          type: string
+        tunnels:
+          items:
+            $ref: '#/components/schemas/TunnelStatus'
+          type: array
+      type: object
+    BGPStatus:
+      properties:
+        peers:
+          items:
+            $ref: '#/components/schemas/BGPStatusPeers'
+          type: array
+        routes:
+          items:
+            $ref: '#/components/schemas/BGPStatusRoutes'
+          type: array
+      type:
+      - object
+      - 'null'
+    IPv4CIDR:
+      example: 10.10.10.10/32
+      pattern: ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}(\/([0-9]|[1-2][0-9]|3[0-2]))?$
+      type: string
+    IPv4:
+      example: 0.0.0.0
+      pattern: ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$
+      type: string
+    Gateway:
+      properties:
+        availabilityZones:
+          properties:
+            tunnel1:
+              $ref: '#/components/schemas/AvailabilityZone'
+            tunnel2:
+              $ref: '#/components/schemas/AvailabilityZone'
+          required:
+          - tunnel1
+          - tunnel2
+          type: object
+        bgp:
+          $ref: '#/components/schemas/BGPGatewayConfig'
+        displayName:
+          description: A user-friendly name for the VPN gateway.
+          example: my-vpn
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$
+          type: string
+        labels:
+          $ref: '#/components/schemas/Label'
+        networkConfig:
+          $ref: '#/components/schemas/NetworkConfig'
+        planId:
+          description: The service plan identifier.
+          example: p1000
+          type: string
+        routingType:
+          $ref: '#/components/schemas/RoutingType'
+      required:
+      - displayName
+      - planId
+      - availabilityZones
+      - routingType
+      type: object
+    GatewayResponse:
+      allOf:
+      - $ref: '#/components/schemas/Gateway'
+      - properties:
+          id:
+            description: The server-generated UUID of the VPN gateway.
+            format: uuid
+            readOnly: true
+            type: string
+          state:
+            $ref: '#/components/schemas/GatewayStatus'
+        type: object
+    Quota:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        usage:
+          format: int32
+          type: integer
+      required:
+      - limit
+      - usage
+      type: object
+    NetworkConfig:
+      properties:
+        predefinedNetworkPrefix:
+          allOf:
+          - $ref: '#/components/schemas/IPv4CIDR'
+          description: 'The IPv4 network prefix (CIDR notation) allocated for the VPN gateway. Must have a prefix length of /28 or larger.
+
+            Once the gateway is created, is not possible to change this attribute.
+
+            '
+          example: 10.0.0.0/28
+        routingTableId:
+          description: Custom routing table ID for the VPN gateway
+          format: uuid
+          type: string
+      type: object
+    CreateGatewayConnectionPayload:
+      properties:
+        displayName:
+          description: A user-friendly name for the connection.
+          example: my-connection
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$
+          type: string
+        enabled:
+          description: This flag decides whether this connection should be enabled or disabled
+          type: boolean
+        labels:
+          $ref: '#/components/schemas/Label'
+        localSubnets:
+          description: Optional. Defaults to 0.0.0.0/0 for Route-based VPN configurations. Mandatory for Policy-based.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          minItems: 1
+          type: array
+        remoteSubnets:
+          description: Optional. Defaults to 0.0.0.0/0 for Route-based VPN configurations. Mandatory for Policy-based.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          maxItems: 100
+          minItems: 1
+          type: array
+        staticRoutes:
+          description: Optional. Use this for route-based VPN.
+          items:
+            $ref: '#/components/schemas/IPv4CIDR'
+          type: array
+        tunnel1:
+          $ref: '#/components/schemas/TunnelConfiguration'
+        tunnel2:
+          $ref: '#/components/schemas/TunnelConfiguration'
+      required:
+      - displayName
+      - tunnel1
+      - tunnel2
+      type: object
+    GatewayStatusResponse:
+      properties:
+        connections:
+          items:
+            $ref: '#/components/schemas/ConnectionStatusResponse'
+          type: array
+        displayName:
+          description: Name of the Gateway instance.
+          example: coffee
+          type: string
+        errorMessage:
+          description: A descriptive message provided when the gateway is in an error state.
+          type: string
+        gatewayStatus:
+          $ref: '#/components/schemas/GatewayStatus'
+        id:
+          description: UUID of the Gateway instance.
+          format: uuid
+          type: string
+        tunnels:
+          items:
+            $ref: '#/components/schemas/VPNTunnels'
+          type: array
+      type: object
+    AvailabilityZone:
+      description: Object that represents an availability zone.
+      example: eu01-1
+      type: string
+    Phase1Status:
+      properties:
+        dhGroup:
+          description: The negotiated Diffie-Hellman Group
+          example: MODP2048
+          type: string
+        encryptionAlgorithm:
+          description: The negotiated encryption algorithm.
+          example: AES_GCM_16
+          type: string
+        integrityAlgorithm:
+          description: The negotiated integrity algorithm or pseudo-random-function.
+          example: SHA_256
+          type: string
+        state:
+          example: INSTALLED
+          type: string
+      type: object
+    QuotaListResponse:
+      properties:
+        quotas:
+          $ref: '#/components/schemas/QuotaList'
+      required:
+      - quotas
+      type: object
+    LabelValue:
+      description: Can be empty. If not empty, must start/end alphanumeric; may contain the characters ".", "-", "_" in between.
+      maxLength: 63
+      pattern: ^([a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?)?$
+      type: string
+    PlanList:
+      properties:
+        defaultPlanId:
+          $ref: '#/components/schemas/PlanID'
+        plans:
+          items:
+            $ref: '#/components/schemas/Plan'
+          type: array
+    PrivateASN:
+      description: 'ASN for private use (reserved by IANA), both 16Bit and 32Bit ranges are valid (RFC 6996).
+
+        '
+      format: int64
+      maximum: 4294967294
+      minimum: 64512
+      type: integer
+    APIErrorDetail:
+      properties:
+        domain:
+          default: vpn.access.stackit.cloud
+          description: The domain of the error source.
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata contains more information. For bad requests this would be field information.
+          type: object
+        reason:
+          description: The reason why the error occurs.
+          enum:
+          - INVALID_FIELD
+          - INVALID_PATH_PARAMETER
+          type: string
+      required:
+      - reason
+      - domain
+      type: object
+    APIErrorResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/APIError'
+      required:
+      - error
+      type: object
+    UpdateGatewayPayload:
+      properties:
+        availabilityZones:
+          properties:
+            tunnel1:
+              $ref: '#/components/schemas/AvailabilityZone'
+            tunnel2:
+              $ref: '#/components/schemas/AvailabilityZone'
+          required:
+          - tunnel1
+          - tunnel2
+          type: object
+        bgp:
+          $ref: '#/components/schemas/BGPGatewayConfig'
+        displayName:
+          description: A user-friendly name for the VPN gateway.
+          example: my-vpn
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$
+          type: string
+        labels:
+          $ref: '#/components/schemas/Label'
+        networkConfig:
+          $ref: '#/components/schemas/NetworkConfig'
+        planId:
+          description: The service plan identifier.
+          example: p1000
+          type: string
+        routingType:
+          $ref: '#/components/schemas/RoutingType'
+      required:
+      - displayName
+      - planId
+      - availabilityZones
+      - routingType
+      type: object
+    ASN:
+      description: "Number of an Autonomous System. Both 16Bit and 32Bit ranges are supported, excluding values reserved by:\n  * RFC 7607 (0)\n  * RFC 6793 (23456, AS_TRANS)\n  * RFC 7300 (65535 and 4294967295, the \"Last ASNs\")\n"
+      format: int64
+      maximum: 4294967294
+      minimum: 1
+      not:
+        enum:
+        - 23456
+        - 65535
+      type: integer
+    BGPTunnelConfig:
+      properties:
+        remoteAsn:
+          $ref: '#/components/schemas/ASN'
+      required:
+      - remoteAsn
+      type: object
+    PlanID:
+      description: The service plan identifier.
+      example: p1000
+      type: string
+    QuotaList:
+      properties:
+        gateways:
+          allOf:
+          - $ref: '#/components/schemas/Quota'
+          description: Current limit and usage for VPN gateways.
+      required:
+      - gateways
+    APIError:
+      properties:
+        code:
+          description: The HTTP status code.
+          example: 400
+          format: int32
+          type: integer
+        details:
+          description: Can contain more details on the error.
+          items:
+            $ref: '#/components/schemas/APIErrorDetail'
+          type: array
+        message:
+          description: A message describing the error.
+          example: One or more fields are invalid.
+          type: string
+        status:
+          description: The HTTP status code text.
+          example: BAD_REQUEST
+          type: string
+      required:
+      - code
+      - message
+      - status
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Internal Server Error
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Not Found
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Forbidden
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Conflict
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Unauthorized
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Bad Request

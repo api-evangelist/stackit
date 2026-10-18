@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Container Registry API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-registry-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: registry
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/artifactories'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: registry_list_artifactories
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/artifactories/{artifactoryId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/artifactories/{artifactoryId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: registry_get_artifactory
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/replication/adapters'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: registry_list_replication_adapters

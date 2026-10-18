@@ -1,0 +1,68 @@
+generated: '2026-10-18'
+method: searched
+source: https://docs.stackit.cloud/developer-tools/
+packages:
+- name: stackit-sdk-go
+  registry: github
+  url: https://github.com/stackitcloud/stackit-sdk-go
+  language: Go
+  official: true
+  version: release-2026-09-14
+  published: '2026-09-14'
+  note: Latest release from GitHub
+- name: stackit-sdk-python
+  registry: github
+  url: https://github.com/stackitcloud/stackit-sdk-python
+  language: Python
+  official: true
+  version: release-2026-09-14
+  published: '2026-09-14'
+  note: Beta version, latest release from GitHub
+- name: stackit-sdk-java
+  registry: github
+  url: https://github.com/stackitcloud/stackit-sdk-java
+  language: Java
+  official: true
+  version: release-2026-10-16
+  published: '2026-10-16'
+  note: Latest release from GitHub
+- name: terraform-provider-stackit
+  registry: terraform
+  url: https://registry.terraform.io/providers/stackitcloud/stackit
+  language: Terraform
+  official: true
+  version: 0.58.1
+  published: null
+  note: Latest version from Terraform Registry, published date not available via API
+- name: '@stackitcloud/pulumi-stackit'
+  registry: npm
+  url: https://www.npmjs.com/package/@stackitcloud/pulumi-stackit
+  language: JavaScript/TypeScript
+  official: true
+  version: 0.0.8
+  published: '2026-10-16'
+  note: Pulumi provider for STACKIT
+- name: '@stackitcloud/n8n-nodes-stackit-ai-model-serving'
+  registry: npm
+  url: https://www.npmjs.com/package/@stackitcloud/n8n-nodes-stackit-ai-model-serving
+  language: JavaScript/TypeScript
+  official: true
+  version: 1.1.0
+  published: '2025-11-03'
+  note: n8n community nodes for STACKIT AI Model Serving
+- name: stackit-cli
+  registry: github
+  url: https://github.com/stackitcloud/stackit-cli
+  language: Go
+  official: true
+  version: null
+  published: null
+  note: Command-line interface, installation via Homebrew, APT, or Snap
+- name: stackit-dns-api-client-go
+  registry: github
+  url: https://github.com/stackitcloud/stackit-dns-api-client-go
+  language: Go
+  official: true
+  version: null
+  published: null
+  note: DNS API client library

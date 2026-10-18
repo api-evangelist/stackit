@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-topic-response-schema.json",
+  "title": "topicResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-pubsub-openapi.yml#/components/schemas/topicResponse",
+  "properties": {
+    "createTime": {
+      "description": "The point in time the resource was created.",
+      "format": "date-time",
+      "maxLength": 128,
+      "type": "string"
+    },
+    "description": {
+      "description": "The description is a longer text chosen by the user to provide more context for the resource.",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The display name is a short name chosen by the user to identify the resource.",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 -]*$",
+      "type": "string"
+    },
+    "id": {
+      "description": "An auto generated unique id which identifies the resource.",
+      "format": "uuid",
+      "maxLength": 36,
+      "minLength": 36,
+      "type": "string"
+    },
+    "labels": {
+      "$ref": "#/$defs/labels"
+    },
+    "settings": {
+      "$ref": "#/$defs/topicSettings"
+    },
+    "state": {
+      "description": "The current state of the resource.",
+      "enum": [
+        "reconciling",
+        "active",
+        "deleting"
+      ],
+      "type": "string"
+    },
+    "uri": {
+      "description": "The URI for reaching the resource.",
+      "maxLength": 1024,
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "displayName",
+    "state",
+    "createTime"
+  ],
+  "$defs": {
+    "labels": {
+      "additionalProperties": {
+        "maxLength": 63,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "description": "Labels are key-value pairs used to group and organize subsets of resources.\n\n**Key constraints:**\n- May contain an optional domain prefix separated by a slash (`/`).\n- The domain prefix must be less than or equal to 250 characters and a valid DNS subdomain containing only lowercase alphanumerics (`[a-z0-9]`) and dashes (`-`), separated by dots (`.`).\n- The name part (excluding the domain prefix) must be between 1 and 63 characters long.\n- The name part must begin and end with an alphanumeric character (`[a-z0-9A-Z]`).\n- The name part may contain dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics in between.\n- Keys starting with the prefix `stackit-` or having a domain prefix of `stackit.cloud` (including its subdomains, e.g., `*.stackit.cloud/`) are reserved for system use.\n\n**Value constraints:**\n- Must be less than or equal to 63 characters long (can be empty).\n- Must begin and end with an alphanumeric character (`[a-z0-9A-Z]`) if not empty.\n- May contain dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics in between.\n\n**Count constraint:**\n- A maximum of 64 labels can be applied per resource. Restricted labels are excluded from this count.\n",
+      "maxProperties": 64,
+      "type": "object"
+    },
+    "topicSettings": {
+      "description": "Configuration settings for the topic.",
+      "properties": {
+        "acl": {
+          "default": [
+            "0.0.0.0/0"
+          ],
+          "description": "Whitelist of IPs in CIDR notation that can access the topic and its underlying subscriptions.",
+          "items": {
+            "format": "cidr",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        "metrics": {
+          "default": false,
+          "description": "Enables or disables metrics collection for the topic.",
+          "type": "boolean"
+        },
+        "retention": {
+          "default": "168h",
+          "description": "The maximum length of time a message is persisted in storage. \nMessages older than this duration are automatically discarded/deleted.\n\n**Format:**\nMust be a scalar duration: a number (integer or decimal) followed by a unit ('s', 'm', or 'h').\n\n**Constraints:**\n- **Minimum:** \"1s\"\n- **Maximum:** \"168h\" (7 days)\n",
+          "pattern": "^[0-9]+(\\.[0-9]+)?(s|m|h)$",
+          "type": "string"
+        },
+        "serviceLogs": {
+          "default": false,
+          "description": "Enables or disables sending of service logs for the topic.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-project-status-schema.json",
+  "title": "ProjectResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-object-storage-openapi.yml#/components/schemas/ProjectStatus",
+  "properties": {
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Project labels",
+      "title": "Labels",
+      "type": "object"
+    },
+    "project": {
+      "description": "Project ID",
+      "title": "Project",
+      "type": "string"
+    },
+    "scope": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ProjectScope"
+        }
+      ],
+      "description": "Project Scope"
+    }
+  },
+  "required": [
+    "project",
+    "scope"
+  ],
+  "type": "object",
+  "$defs": {
+    "ProjectScope": {
+      "description": "The scope of a STACKIT project can be public (default) or\ncan have client specific special requirements.",
+      "enum": [
+        "PUBLIC",
+        "SCHWARZ"
+      ],
+      "title": "ProjectScope",
+      "type": "string"
+    }
+  }
+}

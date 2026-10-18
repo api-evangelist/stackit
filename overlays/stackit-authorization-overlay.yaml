@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Membership API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-authorization-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: authorization
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/permissions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: authorization_list_permissions
+- target: $.paths['/v2/users/{email}/memberships'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: authorization_list_user_memberships
+- target: $.paths['/v2/users/{email}/permissions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: authorization_list_user_permissions
+- target: $.paths['/v2/{resourceType}/{resourceId}/members'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: authorization_list_members
+- target: $.paths['/v2/{resourceType}/{resourceId}/roles'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: authorization_list_roles
+- target: $.paths['/v2/{resourceType}/{resourceId}/roles/{roleId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/{resourceType}/{resourceId}/roles/{roleId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: authorization_get_role

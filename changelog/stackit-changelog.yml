@@ -1,0 +1,68 @@
+generated: '2026-10-18'
+method: searched
+generator: extract-docs-artifacts.py (deepseek)
+source: https://docs.stackit.cloud/release-notes/
+sources:
+- https://docs.stackit.cloud/release-notes/
+entries:
+- date: '2026-10-13'
+  highlights:
+  - All v1beta endpoints of the STACKIT Telemetry Router and Telemetry Link are deprecated as of October 31, 2026.
+  - A grace period of six months applies.
+  - On April 30, 2027, the v1beta endpoints are permanently shut down and are no longer available.
+  - Migrate all your integrations, applications, and scripts to the stable v1 versions of the APIs before this deadline.
+  breaking: true
+- date: '2026-10-13'
+  highlights:
+  - We are rolling out a new permission model for STACKIT Support that gives you fine-grained control over who can access tickets, right inside
+    the STACKIT Portal.
+  - Every user can still work with their own tickets out of the box.
+  - On top of that, you can now designate ticket administrators who are able to view and manage all tickets across an organization or project,
+    without any manual permission upkeep for individual tickets.
+  - Alongside the new permission model, we have significantly improved how you search and filter tickets.
+  breaking: false
+- date: '2026-10-08'
+  highlights:
+  - The version 1.4.0 CSE (KACLS) is now available.
+  - Helm chart versions (including security patches) of infrastructure services updated
+  - Base image of KACL service updated
+  - Feature 'Integration of metering API' added
+  version: 1.4.0
+  breaking: false
+- date: '2026-10-07'
+  highlights:
+  - We are happy to announce the release of a pre-configured Audit Log Dashboard for STACKIT Observability.
+  - This new dashboard allows you to easily view and analyze your incoming audit trails directly inside Grafana with zero setup required.
+  - The update has been automatically applied to all existing instances and is included by default in all newly created instances.
+  - To access the new dashboard, open your Grafana instance, navigate to Dashboards in the left-hand menu, open the STACKIT folder, and select
+    the Audit Log Dashboard.
+  breaking: false
+- date: '2026-10-06'
+  highlights:
+  - 'We are pleased to introduce a major milestone: With the switch to our new portal at domains.stackit.cloud, we have officially migrated into
+    the STACKIT ecosystem.'
+  - 'Simple Login via STACKIT IdP: By connecting to the central STACKIT Identity Provider (IdP), you benefit from a simplified, secure single
+    sign-on and a revised invitation process.'
+  - 'Configurable & Persistent Tables: Customize table views to your individual needs.'
+  - DNS History & Snapshots (API-only) Track all zone changes (audit logs) and restore previous zone states (Restore via History ID).
+  breaking: false
+- date: '2026-10-06'
+  highlights:
+  - Ubuntu 26.04 is now available in the STACKIT Kubernetes Engine (SKE).
+  - Ubuntu 22.04 End of Life & Automated Update Schedule
+  - Ubuntu 22.04 reaches the end of its official maintenance support in May 2027.
+  - 2026-10-06 Ubuntu 26.04 available in SKE.
+  breaking: false
+- date: '2026-10-05'
+  highlights:
+  - The STACKIT Cloud Security Posture Management (CSPM) service is now Generally Available (GA).
+  - This fully managed service delivers comprehensive visibility and automatically detects misconfigurations and compliance deviations across
+    your STACKIT ecosystem.
+  - '24-hour scans: Your environments are now automatically and continuously assessed every 24 hours.'
+  - 'Complete STACKIT coverage: Security policies have been expanded to cover all STACKIT Services, guaranteeing end-to-end compliance checks
+    across your entire infrastructure.'
+  breaking: false
+scheme: monthly
+current_version: 2026-10
+docs: https://docs.stackit.cloud/release-notes/
+note: The page shows future dates (2026) which may indicate placeholder or test content

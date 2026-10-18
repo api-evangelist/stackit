@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-artifactory-list-schema.json",
+  "title": "ArtifactoryList",
+  "description": "A list of artifactories inside a STACKIT project.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-registry-openapi.yml#/components/schemas/ArtifactoryList",
+  "properties": {
+    "artifactories": {
+      "items": {
+        "$ref": "#/$defs/Artifactory"
+      },
+      "type": "array"
+    },
+    "next_page_token": {
+      "description": "A token to retrieve the next page of results. Pass this value as `page_token` in the subsequent request. If empty, there are no more pages.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifactories"
+  ],
+  "type": "object",
+  "$defs": {
+    "Artifactory": {
+      "description": "Artifactory Information.",
+      "properties": {
+        "consumed_quota_bytes": {
+          "description": "How many bytes of quota is consumed. Read Only.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "create_time": {
+          "description": "The date and time the creation of the STACKIT Artifactory was triggered.",
+          "format": "date-time",
+          "maxLength": 48,
+          "type": "string"
+        },
+        "id": {
+          "description": "A auto generated unique id which identifies the STACKIT Artifactory.",
+          "format": "uuid",
+          "maxLength": 36,
+          "type": "string"
+        },
+        "name": {
+          "description": "A user chosen name to distinguish multiple STACKIT Artifactories.",
+          "maxLength": 255,
+          "type": "string"
+        },
+        "proxy": {
+          "$ref": "#/$defs/Proxy"
+        },
+        "state": {
+          "description": "The current state of the STACKIT Artifactory.",
+          "enum": [
+            "Reconciling",
+            "Active",
+            "Deleted",
+            "Error"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "description": "The base URL of the STACKIT Artifactory.",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "create_time",
+        "state",
+        "url",
+        "consumed_quota_bytes"
+      ],
+      "type": "object"
+    },
+    "Proxy": {
+      "description": "Replication settings for a proxy-cache artifactory",
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/RedactedCredentials"
+        },
+        "description": {
+          "description": "Description of the registry.",
+          "type": "string"
+        },
+        "registry_type": {
+          "description": "Which replication adapter to use for this registry. Discover the\nlist of supported replication adapters, and therefore supported\nregistry types, by calling GET /v1/projects/{projectId}/regions/{regionId}/replication/adapters\n",
+          "type": "string"
+        },
+        "url": {
+          "description": "Upstream registry url to proxy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "registry_type",
+        "url"
+      ],
+      "type": "object"
+    },
+    "RedactedCredentials": {
+      "description": "Credentials for upstream registry, redacted",
+      "properties": {
+        "access_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "access_key"
+      ],
+      "type": "object"
+    }
+  }
+}

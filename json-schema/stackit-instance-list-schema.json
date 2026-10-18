@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-instance-list-schema.json",
+  "title": "instanceList",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-edge-openapi.yml#/components/schemas/instanceList",
+  "properties": {
+    "instances": {
+      "items": {
+        "$ref": "#/$defs/instance"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "instances"
+  ],
+  "$defs": {
+    "acl": {
+      "description": "The ACL config for the instances API.",
+      "properties": {
+        "ipAllowList": {
+          "items": {
+            "$ref": "#/$defs/ipAllowListEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "instance": {
+      "properties": {
+        "acl": {
+          "$ref": "#/$defs/acl"
+        },
+        "created": {
+          "description": "The date and time the creation of the instance was triggered.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": {
+          "description": "A user chosen description to distinguish multiple instances.",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The displayed name of the instance.",
+          "format": "hostname",
+          "maxLength": 8,
+          "type": "string"
+        },
+        "frontendUrl": {
+          "description": "URL to the Management UI of the Instance.",
+          "format": "url",
+          "type": "string"
+        },
+        "id": {
+          "description": "A auto generated unique id which identifies the instance.",
+          "format": "hostname",
+          "maxLength": 16,
+          "type": "string"
+        },
+        "planId": {
+          "description": "Service Plan configures the size of the Instance.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "status": {
+          "description": "The current status of the instance.",
+          "enum": [
+            "error",
+            "reconciling",
+            "active",
+            "deleting"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "planId",
+        "frontendUrl",
+        "status",
+        "created"
+      ]
+    },
+    "ipAllowListEntry": {
+      "properties": {
+        "createdAt": {
+          "description": "ISO-8601 timestamp of when the entry was created.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Some description of the entry.",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "ipRange": {
+          "description": "The IP CIDR range for the ACL entry.",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "ISO-8601 timestamp of when the entry was last updated.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uuid": {
+          "description": "The unique identifier for the ipAllowListEntry entry. This value is immutable, used to identify entries for updates, and cannot be changed after creation.",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ipRange",
+        "uuid"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Automation Service API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-automation-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: automation
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: automation_list_volume_automations
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations/templates'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: automation_list_volume_templates
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations/templates/{templateId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: automation_get_volume_template
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: automation_get_volume_automation
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}/executions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: automation_list_volume_executions
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}/executions/{executionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: automation_get_volume_execution

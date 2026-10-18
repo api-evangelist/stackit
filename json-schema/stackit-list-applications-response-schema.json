@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-list-applications-response-schema.json",
+  "title": "ListApplicationsResponse",
+  "description": "ListApplicationsResponse contains applications and pagination metadata.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-sca-openapi.yml#/components/schemas/ListApplicationsResponse",
+  "properties": {
+    "items": {
+      "description": "Applications under the requested parent.",
+      "items": {
+        "$ref": "#/$defs/ApplicationSummary"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ApplicationSummary": {
+      "description": "ApplicationSummary describes a summary of an application.",
+      "properties": {
+        "containers": {
+          "description": "Number of containers.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "createdAt": {
+          "description": "Creation date in RFC3339 format.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Application's human-readable name.",
+          "type": "string"
+        },
+        "environmentId": {
+          "description": "Environment's identifier.",
+          "type": "string"
+        },
+        "environmentName": {
+          "description": "Environment's human-readable name.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Application identifier, for example: 00000000-0000-0000-0000-000000000000.",
+          "type": "string"
+        },
+        "instances": {
+          "description": "Application's running instances.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "internalUrl": {
+          "description": "Application's internal URL.",
+          "type": "string"
+        },
+        "lastDeployment": {
+          "description": "Date of the last moment the application got the running status in RFC3339 format.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/CurrentStatus"
+        },
+        "stopped": {
+          "description": "Indicates if the application resources are stopped.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "Application's published URL.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CurrentStatus": {
+      "default": "CURRENT_STATUS_UNSPECIFIED",
+      "description": " - CURRENT_STATUS_UNSPECIFIED: Used as zero value.\n - CURRENT_STATUS_PROGRESSING: Applications replicas are being created.\n - CURRENT_STATUS_RUNNING: Application is ready and has the desired replicas running.\n - CURRENT_STATUS_FAILED: Application is not available and has some error.\n - CURRENT_STATUS_IDLE: Application is ready but is scaled to 0 replicas.\n - CURRENT_STATUS_NONE: Application is stopped.",
+      "enum": [
+        "CURRENT_STATUS_UNSPECIFIED",
+        "CURRENT_STATUS_PROGRESSING",
+        "CURRENT_STATUS_RUNNING",
+        "CURRENT_STATUS_FAILED",
+        "CURRENT_STATUS_IDLE",
+        "CURRENT_STATUS_NONE"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-update-alert-configs-payload-schema.json",
+  "title": "UpdateAlertConfigsPayload",
+  "description": "Alert config",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-observability-openapi.yml#/components/schemas/UpdateAlertConfigsPayload",
+  "properties": {
+    "global": {
+      "description": "Global config. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.",
+      "properties": {
+        "opsgenieApiKey": {
+          "description": "Opsgenie api key\n`Additional Validators:`\n* should only include the characters: a-zA-Z0-9-",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "opsgenieApiUrl": {
+          "description": "Opsgenie api url\n`Additional Validators:`\n* must be a syntactically valid url address",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "resolveTimeout": {
+          "default": "5m",
+          "description": "ResolveTimeout is the default value used by alertmanager if the alert does not include EndsAt, after this time passes it can declare the alert as resolved if it has not been updated. This has no impact on alerts from Prometheus, as they always include EndsAt. \n`Additional Validators:`\n* must be a valid time format",
+          "maxLength": 8,
+          "minLength": 2,
+          "type": "string"
+        },
+        "smtpAuthIdentity": {
+          "description": "Auth identity.\n`Additional Validators:`\n* must be a syntactically valid email address",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "smtpAuthPassword": {
+          "description": "SMTP Auth using LOGIN and PLAIN.",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "smtpAuthUsername": {
+          "description": "SMTP Auth using CRAM-MD5, LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate to the SMTP server.",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "smtpFrom": {
+          "description": "The default SMTP From header field. \n`Additional Validators:`\n* must be a syntactically valid email address",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "smtpSmarthost": {
+          "description": "The default SMTP smarthost used for sending emails, including port number. Port number usually is 25, or 587 for SMTP over TLS (sometimes referred to as STARTTLS). Example: smtp.example.org:587 \n`Additional Validators:`\n* should only include the characters: a-zA-Z0-9_./@&?:-",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "inhibitRules": {
+      "description": "A list of inhibition rules.",
+      "properties": {
+        "equal": {
+          "description": "Labels that must have an equal value in the source and target alert for the inhibition to take effect.\n`Additional Validators:`\n* should only include the characters: a-zA-Z0-9_./@&?:-",
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sourceMatch": {
+          "description": "map of key:value. Matchers for which one or more alerts have to exist for the inhibition to take effect.\n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not have more than 200 characters\n* each key and value should only include the characters: a-zA-Z0-9_./@&?:-",
+          "type": "object"
+        },
+        "sourceMatchRe": {
+          "description": "map of key:value. Regex match\n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not have more than 200 characters",
+          "type": "object"
+        },
+        "targetMatch": {
+          "description": "map of key:value. Matchers that have to be fulfilled in the alerts to be muted.\n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not have more than 200 characters\n* each key and value should only include the characters: a-zA-Z0-9_./@&?:-",
+          "type": "object"
+        },
+        "targetMatchRe": {
+          "description": "map of key:value. Matchers that have to be fulfilled in the alerts to be muted. Regex.\n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not have more than 200 characters",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "receivers": {
+      "description": "A list of notification receivers.",
+      "items": {
+        "description": "Receivers",
+        "properties": {
+          "emailConfigs": {
+            "description": "Email configurations",
+            "items": {
+              "properties": {
+                "authIdentity": {
+                  "description": "SMTP authentication information.\n`Additional Validators:`\n* must be a syntactically valid email address",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "authPassword": {
+                  "description": "SMTP authentication information.",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "authUsername": {
+                  "description": "SMTP authentication information.",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "from": {
+                  "description": "The sender address.\n`Additional Validators:`\n* must be a syntactically valid email address",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "sendResolved": {
+                  "default": false,
+                  "description": "Whether to notify about resolved alerts.",
+                  "type": "boolean"
+                },
+                "smarthost": {
+                  "description": "The SMTP host through which emails are sent.\n`Additional Validators:`\n* should only include the characters: a-zA-Z0-9_./@&?:-",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "to": {
+                  "description": "The email address to send notifications to.\n`Additional Validators:`\n* must be a syntactically valid email address",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "description": "`Additional Validators:`\n* must be unique\n* should only include the characters: a-zA-Z0-9-",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "opsgenieConfigs": {
+            "description": "Configuration for ops genie.",
+            "items": {
+              "properties": {
+                "apiKey": {
+                  "description": "The API key to use when talking to the OpsGenie API.\n`Additional Validators:`\n* should only include the characters: a-zA-Z0-9-",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "apiUrl": {
+                  "description": "The host to send OpsGenie API requests to.\n`Additional Validators:`\n* must be a syntactically valid url address",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "priority": {
+                  "description": "Priority level of alert. Possible values are P1, P2, P3, P4, and P5.",
+                  "maxLength": 2,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                "sendResolved": {
+                  "default": true,
+                  "description": "Whether to notify about resolved alerts.",
+                  "type": "boolean"
+                },
+                "tags": {
+                  "description": "Comma separated list of tags attached to the notifications.",
+                  "maxLength": 400,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "webHookConfigs": {
+            "items": {
+              "properties": {
+                "googleChat": {
+                  "default": false,
+                  "description": "Google Chat webhooks require special handling. If you set this property to true, it is treated as such. `Additional Validators:` * When set to true, msTeams must be false.",
+                  "type": "boolean"
+                },
+                "msTeams": {
+                  "default": false,
+                  "description": "Microsoft Teams webhooks require special handling. If you set this property to true, it is treated as such. `Additional Validators:` * When set to true, googleChat must be false.",
+                  "type": "boolean"
+                },
+                "sendResolved": {
+                  "default": true,
+                  "description": "Whether to notify about resolved alerts.",
+                  "type": "boolean"
+                },
+                "url": {
+                  "description": "The endpoint to send HTTP POST requests to.\n`Additional Validators:`\n* must be a syntactically valid url address",
+                  "maxLength": 500,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "route": {
+      "description": "The root node of the routing tree.",
+      "properties": {
+        "continue": {
+          "default": false,
+          "description": "The continue parameter cannot be set to true on the root route because there are no subsequent sibling nodes to match. It must always be false.",
+          "type": "boolean"
+        },
+        "groupBy": {
+          "description": "The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.",
+          "items": {
+            "description": "As described",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "groupInterval": {
+          "default": "5m",
+          "description": "How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)\n`Additional Validators:`\n* must be a valid time format",
+          "maxLength": 8,
+          "minLength": 2,
+          "type": "string"
+        },
+        "groupWait": {
+          "default": "30s",
+          "description": "How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)\n`Additional Validators:`\n* must be a valid time format",
+          "maxLength": 8,
+          "minLength": 2,
+          "type": "string"
+        },
+        "match": {
+          "deprecated": true,
+          "description": "map of key:value. A set of equality matchers an alert has to fulfill to match the node. \n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not be longer than 200 characters\n* key and values should only include the characters: a-zA-Z0-9_./@&?:-",
+          "type": "object"
+        },
+        "matchRe": {
+          "deprecated": true,
+          "description": "map of key:value. A set of regex-matchers an alert has to fulfill to match the node. \n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not be longer than 200 characters",
+          "type": "object"
+        },
+        "receiver": {
+          "description": "Receiver that should be one item of receivers\n`Additional Validators:`\n* must be a in name of receivers",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "repeatInterval": {
+          "default": "4h",
+          "description": "How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).\n`Additional Validators:`\n* must be a valid time format",
+          "maxLength": 8,
+          "minLength": 2,
+          "type": "string"
+        },
+        "routes": {
+          "description": "Zero or more child routes.",
+          "items": {
+            "description": "As in one level above",
+            "properties": {
+              "continue": {
+                "default": false,
+                "description": "Whether an alert should continue matching subsequent sibling nodes.",
+                "type": "boolean"
+              },
+              "groupBy": {
+                "items": {
+                  "description": "As in one level above",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "groupInterval": {
+                "description": "As in one level above",
+                "maxLength": 8,
+                "minLength": 2,
+                "type": "string"
+              },
+              "groupWait": {
+                "description": "As in one level above",
+                "maxLength": 8,
+                "type": "string"
+              },
+              "match": {
+                "deprecated": true,
+                "description": "As in one level above",
+                "type": "object"
+              },
+              "matchRe": {
+                "deprecated": true,
+                "description": "As in one level above",
+                "type": "object"
+              },
+              "matchers": {
+                "description": "A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics. The syntax of a matcher consists of three tokens:\n* A valid Prometheus label name.\n* One of =, !=, =~, or !~. = means equals, != means that the strings are not equal, =~ is used for equality of regex expressions and !~ is used for un-equality of regex expressions. They have the same meaning as known from PromQL selectors.\n* A UTF-8 string, which may be enclosed in double quotes. Before or after each token, there may be any amount of whitespace.\n`Additional Validators:`\n* should not contain more than 5 keys\n* each key and value should not be longer than 200 characters",
+                "items": {
+                  "description": "Item of matchers",
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "receiver": {
+                "description": "As in one level above",
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              "repeatInterval": {
+                "description": "As in one level above",
+                "maxLength": 8,
+                "minLength": 2,
+                "type": "string"
+              },
+              "routes": {
+                "description": "Another child routes",
+                "items": {
+                  "description": "As in one level above",
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "receiver"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "receivers",
+    "route"
+  ],
+  "type": "object"
+}

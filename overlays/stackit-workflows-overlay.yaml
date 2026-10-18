@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Workflows API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-workflows-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: workflows
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{regionId}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: workflows_list_instances
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: workflows_get_instance
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{regionId}/instances/{instanceId}/dag-bundles'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: workflows_list_dag_bundles
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{regionId}/instances/{instanceId}/dag-bundles/{bundleName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{regionId}/instances/{instanceId}/dag-bundles/{bundleName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: workflows_get_dag_bundle
+- target: $.paths['/v1alpha/regions/{regionId}/provider-options'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: workflows_get_provider_options

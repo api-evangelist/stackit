@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-update-wafpayload-schema.json",
+  "title": "UpdateWAFPayload",
+  "description": "UpdateWAFRequest updates a WAF if rules changed.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-alb-waf-openapi.yml#/components/schemas/UpdateWAFPayload",
+  "properties": {
+    "customRuleGroupName": {
+      "description": "Name of the CRG configuration for that WAF.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels represent user-defined metadata as key-value pairs.\nLabel count should not exceed 64 per WAF.\n\n**Key Formatting Rules:**\nLength: 1-63 characters.\nCharacters: Must begin and end with [a-zA-Z0-9]. May contain dashes (-), underscores (_), dots (.), and alphanumerics in between.\nKeys starting with 'stackit-' are system-reserved; users MUST NOT manage them.\n\n**Value Formatting Rules:**\nLength: 0-63 characters (empty string explicitly allowed).\nCharacters (for non-empty values): Must begin and end with [a-zA-Z0-9]. May contain dashes (-), underscores (_), dots (.), and alphanumerics in between.\n",
+      "type": "object"
+    },
+    "managedRuleSetName": {
+      "description": "Name of the managed rule set configuration for that WAF.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "name": {
+      "description": "WAF name",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "projectId": {
+      "description": "Project identifier",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "region": {
+      "description": "Region",
+      "format": "string",
+      "pattern": "^[a-z]{2,4}[0-9]{2}$",
+      "readOnly": true,
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "type": "object"
+}

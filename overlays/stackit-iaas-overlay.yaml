@@ -1,0 +1,430 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT IaaS API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-iaas-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: iaas
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/keypairs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_key_pairs
+- target: $.paths['/v2/keypairs/{keypairName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/keypairs/{keypairName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_key_pair
+- target: $.paths['/v2/networks/public-ip-ranges'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_public_i_p_ranges
+- target: $.paths['/v2/organizations/{organizationId}/network-areas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_network_areas
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_network_area
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/projects'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_network_area_projects
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_network_area_regions
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_network_area_region
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/network-ranges'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_network_area_ranges
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/network-ranges/{networkRangeId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/network-ranges/{networkRangeId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_network_area_range
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_network_area_routes
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routes/{routeId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routes/{routeId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_network_area_route
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_routing_tables_of_area
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_routing_table_of_area
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}/routes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_routes_of_routing_table
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}/routes/{routeId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}/routes/{routeId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_route_of_routing_table
+- target: $.paths['/v2/organizations/{organizationId}/requests/{requestId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_organization_request
+- target: $.paths['/v2/projects/{projectId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_project_details
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/affinity-groups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_affinity_groups
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/affinity-groups/{affinityGroupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/affinity-groups/{affinityGroupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_affinity_group
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/backups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_backups
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/backups/{backupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/backups/{backupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_backup
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_images
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images/{imageId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images/{imageId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_image
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images/{imageId}/share'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images/{imageId}/share'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_image_share
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images/{imageId}/share/{consumerProjectId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/images/{imageId}/share/{consumerProjectId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_image_share_consumer
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/machine-types'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_machine_types
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/machine-types/{machineType}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_machine_type
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/networks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_networks
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/networks/{networkId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/networks/{networkId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_network
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/networks/{networkId}/nics'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_nics
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/networks/{networkId}/nics/{nicId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/networks/{networkId}/nics/{nicId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_nic
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/nics'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_project_n_i_cs
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/nics/{nicId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_project_n_i_c
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/public-ips'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_public_i_ps
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/public-ips/{publicIpId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/public-ips/{publicIpId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_public_i_p
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/quotas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_quotas
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/requests/{requestId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_project_request
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/security-groups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_security_groups
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/security-groups/{securityGroupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/security-groups/{securityGroupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_security_group
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/security-groups/{securityGroupId}/rules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_security_group_rules
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/security-groups/{securityGroupId}/rules/{securityGroupRuleId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/security-groups/{securityGroupId}/rules/{securityGroupRuleId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_security_group_rule
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_servers
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_server
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/console'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_server_console
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/log'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_server_log
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/networks/{networkId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/nics'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_server_n_i_cs
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/nics/{nicId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/public-ips/{publicIpId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/security-groups/{securityGroupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/service-accounts'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_server_service_accounts
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/service-accounts/{serviceAccountMail}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/volume-attachments'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_attached_volumes
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/volume-attachments/{volumeId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/volume-attachments/{volumeId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_attached_volume
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/snapshots'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_snapshots_in_project
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/snapshots/{snapshotId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/snapshots/{snapshotId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_snapshot
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/volume-performance-classes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_volume_performance_classes
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/volume-performance-classes/{volumePerformanceClass}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_volume_performance_class
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/volumes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_volumes
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/volumes/{volumeId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/volumes/{volumeId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_get_volume
+- target: $.paths['/v2/regions/{region}/availability-zones'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: iaas_list_availability_zones

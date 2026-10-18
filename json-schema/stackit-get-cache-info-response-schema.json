@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-cache-info-response-schema.json",
+  "title": "GetCacheInfoResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-cdn-openapi.yml#/components/schemas/GetCacheInfoResponse",
+  "properties": {
+    "history": {
+      "items": {
+        "$ref": "#/$defs/GetCacheInfoResponseHistoryEntry"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "lastPurgeTime": {
+      "description": "Returns the last time the cache was purged by calling the PurgeCache endpoint.\nTime represented as RFC3339 compliant string. If the cache was never purged, this returns `null`\n",
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "lastPurgeTime",
+    "history"
+  ],
+  "type": "object",
+  "$defs": {
+    "GetCacheInfoResponseHistoryEntry": {
+      "properties": {
+        "occurredAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "full",
+            "granular"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "occurredAt",
+        "type"
+      ],
+      "type": "object"
+    }
+  }
+}

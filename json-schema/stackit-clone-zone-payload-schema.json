@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-clone-zone-payload-schema.json",
+  "title": "CloneZonePayload",
+  "description": "metadata to clone a zone.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dns-openapi.yml#/components/schemas/CloneZonePayload",
+  "properties": {
+    "adjustRecords": {
+      "description": "Adjust record set content and replace the dns name of the original zone with the new dns name of the cloned zone",
+      "type": "boolean"
+    },
+    "description": {
+      "description": "New Description for the cloned zone. Leave empty to use the same description as the original zone",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "dnsName": {
+      "description": "DnsName is the dns name of the zone to clone",
+      "maxLength": 253,
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "description": "New Name for the cloned zone. Leave empty to use the same name as the original zone",
+      "maxLength": 63,
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "dnsName"
+  ],
+  "type": "object"
+}

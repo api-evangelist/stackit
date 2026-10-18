@@ -1,0 +1,1424 @@
+openapi: 3.2.0
+info:
+  title: Stackit Folders API
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Folders across 6 of this provider''s published API definitions: stackit-resource-manager-v0.json, stackit-telemetry-link-v1.json, stackit-ufw-v1.json, stackit-resource-manager-openapi.yml, stackit-telemetry-link-openapi.yml, stackit-ufw-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://resource-manager.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://telemetry-link.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://ufw.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Folders
+paths:
+  /v2/folders:
+    get:
+      description: 'Returns all folders and their metadata that:
+
+        - Are children of the specific containerParentId
+
+        - Match the given containerIds
+
+        - User is member of
+
+
+        Filter:
+
+        - Either containerParentId OR containerIds OR member must be passed
+
+        - If containerId and containerParentId are given, both are used for filtering - containers must point to the same parent
+
+        - If member and containerParentId are given, both are used for filtering
+
+        - If member is given, containers must not point to the same container parent
+
+
+        Authorization & Permissions:
+
+        - When filtering by member: resource-manager.folder.direct.get is evaluated on target folders for the member; if caller differs from target member, system-level resource-manager.folder.get is required.
+
+        - When filtering by containerParentId: resource-manager.folder.list is evaluated on the parent container.
+
+        - When filtering by containerIds: resource-manager.folder.get is evaluated on the parent container of requested folders.'
+      operationId: ListFolders
+      parameters:
+      - description: Identifier of the parent resource container - containerId as well as UUID identifier is supported.
+        in: query
+        name: containerParentId
+        schema:
+          type: string
+      - description: List of container identifiers - containerId as well as UUID identifier is supported.
+        in: query
+        name: containerIds
+        schema:
+          items:
+            type: string
+          type: array
+      - $ref: '#/components/parameters/member'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/creation-time-start'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFoldersResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  $ref: '#/components/examples/BadRequest'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  $ref: '#/components/examples/Forbidden'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              examples:
+                Conflict:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Get All Folders
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.folder.direct.get
+        - resource-manager.folder.list
+        - resource-manager.folder.get
+      tags:
+      - Folders
+    post:
+      description: 'Creates a new folder within a parent organization or folder.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Parent Container: resource-manager.folder.create (required permission on the target parent organization or folder to create a folder).'
+      operationId: CreateFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFolderPayload'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderResponse'
+          description: Created
+        '400':
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  $ref: '#/components/examples/BadRequest'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  $ref: '#/components/examples/Forbidden'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              examples:
+                Conflict:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Create Folder
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.folder.create
+      tags:
+      - Folders
+    servers:
+    - url: https://resource-manager.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/folders/{containerId}:
+    parameters:
+    - description: Folder identifier - containerId as well as UUID identifier is supported.
+      in: path
+      name: containerId
+      required: true
+      schema:
+        type: string
+    delete:
+      description: 'Delete a folder and its metadata.
+
+        - Folder must not contain active child containers unless force deletion is enabled without attached projects.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Folder: resource-manager.folder.delete (required permission on the target folder to delete it).'
+      operationId: DeleteFolder
+      parameters:
+      - description: If true, all nested, empty folders are deleted recursively - if no project is attached!
+        in: query
+        name: force
+        schema:
+          default: false
+          type: boolean
+      responses:
+        '202':
+          description: Deletion process triggered
+        '404':
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  $ref: '#/components/examples/NotFound'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              examples:
+                Conflict:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Delete Folder
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.folder.delete
+      tags:
+      - Folders
+    get:
+      description: 'Returns metadata for a specific folder.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Folder: resource-manager.folder.get (required primary permission to retrieve folder details).
+
+        - Evaluated on Parent Containers: resource-manager.organization.get and resource-manager.folder.get implicitly to resolve parent hierarchy details.'
+      operationId: GetFolderDetails
+      parameters:
+      - in: query
+        name: includeParents
+        schema:
+          default: false
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFolderDetailsResponse'
+          description: OK
+        '403':
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  $ref: '#/components/examples/Forbidden'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  $ref: '#/components/examples/NotFound'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      summary: Get Folder Details
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.organization.get
+        - resource-manager.folder.get
+      tags:
+      - Folders
+    patch:
+      description: 'Update the folder and its metadata (name, labels, parent container).
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Folder: resource-manager.folder.edit (required permission on the target folder to modify its details, labels, or parent).'
+      operationId: PartialUpdateFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartialUpdateFolderPayload'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderResponse'
+          description: OK
+        '403':
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  $ref: '#/components/examples/Forbidden'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  $ref: '#/components/examples/NotFound'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              examples:
+                Conflict:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Update Folder
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.folder.edit
+      tags:
+      - Folders
+    servers:
+    - url: https://resource-manager.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/folders/{containerId}/labels:
+    parameters:
+    - description: Folder identifier - containerId as well as UUID identifier is supported.
+      in: path
+      name: containerId
+      required: true
+      schema:
+        type: string
+    delete:
+      description: 'Deletes folder labels by specified keys, or removes all labels if no key is provided.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Folder: resource-manager.folder.edit (required permission on the target folder to delete its labels).'
+      operationId: DeleteFolderLabels
+      parameters:
+      - description: Label name.
+        in: query
+        name: keys
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        '202':
+          description: Labels removed
+        '409':
+          content:
+            application/json:
+              examples:
+                Cannot delete label because of policy:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Delete Folder Labels
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.folder.edit
+      tags:
+      - Folders
+    servers:
+    - url: https://resource-manager.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/folders/{folderId}/regions/{regionId}/telemetry-link:
+    parameters:
+    - $ref: '#/components/parameters/folderId'
+    - $ref: '#/components/parameters/regionId'
+    delete:
+      description: Deletes the given Telemetry Link within the folder.
+      operationId: delete-folder-telemetry-link
+      responses:
+        '204':
+          description: Telemetry Link was deleted successfully.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.delete
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: Delete folder telemetry link
+      x-summary-source: derived
+    get:
+      description: Returns the details for the given Telemetry Link within the folder.
+      operationId: get-folder-telemetry-link
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link details successfully retrieved.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.get
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: Get folder telemetry link
+      x-summary-source: derived
+    patch:
+      description: Patches the given Telemetry Link within the folder.
+      operationId: partial-update-folder-telemetry-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/partial-update-folder-telemetry-linkPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link was patched successfully.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.update
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: Partial update folder telemetry link
+      x-summary-source: derived
+    put:
+      description: Creates or updates the given Telemetry Link within the folder.
+      operationId: create-or-update-folder-telemetry-link
+      parameters:
+      - $ref: '#/components/parameters/ifNoneMatch'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-or-update-folder-telemetry-linkPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link was updated successfully.
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link was created successfully.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '412':
+          $ref: '#/components/responses/preconditionFailed'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.update
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: Create or update folder telemetry link
+      x-summary-source: derived
+    servers:
+    - url: https://telemetry-link.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/folders/{folderId}/regions/{regionId}/telemetry-link/backflush-jobs:
+    parameters:
+    - $ref: '#/components/parameters/folderId'
+    - $ref: '#/components/parameters/regionId'
+    get:
+      description: Returns a list of all Backflush Jobs for the folder.
+      operationId: list-folder-backflush-jobs
+      parameters:
+      - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listBackflushJobsResponse'
+          description: Successful response with all Backflush Jobs.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.get
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: List folder backflush jobs
+      x-summary-source: derived
+    post:
+      description: Creates a new Backflush Job for the folder.
+      operationId: create-folder-backflush-job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-folder-backflush-jobPayload'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backflushJobResponse'
+          description: Backflush Job was created successfully
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.update
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: Create folder backflush job
+      x-summary-source: derived
+    servers:
+    - url: https://telemetry-link.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/folders/{folderId}/regions/{regionId}/telemetry-link/backflush-jobs/{backflushJobId}:
+    parameters:
+    - $ref: '#/components/parameters/folderId'
+    - $ref: '#/components/parameters/regionId'
+    - $ref: '#/components/parameters/backflushJobId'
+    get:
+      description: Returns the details for the given Backflush Job in a folder.
+      operationId: get-folder-backflush-job
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backflushJobResponse'
+          description: Backflush Job details successfully retrieved.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.get
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+      summary: Get folder backflush job
+      x-summary-source: derived
+    servers:
+    - url: https://telemetry-link.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/folders/{folderId}/children:
+    get:
+      description: Returns a list of containers for a specific folder
+      operationId: ListFolderContainers
+      parameters:
+      - $ref: '#/components/parameters/folderId_2'
+      - $ref: '#/components/parameters/limit_2'
+      - $ref: '#/components/parameters/cursor'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListContainersResponse'
+          description: Successful response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Forbidden access. You are not allowed to get rules from this project.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Folder not found.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Service is not available.
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Service is not available.
+      security:
+      - BearerAuth: []
+      summary: Get containers from a folder
+      x-stackit-authorization:
+        actions:
+        - ufw.folder.list
+        resource-id: folderId
+        resource-id-type: dynamic
+        resource-type: folder
+      tags:
+      - Folders
+    servers:
+    - url: https://ufw.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    ErrorResponse:
+      properties:
+        error:
+          description: The reason phrase of the status code.
+          example: Bad Request
+          type: string
+        message:
+          description: Description of the error.
+          example: Validation of {param} failed.
+          type: string
+        path:
+          description: Path which was called.
+          example: /path/where/error/occurred
+          type: string
+        status:
+          description: Http Status Code.
+          example: 400
+          type: number
+        timeStamp:
+          description: Timestamp at which the error occurred.
+          example: '2019-08-24T14:15:22Z'
+          format: date-time
+          type: string
+      required:
+      - timeStamp
+      - path
+      - status
+      - error
+      - message
+      title: ErrorResponse
+      type: object
+    ParentList:
+      items:
+        properties:
+          containerId:
+            description: User-friendly identifier of either organization or folder (will replace id).
+            example: container-name-Rq86WY1
+            type: string
+          containerParentId:
+            description: User-friendly parent identifier of either organization or folder (will replace parentId).
+            example: parent-name-VuUfqh1
+            type: string
+          id:
+            description: Identifier.
+            example: 910a3330-8fad-42a7-ab2d-f214633cf047
+            format: uuid
+            type: string
+          name:
+            description: Parent container name.
+            example: My Organization
+            type: string
+          parentId:
+            description: Identifier of the parent resource container.
+            example: 54066bf4-1aff-4f7b-9f83-fb23c348fee3
+            format: uuid
+            type: string
+          type:
+            description: Parent container type.
+            enum:
+            - FOLDER
+            - ORGANIZATION
+            example: ORGANIZATION
+            type: string
+        required:
+        - name
+        - type
+        - id
+        - containerId
+        type: object
+      title: ParentList
+      type: array
+    GetFolderDetailsResponse:
+      properties:
+        containerId:
+          description: Globally unique user-friendly identifier.
+          example: first-folder-158955
+          type: string
+        creationTime:
+          description: Timestamp at which the folder was created.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+        folderId:
+          description: Globally unique folder identifier.
+          example: 54066bf4-1aff-4f7b-9f83-fb23c348fff3
+          format: uuid
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          description: Folder name.
+          example: First Folder
+          type: string
+        parent:
+          $ref: '#/components/schemas/Parent'
+        parents:
+          $ref: '#/components/schemas/ParentList'
+        updateTime:
+          description: Timestamp at which the folder was last modified.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - containerId
+      - folderId
+      - creationTime
+      - updateTime
+      - parent
+      title: GetFolderDetailsResponse
+      type: object
+    PartialUpdateFolderPayload:
+      properties:
+        containerParentId:
+          description: New parent identifier for the resource container - containerId as well as UUID identifier is supported.
+          example: name-of-parent-173523
+          type: string
+        labels:
+          $ref: '#/components/schemas/UpdateLabels'
+        name:
+          description: New name for the resource container matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.
+          pattern: ^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$
+          type: string
+      title: UpdateFolderRequest
+      type: object
+    FolderResponse:
+      properties:
+        containerId:
+          description: Globally unique, user-friendly identifier.
+          example: first-folder-158955
+          type: string
+        creationTime:
+          description: Timestamp at which the folder was created.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+        folderId:
+          description: Globally unique folder identifier.
+          example: 54066bf4-1aff-4f7b-9f83-fb23c348fff3
+          format: uuid
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          description: Folder name.
+          example: First Folder
+          type: string
+        parent:
+          $ref: '#/components/schemas/Parent'
+        updateTime:
+          description: Timestamp at which the folder was last modified.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - containerId
+      - folderId
+      - creationTime
+      - updateTime
+      - parent
+      title: FolderResponse
+      type: object
+    Limit:
+      default: 50
+      description: The maximum number of projects to return in the response. If not present, an appropriate default will be used.
+      maximum: 100
+      minimum: 0
+      title: Limit
+      type: number
+    ListFoldersResponse:
+      properties:
+        items:
+          items:
+            properties:
+              containerId:
+                description: Globally unique folder identifier.
+                example: first-folder-158955
+                type: string
+              creationTime:
+                description: Timestamp at which the folder was created.
+                example: '2020-08-24T14:15:22Z'
+                format: date-time
+                type: string
+              folderId:
+                description: Globally unique folder identifier.
+                example: 54066bf4-1aff-4f7b-9f83-fb23c348fff3
+                format: uuid
+                type: string
+              labels:
+                $ref: '#/components/schemas/Labels'
+              name:
+                description: Name of the folder.
+                example: My Folder
+                type: string
+              parent:
+                $ref: '#/components/schemas/Parent'
+              updateTime:
+                description: Timestamp at which the folder was created.
+                example: '2020-08-24T14:15:22Z'
+                format: date-time
+                type: string
+            required:
+            - name
+            - parent
+            - containerId
+            - folderId
+            - creationTime
+            - updateTime
+            type: object
+          type: array
+        limit:
+          $ref: '#/components/schemas/Limit'
+        offset:
+          $ref: '#/components/schemas/Offset'
+      required:
+      - items
+      - offset
+      - limit
+      title: ListFoldersResponse
+      type: object
+    Parent:
+      description: Parent container.
+      properties:
+        containerId:
+          description: User-friendly identifier of either organization or folder (will replace id).
+          example: container-name-Rq86WY1
+          type: string
+        id:
+          description: Identifier of either organization or folder.
+          example: 54066bf4-1aff-4f7b-9f83-fb23c348fee3
+          format: uuid
+          type: string
+        type:
+          description: Container type of parent container.
+          enum:
+          - ORGANIZATION
+          - FOLDER
+          example: ORGANIZATION
+          type: string
+      required:
+      - containerId
+      - id
+      - type
+      title: Parent
+      type: object
+    Member:
+      properties:
+        role:
+          description: A valid role defined for the resource.
+          type: string
+        subject:
+          description: Unique identifier of the user, service account or client.
+          example: max.musterman@mail.schwarz
+          type: string
+      required:
+      - subject
+      - role
+      title: Member
+      type: object
+    Labels:
+      additionalProperties:
+        type: string
+      description: 'Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.
+
+
+        * **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.
+
+        * **Value:** Must be 63 characters or less. May be empty (""). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).
+
+
+        > Note: Additional naming restrictions may apply depending on your specific organization.*'
+      maxProperties: 64
+      title: Labels
+      type: object
+    UpdateLabels:
+      additionalProperties:
+        type:
+        - string
+        - 'null'
+      description: 'Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.
+
+
+        Setting an individual label''s value to `null` removes/deletes that label from the resource.
+
+
+        * **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.
+
+        * **Value:** Must be 63 characters or less. May be empty (""). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).
+
+
+        > Note: Additional naming restrictions may apply depending on your specific organization.*'
+      title: Labels
+      type: object
+    CreateFolderPayload:
+      properties:
+        containerParentId:
+          description: Identifier of the parent resource container - containerId as well as UUID identifier is supported.
+          example: name-of-parent-173523
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        members:
+          description: The initial members assigned to the project. At least one subject needs to be a user, and not a client or service account.
+          items:
+            $ref: '#/components/schemas/Member'
+          minItems: 1
+          type: array
+          uniqueItems: true
+        name:
+          description: The name of the folder matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.
+          example: My Folder
+          pattern: ^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$
+          type: string
+      required:
+      - name
+      - containerParentId
+      title: CreateFolderRequest
+      type: object
+    Offset:
+      default: 0
+      description: The offset of the first item in the collection to return.
+      minimum: 0
+      title: Offset
+      type: number
+    listBackflushJobsResponse:
+      properties:
+        backflushJobs:
+          items:
+            $ref: '#/components/schemas/backflushJobResponse'
+          type: array
+        nextPageToken:
+          description: A token to retrieve the next page of results.
+          type: string
+      required:
+      - backflushJobs
+      type: object
+    backflushJobResponse:
+      properties:
+        createTime:
+          description: The point in time the resource was created.
+          format: date-time
+          type: string
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          type: string
+        id:
+          description: A auto generated unique id which identifies the resource.
+          format: uuid
+          type: string
+        regionId:
+          description: The STACKIT region name the resource is located in.
+          enum:
+          - eu01
+          - eu02
+          type: string
+        status:
+          description: The current state of the link.
+          enum:
+          - active
+          - complete
+          - failed
+          - reconciling
+          - deleting
+          type: string
+      required:
+      - id
+      - regionId
+      - status
+      - createTime
+      type: object
+    partial-update-folder-telemetry-linkPayload:
+      allOf:
+      - $ref: '#/components/schemas/telemetryLinkRequest'
+    telemetryLinkResponse:
+      properties:
+        accessToken:
+          description: The access token.
+          type: string
+        createTime:
+          description: The point in time the resource was created.
+          format: date-time
+          type: string
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          type: string
+        enabled:
+          description: Indicates whether routing through the link to a telemetry-router is active.
+          type: boolean
+        id:
+          description: A auto generated unique id which identifies the resource.
+          format: uuid
+          type: string
+        regionId:
+          description: The STACKIT region name the resource is located in.
+          enum:
+          - eu01
+          - eu02
+          type: string
+        status:
+          description: The current state of the link.
+          enum:
+          - active
+          - inactive
+          - failed
+          - reconciling
+          - deleting
+          type: string
+        telemetryRouterId:
+          description: The ID of the telemetry-router to route the telemetry data.
+          maxLength: 1024
+          type: string
+      required:
+      - id
+      - displayName
+      - regionId
+      - telemetryRouterId
+      - enabled
+      - status
+      - createTime
+      type: object
+    create-folder-backflush-jobPayload:
+      properties:
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 \-]*$
+          type: string
+      type: object
+    response4xx:
+      properties:
+        message:
+          description: A message containing the reason for failure
+          type: string
+      required:
+      - message
+      type: object
+    telemetryLinkRequest:
+      properties:
+        accessToken:
+          description: The access token.
+          pattern: ^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$
+          type: string
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 \-]*$
+          type: string
+        enabled:
+          default: true
+          description: Indicates whether routing through the link to a telemetry-router is active.
+          type: boolean
+        telemetryRouterId:
+          description: The ID of the telemetry-router to route the telemetry data.
+          maxLength: 1024
+          type: string
+      type: object
+    create-or-update-folder-telemetry-linkPayload:
+      allOf:
+      - required:
+        - displayName
+        - telemetryRouterId
+        - accessToken
+        type: object
+      - $ref: '#/components/schemas/telemetryLinkRequest'
+    ErrorResponse_2:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+    ContainerResponse:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - name
+      - type
+      type: object
+    ListContainersResponse:
+      properties:
+        cursor:
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/ContainerResponse'
+          type: array
+        limit:
+          format: int32
+          type: integer
+      required:
+      - items
+      - cursor
+      - limit
+      type: object
+    ErrorResponse_3:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+  parameters:
+    creation-time-start:
+      description: A timestamp to specify the beginning of the creationTime from which entries should be returned. If not given, defaults to the beginning of time.
+      in: query
+      name: creation-time-start
+      schema:
+        example: '2021-01-20T00:00:00Z'
+        format: date-time
+        type: string
+    limit:
+      description: The maximum number of projects to return in the response. If not present, an appropriate default will be used. If maximum is exceeded, maximum is used.
+      in: query
+      name: limit
+      schema:
+        default: 50
+        maximum: 100
+        minimum: 0
+        type: number
+    member:
+      description: E-Mail address of the user for whom the visible resource containers should be filtered.
+      in: query
+      name: member
+      schema:
+        type: string
+    offset:
+      description: The offset of the first item in the collection to return.
+      in: query
+      name: offset
+      schema:
+        default: 0
+        minimum: 0
+        type: number
+    ifNoneMatch:
+      description: ETag of the resource. If specified, the resource is only created if it does not exist. Specify "*" to avoid creating a resource.
+      in: header
+      name: If-None-Match
+      schema:
+        type: string
+    regionId:
+      description: The STACKIT region name the resource is located in.
+      in: path
+      name: regionId
+      required: true
+      schema:
+        enum:
+        - eu01
+        - eu02
+        type: string
+    folderId:
+      description: The STACKIT portal folder UUID the resource is located in.
+      in: path
+      name: folderId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    pageToken:
+      allowEmptyValue: true
+      description: A token to retrieve the next page of results.
+      in: query
+      name: pageToken
+      schema:
+        maxLength: 1024
+        type: string
+    backflushJobId:
+      description: The Backflush Job UUID.
+      in: path
+      name: backflushJobId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    pageSize:
+      description: Maximum number of items to return
+      in: query
+      name: pageSize
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+    folderId_2:
+      description: The STACKIT portal folder UUID
+      in: path
+      name: folderId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    cursor:
+      description: A pagination cursor that represents a position in the dataset. If given, results will be returned from the item after the cursor. If not given, results will be returned from the beginning.
+      in: query
+      name: cursor
+      schema:
+        type: string
+    limit_2:
+      description: The maximum number of items to return in the response. If maximum is exceeded, maximum is used.
+      in: query
+      name: limit
+      schema:
+        format: int32
+        type: integer
+    folderId_3:
+      description: The STACKIT portal folder UUID
+      in: path
+      name: folderId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    limit_3:
+      description: The maximum number of items to return in the response. If maximum is exceeded, maximum is used.
+      in: query
+      name: limit
+      schema:
+        format: int32
+        type: integer
+  examples:
+    PolicyConflict:
+      value:
+        error: Conflict
+        message: Request aborted due conflict.
+        path: /path/where/error/occurred
+        status: 409
+        timeStamp: '2019-08-24T14:15:22Z'
+    NotFound:
+      value:
+        error: Not Found
+        message: '{resource} not found.'
+        path: /path/where/error/occurred
+        status: 404
+        timeStamp: '2019-08-24T14:15:22Z'
+    Forbidden:
+      value:
+        error: Forbidden
+        message: Access to this resource is forbidden.
+        path: /path/where/error/occurred
+        status: 403
+        timeStamp: '2019-08-24T14:15:22Z'
+    BadRequest:
+      value:
+        error: Bad Request
+        message: Validation of {param-one} failed.
+        path: /path/where/error/occurred
+        status: 400
+        timeStamp: '2019-08-24T14:15:22Z'
+  responses:
+    notFound:
+      description: Not found. The resource has not been found.
+    internalServerError:
+      description: Internal server error. The application experienced some unexpected situation.
+    badRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Bad Request. The data provided by the client did not match expectations.
+    preconditionFailed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Precondition Failed.
+    conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Conflict. The resource has been modified by some other client. Please try again.
+    unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Unauthorized. You may have provided no or wrong credentials.
+x-refined-from:
+- stackit-resource-manager-v0.json
+- stackit-telemetry-link-v1.json
+- stackit-ufw-v1.json
+- stackit-resource-manager-openapi.yml
+- stackit-telemetry-link-openapi.yml
+- stackit-ufw-openapi.yml

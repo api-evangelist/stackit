@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-quota-schema.json",
+  "title": "Quota",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-scf-openapi.yml#/components/schemas/Quota",
+  "properties": {
+    "apps": {
+      "$ref": "#/$defs/QuotaApps"
+    },
+    "createdAt": {
+      "format": "date-time",
+      "title": "The time with zone when the organization quota was created.",
+      "type": "string"
+    },
+    "domains": {
+      "$ref": "#/$defs/QuotaDomains"
+    },
+    "guid": {
+      "$ref": "#/$defs/QuotaId"
+    },
+    "name": {
+      "title": "Name of the Quota.",
+      "type": "string"
+    },
+    "orgId": {
+      "$ref": "#/$defs/OrgId"
+    },
+    "platformId": {
+      "$ref": "#/$defs/PlatformId"
+    },
+    "projectId": {
+      "$ref": "#/$defs/ProjectId"
+    },
+    "region": {
+      "$ref": "#/$defs/Region"
+    },
+    "routes": {
+      "$ref": "#/$defs/QuotaRoutes"
+    },
+    "services": {
+      "$ref": "#/$defs/QuotaServices"
+    },
+    "updatedAt": {
+      "format": "date-time",
+      "title": "The time with zone when the organization quota was last updated.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "guid",
+    "name",
+    "projectId",
+    "region",
+    "platformId",
+    "createdAt",
+    "updatedAt",
+    "apps",
+    "services",
+    "routes",
+    "domains"
+  ],
+  "type": "object",
+  "$defs": {
+    "OrgId": {
+      "format": "uuid",
+      "title": "The unique id of the organization",
+      "type": "string"
+    },
+    "PlatformId": {
+      "format": "uuid",
+      "title": "The unique id of the platform",
+      "type": "string"
+    },
+    "ProjectId": {
+      "format": "uuid",
+      "title": "The unique id of the STACKIT Project",
+      "type": "string"
+    },
+    "QuotaApps": {
+      "properties": {
+        "logRateLimitInBytesPerSecond": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total log rate limit allowed for all the started processes and running tasks in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "perAppTasks": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Maximum number of running tasks in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "perProcessMemoryInMb": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Maximum memory for a single process or task.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "totalInstances": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total instances of all the started processes allowed in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "totalMemoryInMb": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total memory allowed for all the started processes and running tasks in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "perProcessMemoryInMb",
+        "totalMemoryInMb",
+        "totalInstances",
+        "logRateLimitInBytesPerSecond",
+        "perAppTasks"
+      ],
+      "title": "Quotas that affect applications and application sub-resources.",
+      "type": "object"
+    },
+    "QuotaDomains": {
+      "properties": {
+        "totalDomains": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total number of domains that can be scoped to an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "totalDomains"
+      ],
+      "title": "Quotas that affect domains.",
+      "type": "object"
+    },
+    "QuotaId": {
+      "format": "uuid",
+      "title": "The unique id of the organization quota",
+      "type": "string"
+    },
+    "QuotaRoutes": {
+      "properties": {
+        "totalReservedPorts": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total number of ports that are reservable by routes in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "totalRoutes": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total number of routes allowed in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "totalRoutes",
+        "totalReservedPorts"
+      ],
+      "title": "Quotas that affect routes.",
+      "type": "object"
+    },
+    "QuotaServices": {
+      "properties": {
+        "paidServicesAllowed": {
+          "title": "Specifies whether instances of paid service plans can be created.",
+          "type": "boolean"
+        },
+        "totalServiceInstances": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total number of service instances allowed in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "totalServiceKeys": {
+          "description": "The value `null` means `unlimited`.\n",
+          "format": "int64",
+          "minimum": 0,
+          "title": "Total number of service keys allowed in an organization.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "paidServicesAllowed",
+        "totalServiceInstances",
+        "totalServiceKeys"
+      ],
+      "title": "Quotas that affect services.",
+      "type": "object"
+    },
+    "Region": {
+      "title": "The region in which the resource is located",
+      "type": "string"
+    }
+  }
+}

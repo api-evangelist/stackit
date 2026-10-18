@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-update-role-payload-schema.json",
+  "title": "UpdateRolePayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-authorization-openapi.yml#/components/schemas/UpdateRolePayload",
+  "properties": {
+    "description": {
+      "maxLength": 255,
+      "minLength": 1,
+      "title": "A human readable description of the role",
+      "type": "string"
+    },
+    "etag": {
+      "type": "string"
+    },
+    "name": {
+      "pattern": "^[a-z](?:[-.]?[a-z]){1,63}$",
+      "title": "Name and of the role.",
+      "type": "string"
+    },
+    "permissions": {
+      "items": {
+        "$ref": "#/$defs/PermissionRequest"
+      },
+      "title": "Permissions for the role.",
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "permissions"
+  ],
+  "type": "object",
+  "$defs": {
+    "PermissionRequest": {
+      "properties": {
+        "name": {
+          "maxLength": 255,
+          "pattern": "^[a-z](?:[-.]?[a-z]){1,63}$",
+          "title": "Existing permission",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

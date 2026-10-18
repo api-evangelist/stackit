@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-access-token-payload-schema.json",
+  "title": "CreateAccessTokenPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-logs-openapi.yml#/components/schemas/CreateAccessTokenPayload",
+  "properties": {
+    "description": {
+      "description": "The description of the access token.",
+      "maxLength": 100,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The displayed name of the access token.",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z][\\w -]*$",
+      "type": "string"
+    },
+    "lifetime": {
+      "description": "A lifetime period for an access token in days. If unset the token will not expire.",
+      "format": "int32",
+      "maximum": 180,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "permissions": {
+      "$ref": "#/$defs/permissions"
+    }
+  },
+  "required": [
+    "permissions",
+    "displayName"
+  ],
+  "$defs": {
+    "permissions": {
+      "description": "The access permissions granted to the access token or access policy.",
+      "items": {
+        "enum": [
+          "read",
+          "write"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    }
+  }
+}

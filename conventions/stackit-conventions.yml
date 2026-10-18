@@ -1,0 +1,31 @@
+generated: '2026-10-18'
+method: derived
+source: openapi/
+auth:
+  style: apiKey
+  location: header
+idempotency:
+  coverage: none
+  note: No idempotency key parameter found on mutating operations
+pagination:
+  style: cursor-based
+  parameters:
+  - cursor
+  - limit
+  - next_page_token
+  - offset
+  - page
+  - page_size
+  response_fields:
+  - nextPageId
+  - nextPageToken
+error_envelope:
+  format: rfc9457
+  media_type: application/problem+json
+rate_limit_signaling:
+  headers:
+  - Retry-After
+  status_code: 429
+reversibility:
+  note: No reversal operations documented in the API specifications
+note: Derived from OpenAPI specifications

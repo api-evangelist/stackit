@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-approle-schema.json",
+  "title": "Approle",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-secrets-manager-openapi.yml#/components/schemas/Approle",
+  "properties": {
+    "description": {
+      "description": "A user chosen description to differentiate between multiple approles.",
+      "type": "string"
+    },
+    "role_id": {
+      "description": "Identifier used for authentication",
+      "format": "uuid",
+      "type": "string"
+    },
+    "secret_id_num_uses": {
+      "format": "int",
+      "type": "integer"
+    },
+    "secret_id_ttl": {
+      "description": "Token TTL in time.Duration format (eg 15m for 15 minutes, 1h for 1 hour).",
+      "pattern": "^[0-9]+[smh]$",
+      "type": "string"
+    },
+    "write": {
+      "description": "Is true if the approle has write access to the secrets engine. Is false for a read-only approle.",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "role_id",
+    "write",
+    "secret_id_num_uses",
+    "secret_id_ttl",
+    "description"
+  ]
+}

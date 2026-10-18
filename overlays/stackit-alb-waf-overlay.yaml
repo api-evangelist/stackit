@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Application Load Balancer Web Application Firewall API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-alb-waf-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: alb-waf
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/custom-rule-groups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_list_custom_rule_group
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/custom-rule-groups/{name}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/custom-rule-groups/{name}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_get_custom_rule_group
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/managed-rule-sets'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_list_managed_rule_sets
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/managed-rule-sets/{name}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/managed-rule-sets/{name}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_get_managed_rule_set
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/quotas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_get_quota
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/wafs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_list_w_a_f
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/wafs/{name}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/wafs/{name}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_waf_get_w_a_f

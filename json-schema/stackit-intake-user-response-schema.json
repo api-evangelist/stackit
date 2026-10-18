@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-intake-user-response-schema.json",
+  "title": "intakeUserResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-intake-openapi.yml#/components/schemas/intakeUserResponse",
+  "properties": {
+    "clientConfig": {
+      "$ref": "#/$defs/clientConfig"
+    },
+    "create_time": {
+      "description": "The point in time the resource was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description is a longer text chosen by the user to provide more context for the resource.",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The display name is a short name chosen by the user to identify the resource.",
+      "maxLength": 32,
+      "minLength": 1,
+      "type": "string"
+    },
+    "id": {
+      "description": "A auto generated unique id which identifies the resource.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels are a set of key-value pairs assigned to resources.",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "state": {
+      "description": "The current state of the resource.",
+      "enum": [
+        "reconciling",
+        "active",
+        "deleting"
+      ],
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/userType"
+    },
+    "user": {
+      "description": "The user to connect to the intake.",
+      "maxLength": 1024,
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "displayName",
+    "state",
+    "create_time",
+    "user",
+    "type"
+  ],
+  "$defs": {
+    "clientConfig": {
+      "description": "Configuration properties for supported clients.",
+      "properties": {
+        "java": {
+          "description": "Configuration for Java Kafka clients.",
+          "type": "string"
+        },
+        "librdkafka": {
+          "description": "Configuration for Kafka clients using librdkafka",
+          "type": "string"
+        }
+      },
+      "required": [
+        "java",
+        "librdkafka"
+      ],
+      "type": "object"
+    },
+    "userType": {
+      "default": "intake",
+      "description": "Type of user, 'intake' allows writing to the Intake, 'dead-letter' allows reading from the dead-letter queue",
+      "enum": [
+        "intake",
+        "dead-letter"
+      ],
+      "type": "string"
+    }
+  }
+}

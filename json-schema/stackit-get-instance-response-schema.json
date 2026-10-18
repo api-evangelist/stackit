@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-instance-response-schema.json",
+  "title": "GetInstanceResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-postgres-flex-openapi.yml#/components/schemas/GetInstanceResponse",
+  "properties": {
+    "backupSchedule": {
+      "$ref": "#/$defs/backup.schedule"
+    },
+    "connectionInfo": {
+      "$ref": "#/$defs/instance.connectionInfo"
+    },
+    "encryption": {
+      "$ref": "#/$defs/instance.encryption"
+    },
+    "flavorId": {
+      "$ref": "#/$defs/flavor.flavorId"
+    },
+    "id": {
+      "$ref": "#/$defs/instance.id"
+    },
+    "isDeletable": {
+      "$ref": "#/$defs/instance.isDeletable"
+    },
+    "labels": {
+      "$ref": "#/$defs/labels"
+    },
+    "name": {
+      "$ref": "#/$defs/instance.name"
+    },
+    "network": {
+      "$ref": "#/$defs/instance.network"
+    },
+    "retentionDays": {
+      "$ref": "#/$defs/retentionDays"
+    },
+    "state": {
+      "$ref": "#/$defs/state"
+    },
+    "storage": {
+      "$ref": "#/$defs/storage"
+    },
+    "version": {
+      "$ref": "#/$defs/instance.version"
+    }
+  },
+  "required": [
+    "backupSchedule",
+    "flavorId",
+    "id",
+    "isDeletable",
+    "name",
+    "retentionDays",
+    "state",
+    "storage",
+    "version",
+    "network",
+    "connectionInfo"
+  ],
+  "type": "object",
+  "$defs": {
+    "acl": {
+      "description": "List of IPV4 cidr.",
+      "items": {
+        "description": "A IPV4 cidr.",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "backup.schedule": {
+      "description": "The schedule for when the database backup will be created. Currently, ONLY daily schedules are supported (every 24 hours). The schedule is written as a cron schedule.",
+      "type": "string"
+    },
+    "flavor.flavorId": {
+      "description": "The id of the instance flavor.",
+      "type": "string"
+    },
+    "instance.connectionInfo": {
+      "description": "The connection information of the instance",
+      "properties": {
+        "write": {
+          "$ref": "#/$defs/instance.connectionInfo.write"
+        }
+      },
+      "required": [
+        "write"
+      ],
+      "type": "object"
+    },
+    "instance.connectionInfo.write": {
+      "description": "The DNS name and port in the instance overview",
+      "properties": {
+        "host": {
+          "description": "The host of the instance.",
+          "type": "string"
+        },
+        "port": {
+          "description": "The port of the instance.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "host",
+        "port"
+      ],
+      "type": "object"
+    },
+    "instance.encryption": {
+      "description": "The configuration for instance's volume and backup storage encryption.\n\n⚠️ **Note:** This feature is in private preview. Supplying this object is only permitted for enabled accounts. If your account does not have access, the request will be rejected.\n",
+      "properties": {
+        "kekKeyId": {
+          "description": "The encryption-key key identifier",
+          "type": "string",
+          "x-oapi-codegen-extra-tags": {
+            "validate": "required,uuid_rfc4122"
+          }
+        },
+        "kekKeyRingId": {
+          "description": "The encryption-key keyring identifier",
+          "type": "string",
+          "x-oapi-codegen-extra-tags": {
+            "validate": "required,uuid_rfc4122"
+          }
+        },
+        "kekKeyVersion": {
+          "description": "The encryption-key version",
+          "type": "string",
+          "x-oapi-codegen-extra-tags": {
+            "validate": "required"
+          }
+        },
+        "serviceAccount": {
+          "type": "string",
+          "x-oapi-codegen-extra-tags": {
+            "validate": "required,email"
+          }
+        }
+      },
+      "required": [
+        "serviceAccount",
+        "kekKeyRingId",
+        "kekKeyId",
+        "kekKeyVersion"
+      ],
+      "type": "object"
+    },
+    "instance.id": {
+      "description": "The ID of the instance.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "instance.isDeletable": {
+      "description": "Whether the instance can be deleted or not.",
+      "type": "boolean"
+    },
+    "instance.name": {
+      "description": "The name of the instance.",
+      "maxLength": 63,
+      "minLength": 3,
+      "type": "string"
+    },
+    "instance.network": {
+      "description": "The access configuration of the instance",
+      "properties": {
+        "accessScope": {
+          "$ref": "#/$defs/instance.network.accessScope"
+        },
+        "acl": {
+          "$ref": "#/$defs/acl"
+        },
+        "instanceAddress": {
+          "type": "string"
+        },
+        "routerAddress": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "acl"
+      ],
+      "type": "object"
+    },
+    "instance.network.accessScope": {
+      "default": "PUBLIC",
+      "description": "The access scope of the instance. It defines if the instance is public or airgapped.\n\n⚠️ **Note:** \"SNA\" value for the \"network.accessScope\" field is only permitted for enabled accounts. If your account does not have access, the request will be rejected.\n",
+      "enum": [
+        "PUBLIC",
+        "SNA"
+      ],
+      "type": "string"
+    },
+    "instance.version": {
+      "description": "The Postgres version used for the instance. See [Versions Endpoint](/documentation/postgres-flex-service/version/v3#tag/Version) for supported version parameters.",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "description": "Key-value pairs, 63 characters max, begin and end with an alphanumerical character,\nmay contain dashes (-), underscores (_), dots (.), and alphanumerics between. Key MUST be at least 1 character.\nMax 64 labels\nRegex for keys: ^(?=.{1,63}$)([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$\nRegex for values: ^(?=.{0,63}$)(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])*$\nThe stackit- prefix is reserved and cannot be used for Keys.\n",
+      "type": "object"
+    },
+    "retentionDays": {
+      "description": "How long backups are retained. The value can only be between 32 and 90 days.",
+      "format": "int32",
+      "maximum": 365,
+      "minimum": 32,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "state": {
+      "description": "The current state of the instance.",
+      "enum": [
+        "READY",
+        "PENDING",
+        "PROGRESSING",
+        "FAILURE",
+        "UNKNOWN",
+        "TERMINATING"
+      ],
+      "type": "string"
+    },
+    "storage": {
+      "description": "The object containing information about the storage size and class.",
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/storage.class"
+        },
+        "size": {
+          "$ref": "#/$defs/storage.size"
+        }
+      },
+      "type": "object"
+    },
+    "storage.class": {
+      "description": "The storage class for the storage.",
+      "type": "string"
+    },
+    "storage.size": {
+      "description": "The storage size in Gigabytes.",
+      "format": "int64",
+      "type": "integer"
+    }
+  }
+}

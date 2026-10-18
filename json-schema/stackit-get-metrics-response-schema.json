@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-metrics-response-schema.json",
+  "title": "GetMetricsResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-logme-openapi.yml#/components/schemas/GetMetricsResponse",
+  "properties": {
+    "cpuIdleTime": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "cpuLoadPercent": {
+      "type": "number"
+    },
+    "cpuSystemTime": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "cpuUserTime": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "diskEphemeralTotal": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "diskEphemeralUsed": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "diskPersistentTotal": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "diskPersistentUsed": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "load1": {
+      "type": "number"
+    },
+    "load15": {
+      "type": "number"
+    },
+    "load5": {
+      "type": "number"
+    },
+    "memoryTotal": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "memoryUsed": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "opensearchDashboardURL": {
+      "type": "string"
+    },
+    "parachuteDiskEphemeralActivated": {
+      "type": "boolean"
+    },
+    "parachuteDiskEphemeralTotal": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskEphemeralUsed": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskEphemeralUsedPercent": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskEphemeralUsedThreshold": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskPersistentActivated": {
+      "type": "boolean"
+    },
+    "parachuteDiskPersistentTotal": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskPersistentUsed": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskPersistentUsedPercent": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "parachuteDiskPersistentUsedThreshold": {
+      "format": "int64",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "load1",
+    "load5",
+    "load15",
+    "memoryTotal",
+    "memoryUsed",
+    "diskPersistentTotal",
+    "diskPersistentUsed",
+    "parachuteDiskPersistentTotal",
+    "parachuteDiskPersistentUsed",
+    "parachuteDiskPersistentUsedPercent",
+    "parachuteDiskPersistentUsedThreshold",
+    "parachuteDiskPersistentActivated",
+    "diskEphemeralTotal",
+    "diskEphemeralUsed",
+    "parachuteDiskEphemeralTotal",
+    "parachuteDiskEphemeralUsed",
+    "parachuteDiskEphemeralUsedPercent",
+    "parachuteDiskEphemeralUsedThreshold",
+    "parachuteDiskEphemeralActivated",
+    "cpuLoadPercent",
+    "opensearchDashboardURL"
+  ],
+  "type": "object"
+}

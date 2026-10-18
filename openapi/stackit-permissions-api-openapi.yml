@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  title: Stackit Permissions API
+  version: '2.0'
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Permissions across 2 of this provider''s published API definitions: stackit-authorization-v2.json, stackit-authorization-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://authorization.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Permissions
+paths:
+  /v2/permissions:
+    get:
+      operationId: ListPermissions
+      parameters:
+      - in: query
+        name: resourceType
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPermissionsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Malformed input
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+      summary: Get available permissions
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - iam.member.get
+      tags:
+      - Permissions
+    servers:
+    - url: https://authorization.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    Permission:
+      properties:
+        description:
+          example: Can create projects in an organization
+          maxLength: 255
+          minLength: 1
+          title: A human readable description of the permission
+          type: string
+        name:
+          example: iam.member.read
+          maxLength: 255
+          pattern: ^[a-z](?:[-.]?[a-z]){1,63}$
+          title: Permission name
+          type: string
+      required:
+      - name
+      - description
+      type: object
+    ErrorResponse:
+      example:
+        error: Bad Request
+        message: Some information about what caused the Error
+        path: /v1/path/which/returned/error
+        status: 400
+        timeStamp: '2019-08-24T14:15:22Z'
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        status:
+          type: integer
+        timeStamp:
+          format: date-time
+          type: string
+      required:
+      - timeStamp
+      - path
+      - status
+      - error
+      - message
+      type: object
+    ListPermissionsResponse:
+      properties:
+        permissions:
+          items:
+            $ref: '#/components/schemas/Permission'
+          title: List of permissions
+          type: array
+      required:
+      - permissions
+      type: object
+x-refined-from:
+- stackit-authorization-v2.json
+- stackit-authorization-openapi.yml

@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-image-schema.json",
+  "title": "Image",
+  "description": "Object that represents an Image and its parameters. Used for Creating and returning (get/list).",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-iaas-openapi.yml#/components/schemas/Image",
+  "properties": {
+    "agent": {
+      "$ref": "#/$defs/ImageAgent"
+    },
+    "checksum": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ImageChecksum"
+        }
+      ],
+      "readOnly": true
+    },
+    "config": {
+      "$ref": "#/$defs/ImageConfig"
+    },
+    "createdAt": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/CreatedAt"
+        }
+      ],
+      "readOnly": true
+    },
+    "diskFormat": {
+      "$ref": "#/$defs/DiskFormat"
+    },
+    "id": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/UUID"
+        }
+      ],
+      "readOnly": true
+    },
+    "importProgress": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/v1ImageImportProgress"
+        }
+      ],
+      "readOnly": true
+    },
+    "labels": {
+      "$ref": "#/$defs/Labels"
+    },
+    "minDiskSize": {
+      "$ref": "#/$defs/SizeInGB"
+    },
+    "minRam": {
+      "$ref": "#/$defs/SizeInMB"
+    },
+    "name": {
+      "$ref": "#/$defs/GenericName"
+    },
+    "owner": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/UUID"
+        }
+      ],
+      "readOnly": true
+    },
+    "protected": {
+      "$ref": "#/$defs/ImageProtected"
+    },
+    "scope": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ImageScope"
+        }
+      ],
+      "readOnly": true
+    },
+    "size": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/SizeInBytes"
+        }
+      ],
+      "readOnly": true
+    },
+    "status": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ImageStatus"
+        }
+      ],
+      "readOnly": true
+    },
+    "updatedAt": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/UpdatedAt"
+        }
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "name",
+    "diskFormat"
+  ],
+  "type": "object",
+  "$defs": {
+    "CreatedAt": {
+      "description": "Date-time when resource was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "DiskFormat": {
+      "description": "Object that represents a disk format.\nPossible values: `raw`, `qcow2`, `iso`.",
+      "type": "string"
+    },
+    "GenericName": {
+      "description": "The name for a General Object. Matches Names and also UUIDs.",
+      "maxLength": 127,
+      "pattern": "^[A-Za-z0-9]+([ /._-]*[A-Za-z0-9]+)*$",
+      "type": "string"
+    },
+    "ImageAgent": {
+      "description": "Support status and default provioning setting for the STACKIT server agent.",
+      "properties": {
+        "provisionByDefault": {
+          "description": "Default provioning of the STACKIT server agent for new servers. The default for new images is false. Can only be enabled when supported is also true.",
+          "type": "boolean",
+          "x-stackit-logging": true
+        },
+        "supported": {
+          "description": "Indicates the STACKIT server agent for the image. The default for new images is false.",
+          "type": "boolean",
+          "x-stackit-logging": true
+        }
+      },
+      "type": "object"
+    },
+    "ImageChecksum": {
+      "description": "Representation of an image checksum.",
+      "properties": {
+        "algorithm": {
+          "description": "Algorithm for the checksum of the image data.\nPossible values: `md5`, `sha512`.",
+          "type": "string",
+          "x-extensible-enum": [
+            "md5",
+            "sha512"
+          ],
+          "x-stackit-logging": true
+        },
+        "digest": {
+          "description": "Hexdigest of the checksum of the image data.",
+          "pattern": "^[0-9a-f]+$",
+          "type": "string",
+          "x-stackit-logging": true
+        }
+      },
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "type": "object"
+    },
+    "ImageConfig": {
+      "description": "Properties to set hardware and scheduling settings for an Image.",
+      "properties": {
+        "architecture": {
+          "description": "Represents CPU architecture. The default for new images is x86.\nPossible values: `arm64`, `x86`.",
+          "type": "string",
+          "x-extensible-enum": [
+            "arm64",
+            "x86"
+          ],
+          "x-stackit-logging": true
+        },
+        "bootMenu": {
+          "description": "Enables the BIOS bootmenu. The default for new images is disabled.",
+          "type": "boolean",
+          "x-stackit-logging": true
+        },
+        "cdromBus": {
+          "description": "Sets CDROM bus controller type.\nPossible values: `scsi`, `virtio`, `ide`, `usb`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-extensible-enum": [
+            "scsi",
+            "virtio",
+            "ide",
+            "usb"
+          ],
+          "x-stackit-logging": true
+        },
+        "diskBus": {
+          "description": "Sets Disk bus controller type.\nPossible values: `scsi`, `virtio`, `ide`, `usb`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-extensible-enum": [
+            "scsi",
+            "virtio",
+            "ide",
+            "usb"
+          ],
+          "x-stackit-logging": true
+        },
+        "nicModel": {
+          "description": "Sets virtual nic model.\nPossible values: `e1000`, `e1000e`, `ne2k_pci`, `pcnet`, `rtl8139`, `virtio`, `vmxnet3`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-extensible-enum": [
+            "e1000",
+            "e1000e",
+            "ne2k_pci",
+            "pcnet",
+            "rtl8139",
+            "virtio",
+            "vmxnet3"
+          ],
+          "x-stackit-logging": true
+        },
+        "operatingSystem": {
+          "description": "Enables OS specific optimizations.\nPossible values: `windows`, `linux`.",
+          "type": "string",
+          "x-extensible-enum": [
+            "windows",
+            "linux"
+          ],
+          "x-stackit-logging": true
+        },
+        "operatingSystemDistro": {
+          "description": "Operating System Distribution.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-stackit-logging": true
+        },
+        "operatingSystemVersion": {
+          "description": "Version of the OS.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-stackit-logging": true
+        },
+        "rescueBus": {
+          "description": "Sets the device bus when the image is used as a rescue image.\nPossible values: `sata`, `scsi`, `virtio`, `usb`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-extensible-enum": [
+            "sata",
+            "scsi",
+            "virtio",
+            "usb"
+          ],
+          "x-stackit-logging": true
+        },
+        "rescueDevice": {
+          "description": "Sets the device when the image is used as a rescue image.\nPossible values: `cdrom`, `disk`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-extensible-enum": [
+            "cdrom",
+            "disk"
+          ],
+          "x-stackit-logging": true
+        },
+        "secureBoot": {
+          "description": "Enables Secure Boot. The default for new images is disabled.",
+          "type": "boolean",
+          "x-stackit-logging": true
+        },
+        "uefi": {
+          "description": "Configure UEFI boot. The default for new images is enabled.",
+          "type": "boolean",
+          "x-stackit-logging": true
+        },
+        "videoModel": {
+          "description": "Sets Graphic device model.\nPossible values: `vga`, `cirrus`, `vmvga`, `qxl`, `virtio`, `none`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-extensible-enum": [
+            "vga",
+            "cirrus",
+            "vmvga",
+            "qxl",
+            "virtio",
+            "none"
+          ],
+          "x-stackit-logging": true
+        },
+        "virtioScsi": {
+          "description": "Enables the use of VirtIO SCSI to provide block device access. By default servers use VirtIO Block.",
+          "type": "boolean",
+          "x-stackit-logging": true
+        }
+      },
+      "type": "object"
+    },
+    "ImageProtected": {
+      "description": "When true the image is prevented from being deleted.",
+      "type": "boolean"
+    },
+    "ImageScope": {
+      "description": "Scope of an Image.\nPossible values: `public`, `local`, `projects`, `organization`.",
+      "type": "string"
+    },
+    "ImageStatus": {
+      "description": "The status of an image object.\nPossible values: `AVAILABLE`, `CREATING`, `DEACTIVATED`, `DELETED`, `DELETING`, `ERROR`.",
+      "type": "string"
+    },
+    "Labels": {
+      "description": "Object that represents the labels as key-value pairs of a resource.\nKey constraints: - May contain an optional domain prefix separated by a slash (`/`). - Domain prefix must be less than or equal to 250 characters. - Domain prefix must ba a valid DNS subdomain containing only lowercase alphanumerics (`[a-z0-9]`) and dashes (`-`), separated by dots (`.`). - Length (excluding the domain prefix) must be between 1 and 63 characters. - Must begin and end with an alphanumerical character (`[a-z0-9A-Z]`). - May contain dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics in between. - Keys starting with the prefix `stackit-` or having a domain prefix of `stackit.cloud` (including its subdomains, e.g., `*.stackit.cloud/`) are reserved for system use.\nValue constraints: - Must be less than or equal to 63 characters long (can be empty). - If not empty it must begin and end with an alphanumeric character (`[a-z0-9A-Z]`). - May contain dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics in between.\nA resource can have a maximum of 64 labels. Reserved labels are excluded from this count. Providing a `null` value for a key will remove that key.",
+      "format": "json",
+      "type": "object"
+    },
+    "SizeInBytes": {
+      "description": "Size in bytes.",
+      "format": "int64",
+      "type": "integer"
+    },
+    "SizeInGB": {
+      "description": "Size in Gigabyte.",
+      "format": "int64",
+      "type": "integer"
+    },
+    "SizeInMB": {
+      "description": "Size in Megabyte.",
+      "format": "int64",
+      "type": "integer"
+    },
+    "UUID": {
+      "description": "Universally Unique Identifier (UUID).",
+      "format": "uuid",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "UpdatedAt": {
+      "description": "Date-time when resource was last updated.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "v1ImageImportProgress": {
+      "description": "Indicates Image Import Progress in percent.",
+      "format": "int64",
+      "type": "integer"
+    }
+  }
+}

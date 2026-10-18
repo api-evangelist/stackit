@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-embeddings-model-resp-schema.json",
+  "title": "GetEmbeddingsModelResp",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-model-serving-openapi.yml#/components/schemas/GetEmbeddingsModelResp",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/EmbeddingModelDetails"
+    }
+  },
+  "required": [
+    "model"
+  ],
+  "type": "object",
+  "$defs": {
+    "EmbeddingModelDetails": {
+      "properties": {
+        "category": {
+          "enum": [
+            "standard",
+            "plus",
+            "premium"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 2000,
+          "pattern": "^[0-9a-zA-Z\\s.:\\/\\-]+$",
+          "type": "string"
+        },
+        "displayedName": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[0-9a-zA-Z\\s_-]+$",
+          "type": "string"
+        },
+        "id": {
+          "description": "generated uuid to identify a model",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "description": "huggingface name",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[0-9a-zA-Z\\s.:\\/\\-]+$",
+          "type": "string"
+        },
+        "outputDimension": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "region": {
+          "type": "string"
+        },
+        "skus": {
+          "items": {
+            "$ref": "#/$defs/SKU"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "url": {
+          "description": "url of the model",
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[0-9a-zA-Z\\s.:\\/\\-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "displayedName",
+        "description",
+        "outputDimension",
+        "url",
+        "skus",
+        "category",
+        "region"
+      ],
+      "type": "object"
+    },
+    "SKU": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    }
+  }
+}

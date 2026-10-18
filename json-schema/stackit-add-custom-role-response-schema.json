@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-add-custom-role-response-schema.json",
+  "title": "AddCustomRoleResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-authorization-openapi.yml#/components/schemas/AddCustomRoleResponse",
+  "properties": {
+    "resourceId": {
+      "pattern": "^([a-zA-Z0-9/_|\\-=+@.]{1,})$",
+      "title": "ID of the resource to which the new role has been added.",
+      "type": "string"
+    },
+    "resourceType": {
+      "pattern": "^[a-z](?:-?[a-z]){1,63}$",
+      "title": "Resource type of the resource to which the new role has been added.",
+      "type": "string"
+    },
+    "role": {
+      "$ref": "#/$defs/Role"
+    }
+  },
+  "required": [
+    "resourceId",
+    "resourceType",
+    "role"
+  ],
+  "type": "object",
+  "$defs": {
+    "Permission": {
+      "properties": {
+        "description": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "A human readable description of the permission",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 255,
+          "pattern": "^[a-z](?:[-.]?[a-z]){1,63}$",
+          "title": "Permission name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "type": "object"
+    },
+    "Role": {
+      "properties": {
+        "description": {
+          "maxLength": 255,
+          "title": "A human readable description of the role",
+          "type": "string"
+        },
+        "etag": {
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^([a-zA-Z0-9/_|\\-=+]{1,})$",
+          "title": "The ID of the role.",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^[a-z](?:[-.]?[a-z]){1,63}$",
+          "title": "Name and identifier of the role.",
+          "type": "string"
+        },
+        "permissions": {
+          "items": {
+            "$ref": "#/$defs/Permission"
+          },
+          "title": "Permissions for the role",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "permissions"
+      ],
+      "type": "object"
+    }
+  }
+}

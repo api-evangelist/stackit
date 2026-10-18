@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-logs-search-filters-response-schema.json",
+  "title": "GetLogsSearchFiltersResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-cdn-openapi.yml#/components/schemas/GetLogsSearchFiltersResponse",
+  "properties": {
+    "cache": {
+      "items": {
+        "enum": [
+          "HIT",
+          "MISS"
+        ],
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "dataCenter": {
+      "$ref": "#/$defs/GetLogsSearchFiltersResponseDatacenterBlock"
+    },
+    "remoteCountry": {
+      "description": "List of ISO-3166 Alpha2 Country Codes matching the input filter. Response is ordered in ascending order.\n\nFor more Info about the country codes, see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2\n",
+      "items": {
+        "description": "ISO-3166 A2 Country Code",
+        "format": "[A-Z]{2}",
+        "maxLength": 2,
+        "minLength": 2,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "status": {
+      "description": "List of Status Codes matching the input filter. Response is ordered in ascending order.",
+      "items": {
+        "description": "Non-negative integer representing an HTTP Status Code.",
+        "format": "int32",
+        "minimum": 0,
+        "type": "integer"
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "status",
+    "remoteCountry",
+    "cache",
+    "dataCenter"
+  ],
+  "type": "object",
+  "$defs": {
+    "GetLogsSearchFiltersResponseDatacenterBlock": {
+      "description": "Object containing Datacenters to filter for. Each datacenter is grouped to the respective region.",
+      "properties": {
+        "AF": {
+          "items": {
+            "$ref": "#/$defs/GetLogsSearchFiltersResponseDatacenterBlockItem"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "ASIA": {
+          "items": {
+            "$ref": "#/$defs/GetLogsSearchFiltersResponseDatacenterBlockItem"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "EU": {
+          "items": {
+            "$ref": "#/$defs/GetLogsSearchFiltersResponseDatacenterBlockItem"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "NA": {
+          "items": {
+            "$ref": "#/$defs/GetLogsSearchFiltersResponseDatacenterBlockItem"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "SA": {
+          "items": {
+            "$ref": "#/$defs/GetLogsSearchFiltersResponseDatacenterBlockItem"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "EU",
+        "NA",
+        "AF",
+        "SA",
+        "ASIA"
+      ],
+      "type": "object"
+    },
+    "GetLogsSearchFiltersResponseDatacenterBlockItem": {
+      "description": "A datacenter. The `id` defines the key needed to filter against the logs endpoint, while the `displayName` defines a human-readable Name.",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "displayName"
+      ],
+      "type": "object"
+    }
+  }
+}

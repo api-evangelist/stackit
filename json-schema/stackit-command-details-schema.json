@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-command-details-schema.json",
+  "title": "CommandDetails",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-run-command-openapi.yml#/components/schemas/CommandDetails",
+  "properties": {
+    "commandTemplateName": {
+      "type": "string"
+    },
+    "commandTemplateTitle": {
+      "type": "string"
+    },
+    "exitCode": {
+      "format": "int32",
+      "type": "integer"
+    },
+    "finishedAt": {
+      "type": "string"
+    },
+    "id": {
+      "format": "int32",
+      "type": "integer"
+    },
+    "output": {
+      "type": "string"
+    },
+    "script": {
+      "type": "string"
+    },
+    "startedAt": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "running",
+        "completed",
+        "failed"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-organization-schema.json",
+  "title": "Organization",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-scf-openapi.yml#/components/schemas/Organization",
+  "properties": {
+    "createdAt": {
+      "format": "date-time",
+      "title": "The time with zone when the organization was created.",
+      "type": "string"
+    },
+    "guid": {
+      "$ref": "#/$defs/OrgId"
+    },
+    "name": {
+      "title": "Name of the organization",
+      "type": "string"
+    },
+    "platformId": {
+      "$ref": "#/$defs/PlatformId"
+    },
+    "projectId": {
+      "$ref": "#/$defs/ProjectId"
+    },
+    "quotaId": {
+      "$ref": "#/$defs/QuotaId"
+    },
+    "region": {
+      "$ref": "#/$defs/Region"
+    },
+    "status": {
+      "$ref": "#/$defs/OrgStatus"
+    },
+    "suspended": {
+      "title": "Indicates whether the organization is suspended.",
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "format": "date-time",
+      "title": "The time with zone when the organization was last updated.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "guid",
+    "name",
+    "status",
+    "projectId",
+    "region",
+    "platformId",
+    "createdAt",
+    "updatedAt",
+    "quotaId",
+    "suspended"
+  ],
+  "type": "object",
+  "$defs": {
+    "OrgId": {
+      "format": "uuid",
+      "title": "The unique id of the organization",
+      "type": "string"
+    },
+    "OrgStatus": {
+      "description": "The organization's status. The status value starts with `deleting` when a deleting request is in progress. The status value starts with `delete_failed` when the deletion failed. The status value can be different from `deleting` and `delete_failed`. Additional details can be provided in the future. ",
+      "title": "The organization's status",
+      "type": "string"
+    },
+    "PlatformId": {
+      "format": "uuid",
+      "title": "The unique id of the platform",
+      "type": "string"
+    },
+    "ProjectId": {
+      "format": "uuid",
+      "title": "The unique id of the STACKIT Project",
+      "type": "string"
+    },
+    "QuotaId": {
+      "format": "uuid",
+      "title": "The unique id of the organization quota",
+      "type": "string"
+    },
+    "Region": {
+      "title": "The region in which the resource is located",
+      "type": "string"
+    }
+  }
+}

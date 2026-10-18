@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-platforms-schema.json",
+  "title": "Platforms",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-scf-openapi.yml#/components/schemas/Platforms",
+  "properties": {
+    "apiUrl": {
+      "format": "uri",
+      "title": "CF API Url of the platform.",
+      "type": "string"
+    },
+    "consoleUrl": {
+      "format": "uri",
+      "title": "Stratos URL of the platform.",
+      "type": "string"
+    },
+    "displayName": {
+      "$ref": "#/$defs/PlatformDisplayName"
+    },
+    "guid": {
+      "$ref": "#/$defs/PlatformId"
+    },
+    "region": {
+      "$ref": "#/$defs/Region"
+    },
+    "systemId": {
+      "title": "The ID of the platform System",
+      "type": "string"
+    }
+  },
+  "required": [
+    "guid",
+    "region",
+    "systemId",
+    "displayName",
+    "apiUrl"
+  ],
+  "type": "object",
+  "$defs": {
+    "PlatformDisplayName": {
+      "title": "The name of the platform.",
+      "type": "string"
+    },
+    "PlatformId": {
+      "format": "uuid",
+      "title": "The unique id of the platform",
+      "type": "string"
+    },
+    "Region": {
+      "title": "The region in which the resource is located",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-default-retention-response-schema.json",
+  "title": "DefaultRetentionResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-object-storage-openapi.yml#/components/schemas/DefaultRetentionResponse",
+  "properties": {
+    "bucket": {
+      "description": "Name of the bucket",
+      "title": "Bucket",
+      "type": "string"
+    },
+    "days": {
+      "description": "Retention period in days",
+      "title": "Days",
+      "type": "integer"
+    },
+    "mode": {
+      "$ref": "#/$defs/RetentionMode"
+    },
+    "project": {
+      "description": "Project ID",
+      "title": "Project",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project",
+    "bucket",
+    "mode",
+    "days"
+  ],
+  "type": "object",
+  "$defs": {
+    "RetentionMode": {
+      "description": "The retention mode for default retention on a bucket.",
+      "enum": [
+        "COMPLIANCE",
+        "GOVERNANCE"
+      ],
+      "title": "RetentionMode",
+      "type": "string"
+    }
+  }
+}

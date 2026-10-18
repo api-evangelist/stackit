@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-dremio-user-payload-schema.json",
+  "title": "create-dremio-userPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dremio-openapi.yml#/components/schemas/create-dremio-userPayload",
+  "properties": {
+    "description": {
+      "description": "The description is a longer text chosen by the user to provide more context for the resource.",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "email": {
+      "description": "This is the admin user's email address.",
+      "format": "email",
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "firstName": {
+      "description": "This is the admin user's first name.",
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "lastName": {
+      "description": "This is the  admin user's last name.",
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "description": "This is the username used to login the admin user.",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "password": {
+      "description": "A password chosen by the user.",
+      "format": "password",
+      "maxLength": 128,
+      "minLength": 15,
+      "type": "string",
+      "writeOnly": true
+    }
+  },
+  "required": [
+    "name",
+    "firstName",
+    "lastName",
+    "email",
+    "password"
+  ]
+}

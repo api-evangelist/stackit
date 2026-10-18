@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-instance-token-payload-schema.json",
+  "title": "CreateInstanceTokenPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-model-experiments-openapi.yml#/components/schemas/CreateInstanceTokenPayload",
+  "properties": {
+    "description": {
+      "maxLength": 160,
+      "pattern": "^[0-9a-zA-Z\\s.:\\/\\-]*$",
+      "type": "string"
+    },
+    "labels": {
+      "$ref": "#/$defs/Labels"
+    },
+    "name": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[0-9a-zA-Z\\s_-]+$",
+      "type": "string"
+    },
+    "ttlDuration": {
+      "description": "time to live duration. Must be valid duration string. Maximum\nallowed duration is 6 months. If not set, defaults to 6 months.\n",
+      "format": "duration",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "$defs": {
+    "Labels": {
+      "additionalProperties": {
+        "maxLength": 63,
+        "pattern": "^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])*$",
+        "type": "string"
+      },
+      "description": "Object that represents the labels of an object. Regex for keys: `^([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$`. Regex for values: `^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])*$`. Providing a `null` value for a key will remove that key. The `stackit-` prefix is reserved and cannot be used for Keys.",
+      "type": "object"
+    }
+  }
+}

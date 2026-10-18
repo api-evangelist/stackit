@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-volume-template-response-schema.json",
+  "title": "GetVolumeTemplateResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-automation-openapi.yml#/components/schemas/GetVolumeTemplateResponse",
+  "properties": {
+    "createTime": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "input": {
+      "$ref": "#/$defs/VolumeTemplateAutomationInput"
+    },
+    "name": {
+      "type": "string"
+    },
+    "output": {
+      "$ref": "#/$defs/VolumeOutput"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "createTime"
+  ],
+  "$defs": {
+    "VolumeOutput": {
+      "properties": {
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/VolumeOutputStep"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "VolumeOutputStep": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/VolumeOutputStepResult"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "VolumeOutputStepResult": {
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    },
+    "VolumeTemplateAutomationInput": {
+      "properties": {
+        "kind": {
+          "enum": [
+            "VolumeRecoveryPointManagement"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    }
+  }
+}

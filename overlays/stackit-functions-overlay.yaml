@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Functions Core API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-functions-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: functions
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1alpha/projects/{projectId}/functions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: functions_list_functions
+- target: $.paths['/v1alpha/projects/{projectId}/functions/{functionId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/functions/{functionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: functions_get_function
+- target: $.paths['/v1alpha/projects/{projectId}/functions/{functionId}/revisions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: functions_list_revisions
+- target: $.paths['/v1alpha/projects/{projectId}/functions/{functionId}/revisions/{revisionId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/functions/{functionId}/revisions/{revisionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: functions_get_revision
+- target: $.paths['/v1alpha/projects/{projectId}/pull-credentials'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: functions_list_pull_credentials
+- target: $.paths['/v1alpha/projects/{projectId}/pull-credentials/{pullCredentialId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/pull-credentials/{pullCredentialId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: functions_get_pull_credential

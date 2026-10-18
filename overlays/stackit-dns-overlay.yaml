@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT DNS API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-dns-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: dns
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/zones'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: dns_list_zones
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: dns_get_zone
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}/labels'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: dns_list_labels
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}/labels/{key}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}/move-code'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}/rrsets'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: dns_list_record_sets
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}/rrsets/{rrSetId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/zones/{zoneId}/rrsets/{rrSetId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: dns_get_record_set

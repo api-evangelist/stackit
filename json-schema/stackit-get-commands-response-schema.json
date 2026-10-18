@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-commands-response-schema.json",
+  "title": "GetCommandsResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-run-command-openapi.yml#/components/schemas/GetCommandsResponse",
+  "properties": {
+    "items": {
+      "items": {
+        "$ref": "#/$defs/Commands"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "Commands": {
+      "properties": {
+        "commandTemplateName": {
+          "type": "string"
+        },
+        "commandTemplateTitle": {
+          "type": "string"
+        },
+        "finishedAt": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "startedAt": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

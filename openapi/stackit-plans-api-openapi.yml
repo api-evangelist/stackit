@@ -1,0 +1,112 @@
+openapi: 3.2.0
+info:
+  description: '### DEPRECATED! This API offers an interface to provision and manage load balancing servers in your STACKIT project. It also has the possibility of pooling target servers for load balancing purposes.
+
+
+    For each load balancer provided, two VMs are deployed in your OpenStack project subject to a fee.'
+  title: STACKIT Network Load Balancer Plans API
+  version: 1.7.2
+servers:
+- url: https://load-balancer.api.{region}stackit.cloud
+  variables:
+    region:
+      default: eu01.
+      enum:
+      - eu01.
+security:
+- bearerAuth: []
+tags:
+- name: Plans
+paths:
+  /v1/plans:
+    get:
+      deprecated: true
+      description: ListPlans returns for the configured service plans for a project.
+      operationId: ListPlans
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPlansResponse'
+          description: OK
+        '400':
+          description: One or more fields are invalid.
+        '401':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          description: this projectId is not allowed to try this API
+        '500':
+          description: internal error - please retry again later or contact support if the issue persists
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: Default error response
+      summary: List available service plans
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Plans
+components:
+  schemas:
+    GoogleProtobufAny:
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+      properties:
+        '@type':
+          description: The type of the serialized message.
+          type: string
+      type: object
+    Status:
+      description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          format: int32
+          type: integer
+        details:
+          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+          items:
+            $ref: '#/components/schemas/GoogleProtobufAny'
+          type: array
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      type: object
+    ListPlansResponse:
+      properties:
+        validPlans:
+          items:
+            $ref: '#/components/schemas/PlanDetails'
+          type: array
+      type: object
+    PlanDetails:
+      properties:
+        description:
+          description: Description
+          example: Description for p10
+          type: string
+        flavorName:
+          description: Flavor Name
+          example: t1.2
+          type: string
+        maxConnections:
+          description: Maximum number of concurrent connections per load balancer VM instance.
+          format: int32
+          title: Load Balancer max supported connections
+          type: integer
+        name:
+          description: Service Plan Name
+          example: Essential-Network-Load-Balancer-10-EU01
+          type: string
+        planId:
+          description: Service Plan Identifier
+          example: p10
+          type: string
+      type: object

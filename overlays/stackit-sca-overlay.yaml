@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Container Applications (SCA) overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-sca-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: sca
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1alpha/projects/{projectId}/applications'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_list_project_applications
+- target: $.paths['/v1alpha/projects/{projectId}/environments'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_list_environments
+- target: $.paths['/v1alpha/projects/{projectId}/environments/{environmentId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_get_environment
+- target: $.paths['/v1alpha/projects/{projectId}/environments/{environmentId}/applications'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_list_applications
+- target: $.paths['/v1alpha/projects/{projectId}/environments/{environmentId}/applications/{applicationId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/environments/{environmentId}/applications/{applicationId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_get_application
+- target: $.paths['/v1alpha/projects/{projectId}/environments/{environmentId}/applications/{applicationId}/events'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_get_application_events
+- target: $.paths['/v1alpha/projects/{projectId}/environments/{environmentId}/applications/{applicationId}/logs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_get_application_logs
+- target: $.paths['/v1alpha/projects/{projectId}/overview'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sca_get_overview

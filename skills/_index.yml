@@ -1,0 +1,81 @@
+name: STACKIT agent skills
+type: AgentSkillIndex
+generated: '2026-10-18'
+method: generated
+source: openapi/
+note: No provider-published skills or AGENTS.md found; skills generated from real operationIds.
+skills:
+- name: stackit-create-project
+  description: Create and inspect a STACKIT project in the resource hierarchy
+  path: skills/stackit-create-project.md
+  api: openapi/stackit-resource-manager-openapi.yml
+  operations:
+  - ListOrganizations
+  - ListFolders
+  - CreateProject
+  - GetProject
+  - PartialUpdateProject
+- name: stackit-provision-server
+  description: Provision a virtual server with network, security group and public IP on STACKIT IaaS
+  path: skills/stackit-provision-server.md
+  api: openapi/stackit-iaas-openapi.yml
+  operations:
+  - CreateNetwork
+  - CreateSecurityGroup
+  - CreateServer
+  - GetServer
+  - CreatePublicIP
+  - AddPublicIpToServer
+  - ListServers
+- name: stackit-create-ske-cluster
+  description: Create a STACKIT Kubernetes Engine (SKE) cluster and fetch a kubeconfig
+  path: skills/stackit-create-ske-cluster.md
+  api: openapi/stackit-ske-openapi.yml
+  operations:
+  - ListProviderOptions
+  - CreateOrUpdateCluster
+  - GetCluster
+  - CreateKubeconfig
+  - ListClusters
+- name: stackit-manage-dns
+  description: Create a DNS zone and record sets in STACKIT DNS
+  path: skills/stackit-manage-dns.md
+  api: openapi/stackit-dns-openapi.yml
+  operations:
+  - CreateZone
+  - GetZone
+  - CreateRecordSet
+  - ListRecordSets
+  - PartialUpdateRecordSet
+- name: stackit-object-storage-bucket
+  description: Enable Object Storage, create a bucket and issue S3 access keys
+  path: skills/stackit-object-storage-bucket.md
+  api: openapi/stackit-object-storage-openapi.yml
+  operations:
+  - EnableService
+  - GetServiceStatus
+  - CreateCredentialsGroup
+  - CreateAccessKey
+  - CreateBucket
+  - ListBuckets
+- name: stackit-postgres-flex-instance
+  description: Provision a PostgreSQL Flex instance with a database and user
+  path: skills/stackit-postgres-flex-instance.md
+  api: openapi/stackit-postgres-flex-openapi.yml
+  operations:
+  - ListFlavors
+  - ListVersions
+  - CreateInstance
+  - GetInstance
+  - CreateUser
+  - CreateDatabase
+- name: stackit-create-and-manage-application-load-balancer
+  description: Create and manage an Application Load Balancer with observability credentials in a project.
+  path: skills/stackit-create-and-manage-application-load-balancer.md
+  api: openapi/stackit-alb-openapi.yml
+  operations:
+  - GetQuota
+  - CreateCredentials
+  - CreateLoadBalancer
+  - GetLoadBalancer
+  - UpdateTargetPool

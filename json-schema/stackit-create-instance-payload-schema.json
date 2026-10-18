@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-instance-payload-schema.json",
+  "title": "CreateInstancePayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-edge-openapi.yml#/components/schemas/CreateInstancePayload",
+  "properties": {
+    "description": {
+      "description": "A user chosen description to distinguish multiple instances.",
+      "maxLength": 256,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The displayed name to distinguish multiple instances.",
+      "format": "hostname",
+      "maxLength": 8,
+      "minLength": 4,
+      "type": "string"
+    },
+    "planId": {
+      "description": "Service Plan configures the size of the Instance.",
+      "format": "uuid",
+      "type": "string"
+    }
+  },
+  "required": [
+    "displayName",
+    "planId"
+  ]
+}

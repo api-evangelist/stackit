@@ -1,0 +1,4400 @@
+openapi: 3.2.0
+info:
+  title: Stackit Organizations API
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Organizations across 9 of this provider''s published API definitions: stackit-iaas-v1.json, stackit-iaas-v2.json, stackit-resource-manager-v0.json, stackit-telemetry-link-v1.json, stackit-ufw-v1.json, stackit-iaas-openapi.yml, stackit-resource-manager-openapi.yml, stackit-telemetry-link-openapi.yml, stackit-ufw-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://iaas.api.{region}stackit.cloud
+  variables:
+    region:
+      default: eu01.
+      enum:
+      - eu01.
+- url: https://iaas.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://resource-manager.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://telemetry-link.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://ufw.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Organizations
+paths:
+  /v1/organizations/{organizationId}/network-areas:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    get:
+      deprecated: true
+      description: Get a list of all visible network areas defined in an organization.
+      operationId: ListNetworkAreas
+      parameters:
+      - $ref: '#/components/parameters/v1LabelSelector'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkAreaListResponse'
+          description: Get a list of all network areas.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all network areas in an organization
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    post:
+      deprecated: true
+      description: Create a new network area in an organization.
+      operationId: CreateNetworkArea
+      requestBody:
+        content:
+          application/json:
+            example:
+              addressFamily:
+                ipv4:
+                  defaultNameservers:
+                  - 10.1.2.10
+                  defaultPrefixLen: 24
+                  maxPrefixLen: 28
+                  minPrefixLen: 22
+                  networkRanges:
+                  - prefix: 10.0.0.0/16
+                  routes:
+                  - nexthop: 10.1.2.10
+                    prefix: 192.168.0.0/24
+                  transferNetwork: 10.1.2.0/24
+              labels:
+                environment: production
+              name: My STACKIT Internet Network Area
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaPayload'
+        description: Request an area creation.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkArea'
+          description: Area has been successfully created.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new network area in an organization
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/network-areas/{areaId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    delete:
+      deprecated: true
+      description: Delete an existing network area in an organization. This is only possible if no projects are using the area anymore.
+      operationId: DeleteNetworkArea
+      responses:
+        '202':
+          description: Delete request for area has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    get:
+      deprecated: true
+      description: Get details about a network area in an organization.
+      operationId: GetNetworkArea
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkArea'
+          description: Show network area details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    patch:
+      deprecated: true
+      description: Update the settings of a network area in an organization.
+      operationId: PartialUpdateNetworkArea
+      requestBody:
+        content:
+          application/json:
+            example:
+              addressFamily:
+                ipv4:
+                  defaultNameservers:
+                  - 10.1.2.10
+                  defaultPrefixLen: 24
+                  maxPrefixLen: 26
+                  minPrefixLen: 22
+              labels:
+                environment: production
+              name: My STACKIT Internet Network Area
+            schema:
+              $ref: '#/components/schemas/PartialUpdateNetworkAreaPayload'
+        description: Request to update an area.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkArea'
+          description: Area has been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update network area settings
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/network-areas/{areaId}/network-ranges:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    get:
+      deprecated: true
+      description: Get a list of all network ranges in a network area.
+      operationId: ListNetworkAreaRanges
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkRangeListResponse'
+          description: List all network ranges.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all network ranges in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    post:
+      deprecated: true
+      description: Create a new network range in an existing network area.
+      operationId: CreateNetworkAreaRange
+      requestBody:
+        content:
+          application/json:
+            example:
+              ipv4:
+              - prefix: 10.1.2.0/24
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaRangePayload'
+        description: Request an addition of network ranges to an area.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkRangeListResponse'
+          description: Adding network ranges was successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new network range in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/network-areas/{areaId}/network-ranges/{networkRangeId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1NetworkRangeID'
+    delete:
+      deprecated: true
+      description: Delete a network range of a network area. The deletion will fail if the network range is still used.
+      operationId: DeleteNetworkAreaRange
+      responses:
+        '202':
+          description: Delete request for network range has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a network range
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    get:
+      deprecated: true
+      description: Get details about a network range in a network area.
+      operationId: GetNetworkAreaRange
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkRange'
+          description: Show network range details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a network range
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/network-areas/{areaId}/projects:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    get:
+      deprecated: true
+      description: Get a list of all projects using a network area.
+      operationId: ListNetworkAreaProjects
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectListResponse'
+          description: List projects for a network area.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all projects using a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.project.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/network-areas/{areaId}/routes:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    get:
+      deprecated: true
+      description: Get a list of all network routes defined in a network area.
+      operationId: ListNetworkAreaRoutes
+      parameters:
+      - $ref: '#/components/parameters/v1LabelSelector'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteListResponse'
+          description: List network routes.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all network routes in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    post:
+      deprecated: true
+      description: Create one or several new network routes in a network area.
+      operationId: CreateNetworkAreaRoute
+      requestBody:
+        content:
+          application/json:
+            example:
+              ipv4:
+              - nexthop: 10.1.2.10
+                prefix: 192.168.0.0/24
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaRoutePayload'
+        description: Request an addition of routes to an area.
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteListResponse'
+          description: Create request for network routes has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new network routes
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/network-areas/{areaId}/routes/{routeId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1RouteID'
+    delete:
+      deprecated: true
+      description: Delete a network route of a network area.
+      operationId: DeleteNetworkAreaRoute
+      responses:
+        '202':
+          description: Delete request for network route has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a network route
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    get:
+      deprecated: true
+      description: Get details about a network route defined in a network area.
+      operationId: GetNetworkAreaRoute
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+          description: Show route details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a network route
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    patch:
+      deprecated: true
+      description: Update a network route defined in a network area.
+      operationId: UpdateNetworkAreaRoute
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNetworkAreaRoutePayload'
+        description: Request an update of a network route.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+          description: Update request for network successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a network route
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v1/organizations/{organizationId}/requests/{requestId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1RequestID'
+    get:
+      deprecated: true
+      description: Lookup an organization request ID from a previous request. This allows to find resource IDs of resources generated during a organization request.
+      operationId: GetOrganizationRequest
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+          description: Show organization request details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Lookup an organization request ID
+      x-stackit-authorization:
+        actions:
+        - iaas.request.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v2/organizations/{organizationId}/network-areas:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    get:
+      description: Get a list of all visible network areas defined in an organization.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreas
+      parameters:
+      - $ref: '#/components/parameters/v1LabelSelector'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkAreaListResponse'
+          description: Get a list of all network areas.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all network areas in an organization
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: ListNetworkAreas
+    post:
+      description: Create a new network area in an organization. You can specify `"preview/routingtables"="true"` as a label to enable the preview routing tables feature. This feature cannot be enabled or disabled afterwards.
+      operationId: postV2OrganizationsByOrganizationIdNetworkAreas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaPayload_2'
+        description: Request an Area creation.
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkArea_2'
+          description: Area has been successfully created.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new network area in an organization
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: CreateNetworkArea
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    delete:
+      description: Delete an existing network area in an organization. This is only possible if no projects are using the area anymore.
+      operationId: deleteV2OrganizationsByOrganizationIdNetworkAreasByAreaId
+      responses:
+        '204':
+          description: Delete request for area has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: DeleteNetworkArea
+    get:
+      description: Get details about a network area in an organization.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreasByAreaId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkArea_2'
+          description: Show network area details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: GetNetworkArea
+    patch:
+      description: Update the settings of a network area in an organization.
+      operationId: patchV2OrganizationsByOrganizationIdNetworkAreasByAreaId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartialUpdateNetworkAreaPayload_2'
+        description: Request to update an Area.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkArea_2'
+          description: Area has been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update network area settings
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: PartialUpdateNetworkArea
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/projects:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    get:
+      description: Get a list of all projects using a network area.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreasByAreaIdProjects
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectListResponse'
+          description: List projects for a network area.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all projects using a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.project.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: ListNetworkAreaProjects
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    get:
+      description: Get a list of all configured regions.
+      operationId: ListNetworkAreaRegions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionalAreaListResponse'
+          description: List all configured area regions.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all configured regions in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.regional-network-area.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    delete:
+      description: Delete a current configuration of region for a network area.
+      operationId: DeleteNetworkAreaRegion
+      responses:
+        '202':
+          description: Regional configuration has been deleted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a configuration of region for a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.regional-network-area.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    get:
+      description: Get details about a configured region in a network area.
+      operationId: GetNetworkAreaRegion
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionalArea'
+          description: Show configured region details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a configured region
+      x-stackit-authorization:
+        actions:
+        - iaas.regional-network-area.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    patch:
+      description: Update a new region for a network area.
+      operationId: UpdateNetworkAreaRegion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNetworkAreaRegionPayload'
+        description: Request an update of a regional network area.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionalArea'
+          description: Regional area has been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a region for a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.regional-network-area.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    put:
+      description: Configure a new region for a network area.
+      operationId: CreateNetworkAreaRegion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaRegionPayload'
+        description: Request to add a new regional network area configuration.
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionalArea'
+          description: Configure network area in a new region was accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Configure a region for a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.regional-network-area.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/network-ranges:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    get:
+      description: Get a list of all network ranges in a network area.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionNetworkRanges
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkRangeListResponse_2'
+          description: List all network ranges.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all network ranges in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: ListNetworkAreaRanges
+    post:
+      description: Create a new network range in an existing network area.
+      operationId: postV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionNetworkRanges
+      requestBody:
+        content:
+          application/json:
+            example:
+              ipv4:
+              - prefix: 10.1.2.0/24
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaRangePayload'
+        description: Request an addition of network ranges to an area.
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkRangeListResponse_2'
+          description: Adding network ranges was successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new network range in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: CreateNetworkAreaRange
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/network-ranges/{networkRangeId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    - $ref: '#/components/parameters/v1NetworkRangeID'
+    delete:
+      description: Delete a network range of a network area. The deletion will fail if the network range is still used.
+      operationId: deleteV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionNetworkRangesByNetworkRangeId
+      responses:
+        '202':
+          description: Delete request for network range accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a network range
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: DeleteNetworkAreaRange
+    get:
+      description: Get details about a network range in a network area.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionNetworkRangesByNetworkRangeId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkRange_2'
+          description: Show network range details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a network range
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.range.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: GetNetworkAreaRange
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routes:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    get:
+      description: Get a list of all network routes defined in a network area.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionRoutes
+      parameters:
+      - $ref: '#/components/parameters/v1LabelSelector'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteListResponse'
+          description: List network routes.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all network routes in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: ListNetworkAreaRoutes
+    post:
+      description: Create one or several new network routes in a network area.
+      operationId: postV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionRoutes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNetworkAreaRoutePayload_2'
+        description: Request an addition of routes to an area.
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteListResponse'
+          description: Create request for network routes accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new network routes
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: CreateNetworkAreaRoute
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routes/{routeId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    - $ref: '#/components/parameters/v1RouteID'
+    delete:
+      description: Delete a network route of a network area.
+      operationId: deleteV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionRoutesByRouteId
+      responses:
+        '202':
+          description: Delete request for the network route has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a network route
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: DeleteNetworkAreaRoute
+    get:
+      description: Get details about a network route defined in a network area.
+      operationId: getV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionRoutesByRouteId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route_2'
+          description: Show route details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a network route
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: GetNetworkAreaRoute
+    patch:
+      description: Update a network route defined in a network area.
+      operationId: patchV2OrganizationsByOrganizationIdNetworkAreasByAreaIdRegionsByRegionRoutesByRouteId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNetworkAreaRoutePayload'
+        description: Request an update of a network route.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route_2'
+          description: Update request for network successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a network route
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.route.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: UpdateNetworkAreaRoute
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    get:
+      description: Get a list of all routing tables in a network area.
+      operationId: ListRoutingTablesOfArea
+      parameters:
+      - $ref: '#/components/parameters/v1LabelSelector'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingTableListResponse'
+          description: List all routing tables.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all routing tables in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    post:
+      description: Create a new routing table in an existing network area.
+      operationId: AddRoutingTableToArea
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRoutingTableToAreaPayload'
+        description: Request an addition of a routing table to an area.
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingTable'
+          description: Adding routing table was successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new routing table in a network area
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    - $ref: '#/components/parameters/v2RoutingTableID'
+    delete:
+      description: Delete a routing table of a network area.
+      operationId: DeleteRoutingTableFromArea
+      responses:
+        '204':
+          description: Delete request for the routing table has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    get:
+      description: Get details about a routing table defined in a network area.
+      operationId: GetRoutingTableOfArea
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingTable'
+          description: Show routing table details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    patch:
+      description: Update a routing table defined in a network area.
+      operationId: UpdateRoutingTableOfArea
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoutingTableOfAreaPayload'
+        description: Request an update of a routing table.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingTable'
+          description: Update request for routing table successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}/routes:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    - $ref: '#/components/parameters/v2RoutingTableID'
+    get:
+      description: Get a list of all routes in a routing table.
+      operationId: ListRoutesOfRoutingTable
+      parameters:
+      - $ref: '#/components/parameters/v1LabelSelector'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteListResponse'
+          description: List all routing table routes.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all routes in a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.route.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    post:
+      description: Create new routes in an existing routing table.
+      operationId: AddRoutesToRoutingTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRoutesToRoutingTablePayload'
+        description: Request an addition of routes to a routing table.
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteListResponse'
+          description: Adding routes to routing table was successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create new routes in a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.route.create
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  ? /v2/organizations/{organizationId}/network-areas/{areaId}/regions/{region}/routing-tables/{routingTableId}/routes/{routeId}
+  : parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1NetworkAreaID'
+    - $ref: '#/components/parameters/v1Region'
+    - $ref: '#/components/parameters/v2RoutingTableID'
+    - $ref: '#/components/parameters/v1RouteID'
+    delete:
+      description: Delete a route in an existing routing table.
+      operationId: DeleteRouteFromRoutingTable
+      responses:
+        '204':
+          description: Delete request for the route has been accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a route in a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.route.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    get:
+      description: Get details about a route defined in a routing table.
+      operationId: GetRouteOfRoutingTable
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route_2'
+          description: Show the details of a route in a routing table.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get details about a route of a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.route.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    patch:
+      description: Update a route defined in a routing table.
+      operationId: UpdateRouteOfRoutingTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRouteOfRoutingTablePayload'
+        description: Request an update of a route in a routing table.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route_2'
+          description: Update request for route successful.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a route of a routing table
+      x-stackit-authorization:
+        actions:
+        - iaas.network-area.rt.route.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{organizationId}/requests/{requestId}:
+    parameters:
+    - $ref: '#/components/parameters/v1OrganizationID'
+    - $ref: '#/components/parameters/v1RequestID'
+    get:
+      description: Lookup an organization request ID from a previous request. This allows to find resource IDs of resources generated during a organization request.
+      operationId: getV2OrganizationsByOrganizationIdRequestsByRequestId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+          description: Show organization request details.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Lookup an organization request ID
+      x-stackit-authorization:
+        actions:
+        - iaas.request.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      x-operation-id-source: normalized
+      x-operation-id-original: GetOrganizationRequest
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations:
+    get:
+      description: 'Returns all organizations and their metadata accessible to the caller.
+
+        - Filterable by containerIds or member.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Organizations: resource-manager.organization.list and/or (depending if containerIDs was used in the request) resource-manager.organization.get to filter and list accessible organizations.'
+      operationId: ListOrganizations
+      parameters:
+      - description: Organization identifiers - containerId as well as UUID identifier is supported. A combination of both is not allowed.
+        in: query
+        name: containerIds
+        schema:
+          items:
+            type: string
+          type: array
+      - $ref: '#/components/parameters/member'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/creation-time-start'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  $ref: '#/components/examples/BadRequest'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  $ref: '#/components/examples/Forbidden'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+      summary: Get all organizations of member
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.organization.get
+        - resource-manager.organization.list
+      tags:
+      - Organizations
+    servers:
+    - url: https://resource-manager.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{containerId}/labels:
+    parameters:
+    - description: Organization identifier - containerId as well as UUID identifier is supported.
+      in: path
+      name: containerId
+      required: true
+      schema:
+        type: string
+    delete:
+      description: 'Deletes organization labels by specified keys, or removes all labels if no key is provided.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Organization: resource-manager.organization.edit (required permission on the organization to delete labels).'
+      operationId: DeleteOrganizationLabels
+      parameters:
+      - description: Label name.
+        in: query
+        name: keys
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        '202':
+          description: Labels removed
+        '409':
+          content:
+            application/json:
+              examples:
+                Cannot delete label because of policy:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Delete Organization Labels
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.organization.edit
+      tags:
+      - Organizations
+    servers:
+    - url: https://resource-manager.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/organizations/{id}:
+    parameters:
+    - description: Organization identifier - containerId as well as UUID identifier is supported.
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+    get:
+      description: 'Returns metadata for a specific organization.
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Organization: resource-manager.organization.get (required permission on the organization to view its details).'
+      operationId: GetOrganization
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+          description: OK
+        '404':
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  $ref: '#/components/examples/NotFound'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      summary: Get Organization Details
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.organization.get
+      tags:
+      - Organizations
+    patch:
+      description: 'Updates organization metadata (name, labels).
+
+
+        Authorization & Permissions:
+
+        - Evaluated on Target Organization: resource-manager.organization.edit (required permission on the organization to update metadata and labels).'
+      operationId: PartialUpdateOrganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartialUpdateOrganizationPayload'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+          description: OK
+        '404':
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  $ref: '#/components/examples/NotFound'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              examples:
+                Conflict:
+                  $ref: '#/components/examples/PolicyConflict'
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Conflict
+      summary: Update Organization
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - resource-manager.organization.edit
+      tags:
+      - Organizations
+    servers:
+    - url: https://resource-manager.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/organizations/{organizationId}/regions/{regionId}/telemetry-link:
+    parameters:
+    - $ref: '#/components/parameters/organizationId'
+    - $ref: '#/components/parameters/regionId'
+    delete:
+      description: Deletes the given Telemetry Link within the organization.
+      operationId: delete-organization-telemetry-link
+      responses:
+        '204':
+          description: Telemetry Link was deleted successfully.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.delete
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: Delete organization telemetry link
+      x-summary-source: derived
+    get:
+      description: Returns the details for the given Telemetry Link within the organization.
+      operationId: get-organization-telemetry-link
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link details successfully retrieved.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: Get organization telemetry link
+      x-summary-source: derived
+    patch:
+      description: Patches the given Telemetry Link within the organization.
+      operationId: partial-update-organization-telemetry-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/partial-update-organization-telemetry-linkPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link was patched successfully.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: Partial update organization telemetry link
+      x-summary-source: derived
+    put:
+      description: Creates or updates the given Telemetry Link within the organization.
+      operationId: create-or-update-organization-telemetry-link
+      parameters:
+      - $ref: '#/components/parameters/ifNoneMatch'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-or-update-organization-telemetry-linkPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link was updated successfully.
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/telemetryLinkResponse'
+          description: Telemetry Link was created successfully.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '412':
+          $ref: '#/components/responses/preconditionFailed'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: Create or update organization telemetry link
+      x-summary-source: derived
+    servers:
+    - url: https://telemetry-link.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/organizations/{organizationId}/regions/{regionId}/telemetry-link/backflush-jobs:
+    parameters:
+    - $ref: '#/components/parameters/organizationId'
+    - $ref: '#/components/parameters/regionId'
+    get:
+      description: Returns a list of all Backflush Jobs for the organization.
+      operationId: list-organization-backflush-jobs
+      parameters:
+      - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listBackflushJobsResponse'
+          description: Successful response with all Backflush Jobs.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: List organization backflush jobs
+      x-summary-source: derived
+    post:
+      description: Creates a new Backflush Job for the organization.
+      operationId: create-organization-backflush-job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-organization-backflush-jobPayload'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backflushJobResponse'
+          description: Backflush Job was created successfully
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.update
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: Create organization backflush job
+      x-summary-source: derived
+    servers:
+    - url: https://telemetry-link.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/organizations/{organizationId}/regions/{regionId}/telemetry-link/backflush-jobs/{backflushJobId}:
+    parameters:
+    - $ref: '#/components/parameters/organizationId'
+    - $ref: '#/components/parameters/regionId'
+    - $ref: '#/components/parameters/backflushJobId'
+    get:
+      description: Returns the details for the given Backflush Job in a organization.
+      operationId: get-organization-backflush-job
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backflushJobResponse'
+          description: Backflush Job details successfully retrieved.
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      x-stackit-authorization:
+        actions:
+        - telemetry-link.instance.get
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+      summary: Get organization backflush job
+      x-summary-source: derived
+    servers:
+    - url: https://telemetry-link.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/organizations/{organizationId}/children:
+    get:
+      description: Returns a list of containers for a specific organization
+      operationId: ListOrganizationContainers
+      parameters:
+      - $ref: '#/components/parameters/organizationId_2'
+      - $ref: '#/components/parameters/limit_2'
+      - $ref: '#/components/parameters/cursor'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListContainersResponse'
+          description: Successful response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Forbidden access. You are not allowed to get containers from this folder.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Folder not found.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Service is not available.
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+          description: Service is not available.
+      security:
+      - BearerAuth: []
+      summary: Get containers from an organization
+      x-stackit-authorization:
+        actions:
+        - ufw.organization.list
+        resource-id: organizationId
+        resource-id-type: dynamic
+        resource-type: organization
+      tags:
+      - Organizations
+    servers:
+    - url: https://ufw.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    NetworkAreaIPv4:
+      allOf:
+      - $ref: '#/components/schemas/Area'
+      - $ref: '#/components/schemas/AreaPrefixConfigIPv4'
+      description: The IPv4 properties of a network area.
+    Resource:
+      description: 'Object that represents a resource type.
+
+        Possible values: `BACKUP`, `IMAGE`, `NETWORK`, `NETWORKAREA`, `NIC`, `PROJECT`, `ROUTE`, `SERVER`, `SERVICEACCOUNT`, `SNAPSHOT`, `VIRTUALIP`, `VOLUME`, `VPC`, `VPCNETWORKRANGE`.'
+      example: SERVER
+      type: string
+    RouteListResponse:
+      description: Route list response.
+      properties:
+        items:
+          $ref: '#/components/schemas/RouteList'
+      required:
+      - items
+      type: object
+    UpdateNetworkAreaRoutePayload:
+      description: Object that represents the request body for a route update.
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+      type: object
+    CreateAreaIPv4:
+      allOf:
+      - $ref: '#/components/schemas/AreaConfig'
+      - $ref: '#/components/schemas/AreaPrefixConfigIPv4'
+      description: The config object for a IPv4 network area.
+    UUID:
+      description: Universally Unique Identifier (UUID).
+      example: d61a8564-c8dd-4ffb-bc15-143e7d0c85ed
+      format: uuid
+      maxLength: 36
+      minLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      type: string
+    AreaMaxPrefixLengthIPv4:
+      description: The maximal prefix length for networks in the network area.
+      example: 29
+      maximum: 29
+      minimum: 24
+      type: integer
+    Route:
+      description: Object represents a network route.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        nexthop:
+          $ref: '#/components/schemas/IP'
+        prefix:
+          $ref: '#/components/schemas/CIDR'
+        routeId:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - prefix
+      - nexthop
+      type: object
+    NetworkRangeList:
+      description: A list of network ranges.
+      items:
+        $ref: '#/components/schemas/NetworkRange'
+      maxItems: 64
+      minItems: 1
+      type: array
+    UpdateAreaIPv4:
+      description: The update object for a IPv4 network area.
+      properties:
+        defaultNameservers:
+          items:
+            $ref: '#/components/schemas/IP'
+          maxItems: 3
+          type: array
+          x-stackit-logging: true
+        defaultPrefixLen:
+          $ref: '#/components/schemas/AreaDefaultPrefixLengthIPv4'
+        maxPrefixLen:
+          $ref: '#/components/schemas/AreaMaxPrefixLengthIPv4'
+        minPrefixLen:
+          $ref: '#/components/schemas/AreaMinPrefixLengthIPv4'
+      type: object
+    AreaConfig:
+      description: The basic network area object.
+      properties:
+        defaultNameservers:
+          items:
+            $ref: '#/components/schemas/IP'
+          maxItems: 3
+          type: array
+          x-stackit-logging: true
+        networkRanges:
+          $ref: '#/components/schemas/NetworkRangeList'
+        routes:
+          $ref: '#/components/schemas/RouteList'
+        transferNetwork:
+          $ref: '#/components/schemas/CIDR'
+      required:
+      - transferNetwork
+      - networkRanges
+      type: object
+    AreaPrefixConfigIPv4:
+      description: The IPv4 prefix config for a network area.
+      properties:
+        defaultPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaDefaultPrefixLengthIPv4'
+          default: 25
+        maxPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaMaxPrefixLengthIPv4'
+          default: 29
+        minPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaMinPrefixLengthIPv4'
+          default: 24
+      type: object
+    ProjectListResponse:
+      description: Project list response.
+      properties:
+        items:
+          $ref: '#/components/schemas/ProjectList'
+      required:
+      - items
+      type: object
+    Nameserver:
+      description: A list containing DNS Servers/Nameservers for IPv4.
+      example:
+      - 10.20.30.40
+      - 50.60.70.80
+      items:
+        $ref: '#/components/schemas/IP'
+      maxItems: 3
+      type: array
+    Request:
+      description: Object that represents a request.
+      properties:
+        details:
+          example: This worked!
+          type: string
+          x-stackit-logging: true
+        requestAction:
+          $ref: '#/components/schemas/ResourceAction'
+        requestId:
+          $ref: '#/components/schemas/ReqId'
+        requestType:
+          $ref: '#/components/schemas/Resource'
+        resources:
+          example:
+          - id: d61a8564-c8dd-4ffb-bc15-143e7d0c85ed
+            status: CREATING
+            type: SERVER
+          items:
+            $ref: '#/components/schemas/RequestResource'
+          type: array
+          x-stackit-logging: true
+        status:
+          $ref: '#/components/schemas/ResourceState'
+      required:
+      - requestId
+      - requestType
+      - requestAction
+      - resources
+      - status
+      type: object
+    CreateAreaAddressFamily:
+      description: The addressFamily object for a area create request.
+      minProperties: 1
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/CreateAreaIPv4'
+      type: object
+    RequestResource:
+      description: Object that represents a resource as part of a request.
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+        status:
+          $ref: '#/components/schemas/ResourceState'
+        type:
+          $ref: '#/components/schemas/Resource'
+      required:
+      - type
+      - id
+      - status
+      type: object
+    CIDR:
+      description: Classless Inter-Domain Routing (CIDR).
+      example: 192.168.0.0/24
+      pattern: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/(3[0-2]|2[0-9]|1[0-9]|[0-9]))$|^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(\/((1(1[0-9]|2[0-8]))|([0-9][0-9])|([0-9])))?$
+      type: string
+    ProjectCount:
+      description: The amount of projects currently referencing a specific area.
+      example: 10
+      format: int64
+      minimum: 0
+      type: integer
+    RouteList:
+      description: A list of routes.
+      items:
+        $ref: '#/components/schemas/Route'
+      type: array
+    Area:
+      description: The basic properties of a network area.
+      properties:
+        defaultNameservers:
+          $ref: '#/components/schemas/Nameserver'
+        networkRanges:
+          $ref: '#/components/schemas/NetworkRangeList'
+        routes:
+          $ref: '#/components/schemas/RouteList'
+        transferNetwork:
+          $ref: '#/components/schemas/CIDR'
+      type: object
+    NetworkAreaList:
+      description: A list of network areas.
+      items:
+        $ref: '#/components/schemas/NetworkArea'
+      type: array
+    PartialUpdateNetworkAreaPayload:
+      properties:
+        addressFamily:
+          $ref: '#/components/schemas/UpdateAreaAddressFamily'
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          $ref: '#/components/schemas/GenericName'
+      type: object
+    UpdateAreaAddressFamily:
+      description: The addressFamily object for a area update request.
+      minProperties: 1
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/UpdateAreaIPv4'
+      type: object
+    ResourceState:
+      description: 'The state of a resource object.
+
+        Possible values: `CREATING`, `CREATED`, `DELETING`, `DELETED`, `FAILED`, `UPDATED`, `UPDATING`.'
+      example: CREATING
+      type: string
+    CreateNetworkAreaPayload:
+      properties:
+        addressFamily:
+          $ref: '#/components/schemas/CreateAreaAddressFamily'
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          $ref: '#/components/schemas/GenericName'
+      required:
+      - name
+      - addressFamily
+      type: object
+    UpdatedAt:
+      description: Date-time when resource was last updated.
+      example: '2017-07-21T17:32:28Z'
+      format: date-time
+      type: string
+    NetworkAreaListResponse:
+      description: Network area list response.
+      properties:
+        items:
+          $ref: '#/components/schemas/NetworkAreaList'
+      required:
+      - items
+      type: object
+    Error:
+      description: Error with HTTP error code and an error message.
+      properties:
+        code:
+          example: 404
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        msg:
+          $ref: '#/components/schemas/errorMessage'
+      required:
+      - code
+      - msg
+      type: object
+    errorMessage:
+      description: An error message.
+      example: Project not found
+      type: string
+    ProjectList:
+      description: A list of STACKIT projects.
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+    Labels:
+      description: 'Object that represents the labels as key-value pairs of a resource.
+
+        Key constraints: - May contain an optional domain prefix separated by a slash (`/`). - Domain prefix must be less than or equal to 250 characters. - Domain prefix must ba a valid DNS subdomain containing only lowercase alphanumerics (`[a-z0-9]`) and dashes (`-`), separated by dots (`.`). - Length (excluding the domain prefix) must be between 1 and 63 characters. - Must begin and end with an alphanumerical character (`[a-z0-9A-Z]`). - May contain dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics in between. - Keys starting with the prefix `stackit-` or having a domain prefix of `stackit.cloud` (including its subdomains, e.g., `*.stackit.cloud/`) are reserved for system use.
+
+        Value constraints: - Must be less than or equal to 63 characters long (can be empty). - If not empty it must begin and end with an alphanumeric character (`[a-z0-9A-Z]`). - May contain dashes (`-`), underscores (`_`), dots (`.`), and alphanumerics in between.
+
+        A resource can have a maximum of 64 labels. Reserved labels are excluded from this count. Providing a `null` value for a key will remove that key.'
+      example:
+        key: value
+      format: json
+      type: object
+    NetworkRangeListResponse:
+      description: Network Range list response.
+      properties:
+        items:
+          $ref: '#/components/schemas/NetworkRangeList'
+      required:
+      - items
+      type: object
+    CreateNetworkAreaRangePayload:
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/NetworkRangeList'
+      type: object
+    AreaMinPrefixLengthIPv4:
+      description: The minimal prefix length for networks in the network area.
+      example: 24
+      maximum: 29
+      minimum: 8
+      type: integer
+    CreateNetworkAreaRoutePayload:
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/RouteList'
+      type: object
+    GenericName:
+      description: The name for a General Object. Matches Names and also UUIDs.
+      example: objectName26
+      maxLength: 127
+      pattern: ^[A-Za-z0-9]+([ /._-]*[A-Za-z0-9]+)*$
+      type: string
+    ResourceAction:
+      description: 'Object that represents a resource action.
+
+        Possible values: `CREATE`, `DELETE`, `UPDATE`.'
+      example: CREATE
+      type: string
+    ReqId:
+      description: Identifier (ID) representing a single API request.
+      example: req-d61a8564c8dd4ffbbc15143e7d0c85ed
+      maxLength: 36
+      minLength: 36
+      pattern: ^req-[0-9a-f]{32}$
+      type: string
+    CreatedAt:
+      description: Date-time when resource was created.
+      example: '2017-07-21T17:32:28Z'
+      format: date-time
+      type: string
+    AreaDefaultPrefixLengthIPv4:
+      description: The default prefix length for networks in the network area.
+      example: 24
+      maximum: 29
+      minimum: 24
+      type: integer
+    NetworkRange:
+      description: Object that represents a network range.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        networkRangeId:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        prefix:
+          $ref: '#/components/schemas/CIDR'
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - prefix
+      type: object
+    NetworkArea:
+      description: Object that represents a network area.
+      properties:
+        areaId:
+          $ref: '#/components/schemas/UUID'
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        ipv4:
+          $ref: '#/components/schemas/NetworkAreaIPv4'
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+        projectCount:
+          $ref: '#/components/schemas/ProjectCount'
+        state:
+          $ref: '#/components/schemas/ResourceState'
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - areaId
+      - name
+      - projectCount
+      - state
+      type: object
+    IP:
+      description: Object that represents an IP address.
+      example: 10.1.2.10
+      pattern: ((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9a-f]{1,4}:){7}([0-9a-f]{1,4}|:))|(([0-9a-f]{1,4}:){6}(:[0-9a-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9a-f]{1,4}:){5}(((:[0-9a-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9a-f]{1,4}:){4}(((:[0-9a-f]{1,4}){1,3})|((:[0-9a-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9a-f]{1,4}:){3}(((:[0-9a-f]{1,4}){1,4})|((:[0-9a-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9a-f]{1,4}:){2}(((:[0-9a-f]{1,4}){1,5})|((:[0-9a-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9a-f]{1,4}:){1}(((:[0-9a-f]{1,4}){1,6})|((:[0-9a-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9a-f]{1,4}){1,7})|((:[0-9a-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))
+      type: string
+    NexthopBlackhole:
+      description: Object that represents a blackhole route.
+      properties:
+        type:
+          enum:
+          - blackhole
+          example: blackhole
+          type: string
+          x-stackit-logging: true
+      required:
+      - type
+      type: object
+    NetworkRangeList_2:
+      description: A list of network area network ranges.
+      items:
+        $ref: '#/components/schemas/NetworkRange_2'
+      maxItems: 64
+      minItems: 1
+      type: array
+    SystemRoutes:
+      default: true
+      description: A config setting for a routing table which allows installation of automatic system routes for connectivity between projects in the same SNA.
+      type: boolean
+    AddRoutingTableToAreaPayload:
+      description: 'An object representing a routing table. Filterable Fields: `dynamicRoutes`, `systemRoutes`.'
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        default:
+          default: true
+          description: This is the default routing table. It can't be deleted and is used if the user does not specify it otherwise.
+          readOnly: true
+          type: boolean
+          x-stackit-logging: true
+        description:
+          $ref: '#/components/schemas/Description'
+        dynamicRoutes:
+          $ref: '#/components/schemas/DynamicRoutes'
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          $ref: '#/components/schemas/GenericName'
+        systemRoutes:
+          $ref: '#/components/schemas/SystemRoutes'
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - name
+      type: object
+    v1RegionName:
+      description: Name of the region.
+      example: eu01
+      type: string
+    RegionalAreaIPv4:
+      description: The regional IPv4 config of a network area.
+      properties:
+        defaultNameservers:
+          items:
+            $ref: '#/components/schemas/IPv4'
+          maxItems: 3
+          type: array
+          x-stackit-logging: true
+        defaultPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaDefaultPrefixLengthIPv4_2'
+          default: 25
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        maxPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaMaxPrefixLengthIPv4_2'
+          default: 29
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        minPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaMinPrefixLengthIPv4_2'
+          default: 24
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        networkRanges:
+          $ref: '#/components/schemas/NetworkRangeList_2'
+        transferNetwork:
+          $ref: '#/components/schemas/CIDRv4'
+      required:
+      - transferNetwork
+      - minPrefixLen
+      - maxPrefixLen
+      - defaultPrefixLen
+      - networkRanges
+      type: object
+    CreateNetworkAreaPayload_2:
+      description: Object that represents the network area create request.
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+      required:
+      - name
+      type: object
+    NexthopIPv4:
+      description: Object that represents an IPv4 address.
+      properties:
+        type:
+          enum:
+          - ipv4
+          example: ipv4
+          type: string
+          x-stackit-logging: true
+        value:
+          description: An IPv4 address.
+          example: 10.1.2.10
+          pattern: ^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$
+          type: string
+          x-stackit-logging: true
+      required:
+      - type
+      - value
+      type: object
+    RoutingTable:
+      description: 'An object representing a routing table. Filterable Fields: `dynamicRoutes`, `systemRoutes`.'
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        default:
+          default: true
+          description: This is the default routing table. It can't be deleted and is used if the user does not specify it otherwise.
+          readOnly: true
+          type: boolean
+          x-stackit-logging: true
+        description:
+          $ref: '#/components/schemas/Description'
+        dynamicRoutes:
+          $ref: '#/components/schemas/DynamicRoutes'
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          $ref: '#/components/schemas/GenericName'
+        systemRoutes:
+          $ref: '#/components/schemas/SystemRoutes'
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - name
+      type: object
+    Description:
+      description: Description Object. Allows string up to 255 Characters.
+      example: cool description dude. Wanna play some Snakeybus?
+      maxLength: 255
+      type: string
+    NetworkArea_2:
+      description: Object that represents a network area.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+        projectCount:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCount'
+          readOnly: true
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - name
+      type: object
+    UpdateRouteOfRoutingTablePayload:
+      description: Object that represents the request body for a route update.
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+      type: object
+    CreateNetworkAreaRegionPayload:
+      description: The basic properties of a regional network area.
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/RegionalAreaIPv4'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ResourceState'
+          readOnly: true
+      type: object
+    AreaMaxPrefixLengthIPv4_2:
+      description: The maximal prefix length for networks in the network area.
+      example: 29
+      format: int64
+      maximum: 29
+      minimum: 24
+      type: integer
+    UpdateDynamicRoutes:
+      description: The update config setting for a routing table which allows propagation of dynamic routes to this routing table.
+      type: boolean
+    DynamicRoutes:
+      default: true
+      description: A config setting for a routing table which allows propagation of dynamic routes to this routing table.
+      type: boolean
+    UpdateRegionalAreaIPv4:
+      description: Object that represents the request body for a regional network area IPv4 configuration update.
+      properties:
+        defaultNameservers:
+          items:
+            $ref: '#/components/schemas/IP'
+          maxItems: 3
+          type: array
+          x-stackit-logging: true
+        defaultPrefixLen:
+          $ref: '#/components/schemas/AreaDefaultPrefixLengthIPv4_2'
+        maxPrefixLen:
+          $ref: '#/components/schemas/AreaMaxPrefixLengthIPv4_2'
+        minPrefixLen:
+          $ref: '#/components/schemas/AreaMinPrefixLengthIPv4_2'
+      type: object
+    DestinationCIDRv4:
+      description: IPv4 Classless Inter-Domain Routing (CIDR) Object.
+      properties:
+        type:
+          enum:
+          - cidrv4
+          example: cidrv4
+          type: string
+          x-stackit-logging: true
+        value:
+          description: An CIDRv4 string.
+          example: 192.168.0.0/24
+          pattern: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/(3[0-2]|2[0-9]|1[0-9]|[0-9]))$
+          type: string
+          x-stackit-logging: true
+      required:
+      - type
+      - value
+      type: object
+    RoutingTableListResponse:
+      description: Routing table response.
+      properties:
+        items:
+          $ref: '#/components/schemas/RoutingTablesList'
+      required:
+      - items
+      type: object
+    NetworkRangeListResponse_2:
+      description: Network Range list response of a network area.
+      properties:
+        items:
+          $ref: '#/components/schemas/NetworkRangeList_2'
+      required:
+      - items
+      type: object
+    NexthopInternet:
+      description: Object that represents a route to the internet.
+      properties:
+        type:
+          enum:
+          - internet
+          example: internet
+          type: string
+          x-stackit-logging: true
+      required:
+      - type
+      type: object
+    CreateNetworkAreaRoutePayload_2:
+      description: Object represents a request to add network routes.
+      properties:
+        items:
+          $ref: '#/components/schemas/RouteList'
+      required:
+      - items
+      type: object
+    AreaDefaultPrefixLengthIPv4_2:
+      description: The default prefix length for networks in the network area.
+      example: 24
+      format: int64
+      maximum: 29
+      minimum: 24
+      type: integer
+    AddRoutesToRoutingTablePayload:
+      description: Object represents a request to add network routes.
+      properties:
+        items:
+          $ref: '#/components/schemas/RouteList'
+      required:
+      - items
+      type: object
+    UpdateRoutingTableOfAreaPayload:
+      description: Object that represents the request body for a routing table update.
+      properties:
+        description:
+          $ref: '#/components/schemas/Description'
+        dynamicRoutes:
+          $ref: '#/components/schemas/UpdateDynamicRoutes'
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          $ref: '#/components/schemas/GenericName'
+        systemRoutes:
+          $ref: '#/components/schemas/UpdateSystemRoutes'
+      type: object
+    NetworkRange_2:
+      description: Object that represents a network range of a network area.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        prefix:
+          $ref: '#/components/schemas/CIDR'
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - prefix
+      type: object
+    DestinationCIDRv6:
+      description: IPv6 Classless Inter-Domain Routing (CIDR) Object.
+      properties:
+        type:
+          enum:
+          - cidrv6
+          example: cidrv6
+          type: string
+          x-stackit-logging: true
+        value:
+          description: An CIDRv6 string.
+          example: 2001:0db8:85a3:0800::/56
+          pattern: ^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(\/((1(1[0-9]|2[0-8]))|([0-9][0-9])|([0-9])))?$
+          type: string
+          x-stackit-logging: true
+      required:
+      - type
+      - value
+      type: object
+    v2RouteDestinationType:
+      description: 'Possible values: `cidrv4`, `cidrv6`.'
+      example: cidrv4
+      type: string
+    UpdateSystemRoutes:
+      description: The update config setting for a routing table which allows installation of automatic system routes for connectivity between projects in the same SNA.
+      type: boolean
+    PartialUpdateNetworkAreaPayload_2:
+      description: Object that represents the network area update request.
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+      type: object
+    AreaMinPrefixLengthIPv4_2:
+      description: The minimal prefix length for networks in the network area.
+      example: 24
+      format: int64
+      maximum: 29
+      minimum: 8
+      type: integer
+    CIDRv4:
+      description: IPv4 Classless Inter-Domain Routing (CIDR).
+      example: 192.168.0.0/24
+      pattern: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/(3[0-2]|2[0-9]|1[0-9]|[0-9]))$
+      type: string
+    Route_2:
+      description: Object represents a network route.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        destination:
+          discriminator:
+            mapping:
+              cidrv4: '#/components/schemas/DestinationCIDRv4'
+              cidrv6: '#/components/schemas/DestinationCIDRv6'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/DestinationCIDRv4'
+          - $ref: '#/components/schemas/DestinationCIDRv6'
+          properties:
+            type:
+              $ref: '#/components/schemas/v2RouteDestinationType'
+          required:
+          - type
+          type: object
+          x-stackit-logging: true
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        nexthop:
+          discriminator:
+            mapping:
+              blackhole: '#/components/schemas/NexthopBlackhole'
+              internet: '#/components/schemas/NexthopInternet'
+              ipv4: '#/components/schemas/NexthopIPv4'
+              ipv6: '#/components/schemas/NexthopIPv6'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/NexthopIPv4'
+          - $ref: '#/components/schemas/NexthopIPv6'
+          - $ref: '#/components/schemas/NexthopInternet'
+          - $ref: '#/components/schemas/NexthopBlackhole'
+          properties:
+            type:
+              type: string
+              x-stackit-logging: true
+          required:
+          - type
+          type: object
+          x-stackit-logging: true
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - destination
+      - nexthop
+      type: object
+    RegionalArea:
+      description: The basic properties of a regional network area.
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/RegionalAreaIPv4'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ResourceState'
+          readOnly: true
+      type: object
+    RegionalAreaListResponse:
+      description: Regional area list response.
+      properties:
+        regions:
+          additionalProperties:
+            $ref: '#/components/schemas/RegionalArea'
+          example:
+            eu01:
+              ipv4:
+                defaultNameservers:
+                - 10.1.2.10
+                defaultPrefixLen: 24
+                maxPrefixLen: 29
+                minPrefixLen: 24
+                networkRanges:
+                - createdAt: '2017-07-21T17:32:28Z'
+                  id: d61a8564-c8dd-4ffb-bc15-143e7d0c85ed
+                  prefix: 10.0.0.0/16
+                  updatedAt: '2017-07-21T17:32:28Z'
+                routes:
+                - createdAt: '2017-07-21T17:32:28Z'
+                  destination:
+                    type: CIDRv4
+                    value: 192.168.2.0/24
+                  id: d61a8564-c8dd-4ffb-bc15-143e7d0c85ed
+                  labels:
+                    key: value
+                  nexthop:
+                    type: IPv4
+                    value: 10.1.2.10
+                  updatedAt: '2017-07-21T17:32:28Z'
+                transferNetwork: 192.168.0.0/24
+              status: CREATED
+          maxProperties: 100
+          type: object
+          x-stackit-logging: true
+      required:
+      - regions
+      type: object
+    NexthopIPv6:
+      description: Object that represents an IPv6 address.
+      properties:
+        type:
+          enum:
+          - ipv6
+          example: ipv6
+          type: string
+          x-stackit-logging: true
+        value:
+          description: An IPv6 address.
+          example: 2001:db8:0:8d3:0:8a2e:70:7344
+          pattern: ^\s*((([0-9a-f]{1,4}:){7}([0-9a-f]{1,4}|:))|(([0-9a-f]{1,4}:){6}(:[0-9a-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9a-f]{1,4}:){5}(((:[0-9a-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9a-f]{1,4}:){4}(((:[0-9a-f]{1,4}){1,3})|((:[0-9a-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9a-f]{1,4}:){3}(((:[0-9a-f]{1,4}){1,4})|((:[0-9a-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9a-f]{1,4}:){2}(((:[0-9a-f]{1,4}){1,5})|((:[0-9a-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9a-f]{1,4}:){1}(((:[0-9a-f]{1,4}){1,6})|((:[0-9a-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9a-f]{1,4}){1,7})|((:[0-9a-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$
+          type: string
+          x-stackit-logging: true
+      required:
+      - type
+      - value
+      type: object
+    IPv4:
+      description: String that represents an IPv4 address.
+      example: 10.1.2.10
+      pattern: ^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$
+      type: string
+    RoutingTablesList:
+      description: A list of routing tables.
+      items:
+        $ref: '#/components/schemas/RoutingTable'
+      type: array
+    UpdateNetworkAreaRegionPayload:
+      description: Object that represents the request body for a regional network area update.
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/UpdateRegionalAreaIPv4'
+      type: object
+    ErrorResponse:
+      properties:
+        error:
+          description: The reason phrase of the status code.
+          example: Bad Request
+          type: string
+        message:
+          description: Description of the error.
+          example: Validation of {param} failed.
+          type: string
+        path:
+          description: Path which was called.
+          example: /path/where/error/occurred
+          type: string
+        status:
+          description: Http Status Code.
+          example: 400
+          type: number
+        timeStamp:
+          description: Timestamp at which the error occurred.
+          example: '2019-08-24T14:15:22Z'
+          format: date-time
+          type: string
+      required:
+      - timeStamp
+      - path
+      - status
+      - error
+      - message
+      title: ErrorResponse
+      type: object
+    OrganizationResponse:
+      properties:
+        containerId:
+          description: Globally unique, user-friendly identifier.
+          example: my-organization-184629
+          type: string
+        creationTime:
+          description: Timestamp at which the organization was created.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels_2'
+        lifecycleState:
+          $ref: '#/components/schemas/LifecycleState'
+        name:
+          description: Organization name.
+          example: My Organization
+          type: string
+        organizationId:
+          description: Globally unique, organization identifier.
+          example: 54066bf4-2bff-4f7b-9f83-fb23c348fee3
+          format: uuid
+          type: string
+        updateTime:
+          description: Timestamp at which the organization was last modified.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - containerId
+      - organizationId
+      - lifecycleState
+      - creationTime
+      - updateTime
+      title: OrganizationResponse
+      type: object
+    Labels_2:
+      additionalProperties:
+        type: string
+      description: 'Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.
+
+
+        * **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.
+
+        * **Value:** Must be 63 characters or less. May be empty (""). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).
+
+
+        > Note: Additional naming restrictions may apply depending on your specific organization.*'
+      maxProperties: 64
+      title: Labels
+      type: object
+    LifecycleState:
+      description: 'Lifecycle state of the resource container.
+
+
+        | LIFECYCLE STATE | DESCRIPTION |
+
+        |----------|--------------------|
+
+        | CREATING | The creation process has been triggered. The state remains until resource manager gets notified about successful process completion. |
+
+        | ACTIVE   | Resource container can be fully used. |
+
+        | INACTIVE | Resource container usage has been disabled. |
+
+        | DELETING | The deletion process has been triggered. The state remains until resource manager gets notified about successful process completion. Afterwards, the record will be deleted. |'
+      enum:
+      - CREATING
+      - ACTIVE
+      - DELETING
+      - INACTIVE
+      example: CREATING
+      title: LifecycleState
+      type: string
+    Offset:
+      default: 0
+      description: The offset of the first item in the collection to return.
+      minimum: 0
+      title: Offset
+      type: number
+    Limit:
+      default: 50
+      description: The maximum number of projects to return in the response. If not present, an appropriate default will be used.
+      maximum: 100
+      minimum: 0
+      title: Limit
+      type: number
+    UpdateLabels:
+      additionalProperties:
+        type:
+        - string
+        - 'null'
+      description: 'Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.
+
+
+        Setting an individual label''s value to `null` removes/deletes that label from the resource.
+
+
+        * **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.
+
+        * **Value:** Must be 63 characters or less. May be empty (""). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).
+
+
+        > Note: Additional naming restrictions may apply depending on your specific organization.*'
+      title: Labels
+      type: object
+    ListOrganizationsResponse:
+      properties:
+        items:
+          items:
+            properties:
+              containerId:
+                description: Globally unique, user-friendly identifier.
+                example: my-organization-156846
+                type: string
+              creationTime:
+                description: Timestamp at which the organization was created.
+                example: '2021-08-24T14:15:22Z'
+                format: date-time
+                type: string
+              labels:
+                $ref: '#/components/schemas/Labels_2'
+              lifecycleState:
+                $ref: '#/components/schemas/LifecycleState'
+              name:
+                description: Name of the organization.
+                example: My Organization
+                type: string
+              organizationId:
+                description: Globally unique, organization identifier.
+                example: 54066bf4-2bff-4f7b-9f83-fb23c348fee3
+                format: uuid
+                type: string
+              updateTime:
+                description: Timestamp at which the organization was last modified.
+                example: '2021-08-24T14:15:22Z'
+                format: date-time
+                type: string
+            required:
+            - name
+            - containerId
+            - organizationId
+            - lifecycleState
+            - creationTime
+            - updateTime
+            type: object
+          type: array
+        limit:
+          $ref: '#/components/schemas/Limit'
+        offset:
+          $ref: '#/components/schemas/Offset'
+      required:
+      - items
+      - offset
+      - limit
+      title: ListOrganizationsResponse
+      type: object
+    PartialUpdateOrganizationPayload:
+      properties:
+        labels:
+          $ref: '#/components/schemas/UpdateLabels'
+        name:
+          description: The new name of the organization matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.
+          example: My Organization
+          pattern: ^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$
+          type: string
+      title: UpdateOrganizationRequest
+      type: object
+    listBackflushJobsResponse:
+      properties:
+        backflushJobs:
+          items:
+            $ref: '#/components/schemas/backflushJobResponse'
+          type: array
+        nextPageToken:
+          description: A token to retrieve the next page of results.
+          type: string
+      required:
+      - backflushJobs
+      type: object
+    create-or-update-organization-telemetry-linkPayload:
+      allOf:
+      - required:
+        - displayName
+        - telemetryRouterId
+        - accessToken
+        type: object
+      - $ref: '#/components/schemas/telemetryLinkRequest'
+    backflushJobResponse:
+      properties:
+        createTime:
+          description: The point in time the resource was created.
+          format: date-time
+          type: string
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          type: string
+        id:
+          description: A auto generated unique id which identifies the resource.
+          format: uuid
+          type: string
+        regionId:
+          description: The STACKIT region name the resource is located in.
+          enum:
+          - eu01
+          - eu02
+          type: string
+        status:
+          description: The current state of the link.
+          enum:
+          - active
+          - complete
+          - failed
+          - reconciling
+          - deleting
+          type: string
+      required:
+      - id
+      - regionId
+      - status
+      - createTime
+      type: object
+    create-organization-backflush-jobPayload:
+      properties:
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 \-]*$
+          type: string
+      type: object
+    partial-update-organization-telemetry-linkPayload:
+      allOf:
+      - $ref: '#/components/schemas/telemetryLinkRequest'
+    telemetryLinkResponse:
+      properties:
+        accessToken:
+          description: The access token.
+          type: string
+        createTime:
+          description: The point in time the resource was created.
+          format: date-time
+          type: string
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          type: string
+        enabled:
+          description: Indicates whether routing through the link to a telemetry-router is active.
+          type: boolean
+        id:
+          description: A auto generated unique id which identifies the resource.
+          format: uuid
+          type: string
+        regionId:
+          description: The STACKIT region name the resource is located in.
+          enum:
+          - eu01
+          - eu02
+          type: string
+        status:
+          description: The current state of the link.
+          enum:
+          - active
+          - inactive
+          - failed
+          - reconciling
+          - deleting
+          type: string
+        telemetryRouterId:
+          description: The ID of the telemetry-router to route the telemetry data.
+          maxLength: 1024
+          type: string
+      required:
+      - id
+      - displayName
+      - regionId
+      - telemetryRouterId
+      - enabled
+      - status
+      - createTime
+      type: object
+    response4xx:
+      properties:
+        message:
+          description: A message containing the reason for failure
+          type: string
+      required:
+      - message
+      type: object
+    telemetryLinkRequest:
+      properties:
+        accessToken:
+          description: The access token.
+          pattern: ^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$
+          type: string
+        description:
+          description: The description is a longer text chosen by the user to provide more context for the resource.
+          maxLength: 1024
+          pattern: ^([a-zA-Z0-9][a-zA-Z0-9 \-]*)?$
+          type: string
+        displayName:
+          description: The display name is a short name chosen by the user to identify the resource.
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 \-]*$
+          type: string
+        enabled:
+          default: true
+          description: Indicates whether routing through the link to a telemetry-router is active.
+          type: boolean
+        telemetryRouterId:
+          description: The ID of the telemetry-router to route the telemetry data.
+          maxLength: 1024
+          type: string
+      type: object
+    ErrorResponse_2:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+    ContainerResponse:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - name
+      - type
+      type: object
+    ListContainersResponse:
+      properties:
+        cursor:
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/ContainerResponse'
+          type: array
+        limit:
+          format: int32
+          type: integer
+      required:
+      - items
+      - cursor
+      - limit
+      type: object
+    NetworkRangeList_3:
+      description: A list of network area network ranges.
+      items:
+        $ref: '#/components/schemas/NetworkRange_3'
+      maxItems: 64
+      minItems: 1
+      type: array
+    RegionalAreaIPv4_2:
+      description: The regional IPv4 config of a network area.
+      properties:
+        defaultNameservers:
+          items:
+            $ref: '#/components/schemas/IPv4'
+          maxItems: 3
+          type: array
+          x-stackit-logging: true
+        defaultPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaDefaultPrefixLengthIPv4_3'
+          default: 25
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        maxPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaMaxPrefixLengthIPv4_3'
+          default: 29
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        minPrefixLen:
+          allOf:
+          - $ref: '#/components/schemas/AreaMinPrefixLengthIPv4_3'
+          default: 24
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        networkRanges:
+          $ref: '#/components/schemas/NetworkRangeList_3'
+        transferNetwork:
+          $ref: '#/components/schemas/CIDRv4'
+      required:
+      - transferNetwork
+      - minPrefixLen
+      - maxPrefixLen
+      - defaultPrefixLen
+      - networkRanges
+      type: object
+    CreateNetworkAreaPayload_3:
+      description: Object that represents the network area create request.
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+      required:
+      - name
+      type: object
+    NetworkArea_3:
+      description: Object that represents a network area.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+        projectCount:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCount'
+          readOnly: true
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - name
+      type: object
+    AreaMaxPrefixLengthIPv4_3:
+      description: The maximal prefix length for networks in the network area.
+      example: 29
+      format: int64
+      maximum: 29
+      minimum: 24
+      type: integer
+    UpdateRegionalAreaIPv4_2:
+      description: Object that represents the request body for a regional network area IPv4 configuration update.
+      properties:
+        defaultNameservers:
+          items:
+            $ref: '#/components/schemas/IP'
+          maxItems: 3
+          type: array
+          x-stackit-logging: true
+        defaultPrefixLen:
+          $ref: '#/components/schemas/AreaDefaultPrefixLengthIPv4_3'
+        maxPrefixLen:
+          $ref: '#/components/schemas/AreaMaxPrefixLengthIPv4_3'
+        minPrefixLen:
+          $ref: '#/components/schemas/AreaMinPrefixLengthIPv4_3'
+      type: object
+    NetworkRangeListResponse_3:
+      description: Network Range list response of a network area.
+      properties:
+        items:
+          $ref: '#/components/schemas/NetworkRangeList_3'
+      required:
+      - items
+      type: object
+    CreateNetworkAreaRoutePayload_3:
+      description: Object represents a request to add network routes.
+      properties:
+        items:
+          $ref: '#/components/schemas/RouteList'
+      required:
+      - items
+      type: object
+    AreaDefaultPrefixLengthIPv4_3:
+      description: The default prefix length for networks in the network area.
+      example: 24
+      format: int64
+      maximum: 29
+      minimum: 24
+      type: integer
+    NetworkRange_3:
+      description: Object that represents a network range of a network area.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        prefix:
+          $ref: '#/components/schemas/CIDR'
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - prefix
+      type: object
+    PartialUpdateNetworkAreaPayload_3:
+      description: Object that represents the network area update request.
+      properties:
+        labels:
+          $ref: '#/components/schemas/Labels'
+        name:
+          example: My network area
+          type: string
+          x-stackit-logging: true
+      type: object
+    AreaMinPrefixLengthIPv4_3:
+      description: The minimal prefix length for networks in the network area.
+      example: 24
+      format: int64
+      maximum: 29
+      minimum: 8
+      type: integer
+    Route_3:
+      description: Object represents a network route.
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/CreatedAt'
+          readOnly: true
+        destination:
+          discriminator:
+            mapping:
+              cidrv4: '#/components/schemas/DestinationCIDRv4'
+              cidrv6: '#/components/schemas/DestinationCIDRv6'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/DestinationCIDRv4'
+          - $ref: '#/components/schemas/DestinationCIDRv6'
+          properties:
+            type:
+              $ref: '#/components/schemas/v2RouteDestinationType'
+          required:
+          - type
+          type: object
+          x-stackit-logging: true
+        id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          readOnly: true
+        labels:
+          $ref: '#/components/schemas/Labels'
+        nexthop:
+          discriminator:
+            mapping:
+              blackhole: '#/components/schemas/NexthopBlackhole'
+              internet: '#/components/schemas/NexthopInternet'
+              ipv4: '#/components/schemas/NexthopIPv4'
+              ipv6: '#/components/schemas/NexthopIPv6'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/NexthopIPv4'
+          - $ref: '#/components/schemas/NexthopIPv6'
+          - $ref: '#/components/schemas/NexthopInternet'
+          - $ref: '#/components/schemas/NexthopBlackhole'
+          properties:
+            type:
+              type: string
+              x-stackit-logging: true
+          required:
+          - type
+          type: object
+          x-stackit-logging: true
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/UpdatedAt'
+          readOnly: true
+      required:
+      - destination
+      - nexthop
+      type: object
+    OrganizationResponse_2:
+      properties:
+        containerId:
+          description: Globally unique, user-friendly identifier.
+          example: my-organization-184629
+          type: string
+        creationTime:
+          description: Timestamp at which the organization was created.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels_3'
+        lifecycleState:
+          $ref: '#/components/schemas/LifecycleState'
+        name:
+          description: Organization name.
+          example: My Organization
+          type: string
+        organizationId:
+          description: Globally unique, organization identifier.
+          example: 54066bf4-2bff-4f7b-9f83-fb23c348fee3
+          format: uuid
+          type: string
+        updateTime:
+          description: Timestamp at which the organization was last modified.
+          example: '2021-08-24T14:15:22Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - containerId
+      - organizationId
+      - lifecycleState
+      - creationTime
+      - updateTime
+      title: OrganizationResponse
+      type: object
+    Labels_3:
+      additionalProperties:
+        type: string
+      description: 'Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.
+
+
+        * **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.
+
+        * **Value:** Must be 63 characters or less. May be empty (""). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).
+
+
+        > Note: Additional naming restrictions may apply depending on your specific organization.*'
+      maxProperties: 64
+      title: Labels
+      type: object
+    ListOrganizationsResponse_2:
+      properties:
+        items:
+          items:
+            properties:
+              containerId:
+                description: Globally unique, user-friendly identifier.
+                example: my-organization-156846
+                type: string
+              creationTime:
+                description: Timestamp at which the organization was created.
+                example: '2021-08-24T14:15:22Z'
+                format: date-time
+                type: string
+              labels:
+                $ref: '#/components/schemas/Labels_3'
+              lifecycleState:
+                $ref: '#/components/schemas/LifecycleState'
+              name:
+                description: Name of the organization.
+                example: My Organization
+                type: string
+              organizationId:
+                description: Globally unique, organization identifier.
+                example: 54066bf4-2bff-4f7b-9f83-fb23c348fee3
+                format: uuid
+                type: string
+              updateTime:
+                description: Timestamp at which the organization was last modified.
+                example: '2021-08-24T14:15:22Z'
+                format: date-time
+                type: string
+            required:
+            - name
+            - containerId
+            - organizationId
+            - lifecycleState
+            - creationTime
+            - updateTime
+            type: object
+          type: array
+        limit:
+          $ref: '#/components/schemas/Limit'
+        offset:
+          $ref: '#/components/schemas/Offset'
+      required:
+      - items
+      - offset
+      - limit
+      title: ListOrganizationsResponse
+      type: object
+    ErrorResponse_3:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+  parameters:
+    v1OrganizationID:
+      description: The identifier (ID) of a STACKIT Organization.
+      in: path
+      name: organizationId
+      required: true
+      schema:
+        $ref: '#/components/schemas/UUID'
+    v1NetworkAreaID:
+      description: The identifier (ID) of a STACKIT Network Area.
+      in: path
+      name: areaId
+      required: true
+      schema:
+        $ref: '#/components/schemas/UUID'
+    v1LabelSelector:
+      description: Filter resources by labels.
+      in: query
+      name: label_selector
+      schema:
+        type: string
+    v1RouteID:
+      description: The identifier (ID) of a STACKIT Route.
+      in: path
+      name: routeId
+      required: true
+      schema:
+        $ref: '#/components/schemas/UUID'
+    v1RequestID:
+      description: The identifier (ID) of a STACKIT Request.
+      in: path
+      name: requestId
+      required: true
+      schema:
+        $ref: '#/components/schemas/ReqId'
+    v1NetworkRangeID:
+      description: The identifier (ID) of a STACKIT Network Range.
+      in: path
+      name: networkRangeId
+      required: true
+      schema:
+        $ref: '#/components/schemas/UUID'
+    v1Region:
+      description: The STACKIT Region of the resources.
+      in: path
+      name: region
+      required: true
+      schema:
+        $ref: '#/components/schemas/v1RegionName'
+    v2RoutingTableID:
+      description: The identifier (ID) of a STACKIT Routing Table.
+      in: path
+      name: routingTableId
+      required: true
+      schema:
+        $ref: '#/components/schemas/UUID'
+    creation-time-start:
+      description: A timestamp to specify the beginning of the creationTime from which entries should be returned. If not given, defaults to the beginning of time.
+      in: query
+      name: creation-time-start
+      schema:
+        example: '2021-01-20T00:00:00Z'
+        format: date-time
+        type: string
+    member:
+      description: E-Mail address of the user for whom the visible resource containers should be filtered.
+      in: query
+      name: member
+      schema:
+        type: string
+    offset:
+      description: The offset of the first item in the collection to return.
+      in: query
+      name: offset
+      schema:
+        default: 0
+        minimum: 0
+        type: number
+    limit:
+      description: The maximum number of projects to return in the response. If not present, an appropriate default will be used. If maximum is exceeded, maximum is used.
+      in: query
+      name: limit
+      schema:
+        default: 50
+        maximum: 100
+        minimum: 0
+        type: number
+    ifNoneMatch:
+      description: ETag of the resource. If specified, the resource is only created if it does not exist. Specify "*" to avoid creating a resource.
+      in: header
+      name: If-None-Match
+      schema:
+        type: string
+    regionId:
+      description: The STACKIT region name the resource is located in.
+      in: path
+      name: regionId
+      required: true
+      schema:
+        enum:
+        - eu01
+        - eu02
+        type: string
+    pageToken:
+      allowEmptyValue: true
+      description: A token to retrieve the next page of results.
+      in: query
+      name: pageToken
+      schema:
+        maxLength: 1024
+        type: string
+    organizationId:
+      description: The STACKIT portal organization UUID the resource is located in.
+      in: path
+      name: organizationId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    backflushJobId:
+      description: The Backflush Job UUID.
+      in: path
+      name: backflushJobId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    pageSize:
+      description: Maximum number of items to return
+      in: query
+      name: pageSize
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+    organizationId_2:
+      description: The STACKIT portal organization UUID
+      in: path
+      name: organizationId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    cursor:
+      description: A pagination cursor that represents a position in the dataset. If given, results will be returned from the item after the cursor. If not given, results will be returned from the beginning.
+      in: query
+      name: cursor
+      schema:
+        type: string
+    limit_2:
+      description: The maximum number of items to return in the response. If maximum is exceeded, maximum is used.
+      in: query
+      name: limit
+      schema:
+        format: int32
+        type: integer
+    organizationId_3:
+      description: The STACKIT portal organization UUID
+      in: path
+      name: organizationId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    limit_3:
+      description: The maximum number of items to return in the response. If maximum is exceeded, maximum is used.
+      in: query
+      name: limit
+      schema:
+        format: int32
+        type: integer
+  responses:
+    NotFound:
+      content:
+        application/json:
+          examples:
+            AreaNotFound:
+              value:
+                code: 404
+                msg: area not found
+            KeypairNotFound:
+              value:
+                code: 404
+                msg: keypair not found
+            NetworkNotFound:
+              value:
+                code: 404
+                msg: network not found
+            NetworkRangeNotFound:
+              value:
+                code: 404
+                msg: network range not found
+            OrganizationNotFound:
+              value:
+                code: 404
+                msg: organization not found
+            ProjectNotFound:
+              value:
+                code: 404
+                msg: project not found
+            RequestNotFound:
+              value:
+                code: 404
+                msg: request not found
+            RouteNotFound:
+              value:
+                code: 404
+                msg: route not found
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The object was not found.
+    InternalServerError:
+      content:
+        application/json:
+          example:
+            code: 500
+            msg: internal server error
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal Server Error, returns a 500 if something is broken on IaaS API Side.
+    Forbidden:
+      content:
+        application/json:
+          example:
+            code: 403
+            msg: Forbidden
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A request which was forbidden.
+    Conflict:
+      content:
+        application/json:
+          example:
+            code: 409
+            msg: Conflict
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A conflict has occurred.
+    Unauthorized:
+      content:
+        application/json:
+          example:
+            code: 401
+            msg: Unauthorized
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A request which was not authorized.
+    BadRequest:
+      content:
+        application/json:
+          examples:
+            InvalidAffinityGroupPolicy:
+              value:
+                code: 400
+                msg: The affinity group policy is not supported
+            InvalidBootDeviceSize:
+              value:
+                code: 400
+                msg: boot device size is not valid or missing
+            InvalidMachineType:
+              value:
+                code: 400
+                msg: machine type is not valid
+            InvalidParameter:
+              value:
+                code: 400
+                msg: 'request body has an error: doesn''t match schema: Error at "/name": value must be a string'
+            InvalidPublicKey:
+              value:
+                code: 400
+                msg: invalid pubkey
+            InvalidUUID:
+              value:
+                code: 400
+                msg: invalid uuid
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A bad request.
+    notFound:
+      description: Not found. The resource has not been found.
+    internalServerError:
+      description: Internal server error. The application experienced some unexpected situation.
+    badRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Bad Request. The data provided by the client did not match expectations.
+    preconditionFailed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Precondition Failed.
+    conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Conflict. The resource has been modified by some other client. Please try again.
+    unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response4xx'
+      description: Unauthorized. You may have provided no or wrong credentials.
+  examples:
+    Forbidden:
+      value:
+        error: Forbidden
+        message: Access to this resource is forbidden.
+        path: /path/where/error/occurred
+        status: 403
+        timeStamp: '2019-08-24T14:15:22Z'
+    PolicyConflict:
+      value:
+        error: Conflict
+        message: Request aborted due conflict.
+        path: /path/where/error/occurred
+        status: 409
+        timeStamp: '2019-08-24T14:15:22Z'
+    BadRequest:
+      value:
+        error: Bad Request
+        message: Validation of {param-one} failed.
+        path: /path/where/error/occurred
+        status: 400
+        timeStamp: '2019-08-24T14:15:22Z'
+    NotFound:
+      value:
+        error: Not Found
+        message: '{resource} not found.'
+        path: /path/where/error/occurred
+        status: 404
+        timeStamp: '2019-08-24T14:15:22Z'
+x-refined-from:
+- stackit-iaas-v1.json
+- stackit-iaas-v2.json
+- stackit-resource-manager-v0.json
+- stackit-telemetry-link-v1.json
+- stackit-ufw-v1.json
+- stackit-iaas-openapi.yml
+- stackit-resource-manager-openapi.yml
+- stackit-telemetry-link-openapi.yml
+- stackit-ufw-openapi.yml

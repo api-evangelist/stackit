@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-delete-access-key-response-schema.json",
+  "title": "DeleteAccessKeyResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-object-storage-openapi.yml#/components/schemas/DeleteAccessKeyResponse",
+  "properties": {
+    "keyId": {
+      "description": "Identifies the pair of access key and secret access key for deletion",
+      "title": "Keyid",
+      "type": "string"
+    },
+    "project": {
+      "description": "Project ID",
+      "title": "Project",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project",
+    "keyId"
+  ],
+  "type": "object"
+}

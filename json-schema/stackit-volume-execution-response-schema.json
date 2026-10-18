@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-volume-execution-response-schema.json",
+  "title": "VolumeExecutionResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-automation-openapi.yml#/components/schemas/VolumeExecutionResponse",
+  "properties": {
+    "automation": {
+      "$ref": "#/$defs/VolumeExecutionDetails"
+    },
+    "createTime": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "endTime": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "RUNNING",
+        "COMPLETED",
+        "FAILED",
+        "TERMINATED"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "createTime",
+    "status"
+  ],
+  "type": "object",
+  "$defs": {
+    "AutomationScheduleTrigger": {
+      "properties": {
+        "rrule": {
+          "description": "An rrule (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rrule"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "AutomationTriggers": {
+      "properties": {
+        "schedule": {
+          "$ref": "#/$defs/AutomationScheduleTrigger"
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "VolumeAutomationInput": {
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "VolumeExecutionAutomation": {
+      "properties": {
+        "createTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "input": {
+          "$ref": "#/$defs/VolumeAutomationInput"
+        },
+        "name": {
+          "type": "string"
+        },
+        "output": {
+          "$ref": "#/$defs/VolumeOutput"
+        },
+        "templateId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "triggers": {
+          "$ref": "#/$defs/AutomationTriggers"
+        },
+        "updateTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createTime",
+        "updateTime"
+      ]
+    },
+    "VolumeExecutionDetails": {
+      "properties": {
+        "config": {
+          "$ref": "#/$defs/VolumeExecutionAutomation"
+        },
+        "output": {
+          "$ref": "#/$defs/VolumeExecutionOutput"
+        }
+      },
+      "required": [
+        "config"
+      ],
+      "type": "object"
+    },
+    "VolumeExecutionOutput": {
+      "properties": {
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/VolumeExecutionOutputStep"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "VolumeExecutionOutputStep": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/VolumeOutputStepResult"
+        },
+        "status": {
+          "enum": [
+            "PENDING",
+            "RUNNING",
+            "FAILED",
+            "SUCCESSFUL"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ]
+    },
+    "VolumeOutput": {
+      "properties": {
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/VolumeOutputStep"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "VolumeOutputStep": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/VolumeOutputStepResult"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "VolumeOutputStepResult": {
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    }
+  }
+}

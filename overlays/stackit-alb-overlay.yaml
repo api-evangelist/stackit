@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Application Load Balancer API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-alb-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: alb
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/credentials'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_list_credentials
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/credentials/{credentialsRef}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/credentials/{credentialsRef}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_get_credentials
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/load-balancers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_list_load_balancers
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/load-balancers/{name}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/load-balancers/{name}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_get_load_balancer
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/quota'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_get_quota
+- target: $.paths['/v2/regions/{region}/plans'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: alb_list_plans

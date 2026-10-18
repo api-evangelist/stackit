@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-zone-payload-schema.json",
+  "title": "CreateZonePayload",
+  "description": "Zone to create.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dns-openapi.yml#/components/schemas/CreateZonePayload",
+  "properties": {
+    "acl": {
+      "default": "0.0.0.0/0,::/0",
+      "description": "the access control list (note: this field currently has no effect and does not enforce any access restrictions on the DNS zone)",
+      "maxLength": 2000,
+      "type": "string"
+    },
+    "contactEmail": {
+      "default": "hostmaster@stackit.cloud",
+      "description": "contact e-mail for the zone",
+      "maxLength": 255,
+      "type": "string"
+    },
+    "defaultTTL": {
+      "default": 3600,
+      "description": "default time to live",
+      "format": "int32",
+      "minimum": 60,
+      "type": "integer"
+    },
+    "description": {
+      "description": "description of the zone",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "dnsName": {
+      "description": "zone name",
+      "maxLength": 253,
+      "minLength": 1,
+      "type": "string"
+    },
+    "expireTime": {
+      "default": 1209600,
+      "description": "expire time",
+      "format": "int32",
+      "minimum": 60,
+      "type": "integer"
+    },
+    "extensions": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/zone.Extensions"
+        }
+      ],
+      "description": "optional extensions",
+      "type": "object"
+    },
+    "isReverseZone": {
+      "default": false,
+      "description": "if the zone is a reverse zone or not",
+      "type": "boolean"
+    },
+    "labelsMap": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "labels for the zone - max 64 items. Keys: 1-314 chars (up to 250 prefix, 1 for slash, 1-63 the actual key). Values: 0-63 chars.",
+      "type": "object"
+    },
+    "name": {
+      "description": "user given name",
+      "maxLength": 63,
+      "minLength": 1,
+      "type": "string"
+    },
+    "negativeCache": {
+      "description": "negative caching",
+      "format": "int32",
+      "minimum": 60,
+      "type": "integer"
+    },
+    "primaries": {
+      "description": "primary name server for secondary zone",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "refreshTime": {
+      "default": 3600,
+      "description": "refresh time",
+      "format": "int32",
+      "minimum": 60,
+      "type": "integer"
+    },
+    "retryTime": {
+      "default": 600,
+      "description": "retry time",
+      "format": "int32",
+      "minimum": 60,
+      "type": "integer"
+    },
+    "type": {
+      "default": "primary",
+      "description": "zone type",
+      "enum": [
+        "primary",
+        "secondary"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "dnsName",
+    "name"
+  ],
+  "type": "object",
+  "$defs": {
+    "zone.Extensions": {
+      "properties": {
+        "observabilityExtension": {
+          "$ref": "#/$defs/zone.ObservabilityExtension"
+        }
+      },
+      "type": "object"
+    },
+    "zone.ObservabilityExtension": {
+      "properties": {
+        "observabilityInstanceId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "observabilityInstanceId"
+      ],
+      "type": "object"
+    }
+  }
+}

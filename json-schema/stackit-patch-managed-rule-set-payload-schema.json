@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-patch-managed-rule-set-payload-schema.json",
+  "title": "PatchManagedRuleSetPayload",
+  "description": "PatchManagedRuleSetRequest updates a rules configuration.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-alb-waf-openapi.yml#/components/schemas/PatchManagedRuleSetPayload",
+  "properties": {
+    "groups": {
+      "additionalProperties": {
+        "$ref": "#/$defs/PatchMRSRuleGroup"
+      },
+      "description": "Map of Managed Rule Set groups to be patched. The key is the Group ID (e.g., 942 for SQL Injection). Only provided rules within the group will be updated; others remain unchanged.",
+      "type": "object"
+    },
+    "name": {
+      "description": "Managed rule set configuration name.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "projectId": {
+      "description": "Project identifier",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "region": {
+      "description": "Region",
+      "format": "string",
+      "pattern": "^[a-z]{2,4}[0-9]{2}$",
+      "readOnly": true,
+      "type": "string"
+    }
+  },
+  "required": [
+    "groups"
+  ],
+  "type": "object",
+  "$defs": {
+    "Mode": {
+      "description": "The current mode of the rule.",
+      "enum": [
+        "MODE_ENABLED",
+        "MODE_DISABLED",
+        "MODE_LOG_ONLY"
+      ],
+      "pattern": "^(MODE_ENABLED|MODE_DISABLED|MODE_LOG_ONLY)$",
+      "title": "Mode",
+      "type": "string"
+    },
+    "PatchMRSRule": {
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/Mode"
+        }
+      },
+      "type": "object"
+    },
+    "PatchMRSRuleGroup": {
+      "properties": {
+        "rules": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PatchMRSRule"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "rules"
+      ],
+      "type": "object"
+    }
+  }
+}

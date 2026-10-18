@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-function-schema.json",
+  "title": "Function",
+  "description": "Represents a STACKIT Functions function.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-functions-openapi.yml#/components/schemas/Function",
+  "properties": {
+    "created_at": {
+      "description": "Time the function was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "current_revision": {
+      "description": "The ID of the currently-deployed revision associated with this function.",
+      "type": "string"
+    },
+    "id": {
+      "description": "Unique identifier for the function.",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "name": {
+      "description": "User-defined name of the function.",
+      "type": "string"
+    },
+    "state": {
+      "description": "Status of this function's latest revision.",
+      "enum": [
+        "CREATING",
+        "ACTIVE",
+        "FAILED"
+      ],
+      "type": "string"
+    },
+    "state_error": {
+      "description": "Error message related to this function's status.",
+      "type": "string"
+    },
+    "updated_at": {
+      "description": "Time the function was last updated.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "url": {
+      "description": "URLs that resolve to the function.",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "type": "array"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "type": "object"
+}

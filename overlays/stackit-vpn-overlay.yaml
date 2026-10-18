@@ -1,0 +1,95 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT VPN API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-vpn-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: vpn
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_list_gateways
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_get_gateway
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/bgp-filters'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_list_gateway_b_g_p_filters
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/bgp-filters/{filterId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/bgp-filters/{filterId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_get_gateway_b_g_p_filter
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/bgp-filters/{filterId}/rules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_list_gateway_b_g_p_filter_rules
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/bgp-filters/{filterId}/rules/{ruleId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/bgp-filters/{filterId}/rules/{ruleId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_get_gateway_b_g_p_filter_rule
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_list_gateway_connections
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections/{connectionId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections/{connectionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_get_gateway_connection
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/connections/{connectionId}/status'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_get_gateway_connection_status
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/gateways/{gatewayId}/status'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_get_gateway_status
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/quotas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_list_quotas
+- target: $.paths['/v1/regions/{region}/plans'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: vpn_list_plans

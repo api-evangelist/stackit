@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-user-schema.json",
+  "title": "User",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-mongodb-flex-openapi.yml#/components/schemas/User",
+  "properties": {
+    "database": {
+      "type": "string"
+    },
+    "host": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "port": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "roles": {
+      "description": "The roles defined for a user. Currently only one role in the list is supported, therefore only the first role from this list is used. The *roles* attribute can contain the following values: 'read', 'readWrite', 'readAnyDatabase', 'readWriteAnyDatabase', 'stackitAdmin'. **The 'readAnyDatabase', 'readWriteAnyDatabase' and 'stackitAdmin' roles will always be created in the admin database.**",
+      "items": {
+        "$ref": "#/$defs/user.role"
+      },
+      "type": "array"
+    },
+    "uri": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "user.role": {
+      "description": "The user role for the instance. The valid values for this attribute are: 'read', 'readWrite', 'readAnyDatabase', 'readWriteAnyDatabase', 'stackitAdmin'.",
+      "type": "string"
+    }
+  }
+}

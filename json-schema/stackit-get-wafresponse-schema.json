@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-wafresponse-schema.json",
+  "title": "GetWAFResponse",
+  "description": "GetWAFResponse returns detailed information about the WAF, which includes the identifying name, references to MRS/CRG and usage.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetWAFResponse",
+  "properties": {
+    "customRuleGroupName": {
+      "description": "Name of the CRG configuration for that WAF.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels represent user-defined metadata as key-value pairs.\nLabel count should not exceed 64 per WAF.\n\n**Key Formatting Rules:**\nLength: 1-63 characters.\nCharacters: Must begin and end with [a-zA-Z0-9]. May contain dashes (-), underscores (_), dots (.), and alphanumerics in between.\nKeys starting with 'stackit-' are system-reserved; users MUST NOT manage them.\n\n**Value Formatting Rules:**\nLength: 0-63 characters (empty string explicitly allowed).\nCharacters (for non-empty values): Must begin and end with [a-zA-Z0-9]. May contain dashes (-), underscores (_), dots (.), and alphanumerics in between.\n",
+      "type": "object"
+    },
+    "managedRuleSetName": {
+      "description": "Name of the managed rule set configuration for that WAF.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "name": {
+      "description": "WAF name",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "usage": {
+      "$ref": "#/$defs/WAFUsage"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "$defs": {
+    "WAFUsage": {
+      "properties": {
+        "count": {
+          "description": "Number of listeners using this WAF configuration.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "description": "List of Application Load Balancers with their associated listeners that use this WAF configuration.",
+          "items": {
+            "$ref": "#/$defs/WAFUsageItem"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "WAFUsageItem": {
+      "properties": {
+        "listenerNames": {
+          "description": "The list of listener names in this Load Balancer, that are using the WAF.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "loadBalancerName": {
+          "description": "The display name of the Load Balancer.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "loadBalancerName"
+      ],
+      "type": "object"
+    }
+  }
+}

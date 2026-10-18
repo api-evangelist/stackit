@@ -1,0 +1,29 @@
+generated: '2026-10-18'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: stackit.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec  6 03:37:35 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: portal.stackit.cloud
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 11 15:19:04 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+domains:
+- domain: stackit.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: stackit.cloud
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

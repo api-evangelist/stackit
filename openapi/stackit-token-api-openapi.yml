@@ -1,0 +1,165 @@
+openapi: 3.2.0
+info:
+  title: Stackit Token API
+  version: '2.0'
+  termsOfService: https://stackit.de/en/imprint
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Token across 2 of this provider''s published API definitions: stackit-service-account-v2.json, stackit-service-account-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://service-account.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Token
+paths:
+  /token:
+    post:
+      description: 'Request a short lived API access token with OAUTH2. Compatible with Using JWTs as Authorization Grants
+
+        You can request a token with a self signed token, or with a refresh token.'
+      operationId: CreateShortLivedAccessToken
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateShortLivedAccessTokenPayload'
+        description: Self signed token or refresh token
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateShortLivedAccessTokenResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              examples:
+                Forbidden Example:
+                  value:
+                    error:
+                      code: 403
+                      message: The request could not be performed
+                      status: Forbidden
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Forbidden
+      summary: Request short lived API access token (OAUTH2)
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Token
+    servers:
+    - url: https://service-account.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    CreateShortLivedAccessTokenResponse:
+      properties:
+        access_token:
+          description: The short lived token that can be used for API access
+          type: string
+        expires_in:
+          example: 3600
+          type: integer
+        refresh_token:
+          description: Refresh token that can be used to request a new access token when it expires (and before refresh token expires). Tokens are rotated.
+          type: string
+        scope:
+          description: scope field of the self signed token
+          type: string
+        token_type:
+          enum:
+          - Bearer
+          type: string
+      required:
+      - access_token
+      - refresh_token
+      - scope
+      - token_type
+      - expires_in
+      title: TokenResponseBody
+      type: object
+    CreateShortLivedAccessTokenPayload:
+      properties:
+        assertion:
+          description: The self signed JWT. Must be given when grant_type is urn:ietf:params:oauth:grant-type:jwt-bearer
+          type: string
+        grant_type:
+          description: Always use URL encoded values. E.g. urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
+          enum:
+          - urn:ietf:params:oauth:grant-type:jwt-bearer
+          - refresh_token
+          type: string
+        refresh_token:
+          description: Refresh token provided by a previous call with a self signed token. Must be given when grant_type is refresh_token
+          type: string
+      required:
+      - grant_type
+      title: TokenRequestBody
+      type: object
+    Error:
+      description: Contains error information.
+      example:
+        error: Bad Request
+        message: Some information about what caused the Error
+        path: /v1/path/which/returned/error
+        status: 400
+        timeStamp: '2019-08-24T14:15:22Z'
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        status:
+          type: integer
+        timeStamp:
+          format: date-time
+          type: string
+      required:
+      - timeStamp
+      - path
+      - status
+      - error
+      - message
+      title: ErrorResponse
+      type: object
+    AuthError:
+      example:
+        error:
+          code: 401
+          message: The request could not be authorized
+          status: Unauthorized
+      properties:
+        error:
+          properties:
+            code:
+              type: integer
+            message:
+              type: string
+            status:
+              type: string
+          required:
+          - code
+          - status
+          - message
+          type: object
+      required:
+      - error
+      title: AuthError
+      type: object
+x-refined-from:
+- stackit-service-account-v2.json
+- stackit-service-account-openapi.yml

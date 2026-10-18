@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Server Backup Management API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-server-backup-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: server-backup
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/backup-policies'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_backup_list_backup_policies
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backup-schedules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_backup_list_backup_schedules
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backup-schedules/{backupScheduleId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backup-schedules/{backupScheduleId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_backup_get_backup_schedule
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_backup_list_backups
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backups/{backupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backups/{backupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_backup_get_backup
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/backups/{backupId}/volume-backups/{volumeBackupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/service'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/service'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_backup_get_service_resource

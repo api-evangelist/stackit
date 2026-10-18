@@ -1,0 +1,7 @@
+generated: '2026-10-18'
+method: derived
+source: openapi/
+name: STACKIT rate limits
+limit_count: 0
+limits: []
+note: Rate limits are not documented in the public documentation. The OpenAPI specifications include Retry-After headers for 429 responses indicating rate limiting is implemented but specific limits are not published.

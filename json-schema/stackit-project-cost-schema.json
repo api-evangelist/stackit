@@ -1,0 +1,337 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-project-cost-schema.json",
+  "title": "v3 Project Costs",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-cost-openapi.yml#/components/schemas/ProjectCost",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/SummarizedProjectCost"
+    },
+    {
+      "$ref": "#/$defs/ProjectCostWithReports"
+    },
+    {
+      "$ref": "#/$defs/ProjectCostWithSummarizedServices"
+    },
+    {
+      "$ref": "#/$defs/ProjectCostWithDetailedServices"
+    }
+  ],
+  "type": "object",
+  "$defs": {
+    "DetailedServiceCost": {
+      "description": "Costs for a single service",
+      "properties": {
+        "reportData": {
+          "description": "Detailed service costs which are ONLY included if granularity is provided",
+          "items": {
+            "$ref": "#/$defs/ReportData"
+          },
+          "type": "array"
+        },
+        "serviceCategoryName": {
+          "description": "Service category name",
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "Name of the service",
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sku": {
+          "description": "Service key",
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "totalCharge": {
+          "description": "Total charge (including discounts) for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalDiscount": {
+          "description": "Total discount for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalQuantity": {
+          "description": "Total quantity",
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalQuantityDecimal": {
+          "description": "Total quantity in decimal format, returned as string to preserve precision.\nNOTE: This field will be removed in future versions and `totalQuantity` will become a decimal.\n",
+          "type": "string"
+        },
+        "unitLabel": {
+          "description": "Label for unit",
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "totalQuantity",
+        "totalQuantityDecimal",
+        "totalCharge",
+        "totalDiscount",
+        "unitLabel",
+        "sku",
+        "serviceName",
+        "serviceCategoryName"
+      ],
+      "title": "Service Costs",
+      "type": "object"
+    },
+    "ProjectCostWithDetailedServices": {
+      "description": "Detailed costs for a project including service costs",
+      "properties": {
+        "customerAccountId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "services": {
+          "description": "Total discount for all services and the whole requested date range (value in cents). Please see \"depth\" parameter for more details.",
+          "items": {
+            "$ref": "#/$defs/DetailedServiceCost"
+          },
+          "type": "array"
+        },
+        "totalCharge": {
+          "description": "Total charge (including discounts) for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalDiscount": {
+          "description": "Total discount for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "customerAccountId",
+        "projectId",
+        "projectName",
+        "totalCharge",
+        "totalDiscount"
+      ],
+      "title": "V3 Project Costs with detailed service costs",
+      "type": "object"
+    },
+    "ProjectCostWithReports": {
+      "description": "Detailed costs for a project",
+      "properties": {
+        "customerAccountId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "reportData": {
+          "description": "Detailed project costs which are ONLY included if granularity is provided AND depth is \"project\"",
+          "items": {
+            "$ref": "#/$defs/ReportData"
+          },
+          "type": "array"
+        },
+        "totalCharge": {
+          "description": "Total charge (including discounts) for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalDiscount": {
+          "description": "Total discount for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "customerAccountId",
+        "projectId",
+        "projectName",
+        "totalCharge",
+        "totalDiscount"
+      ],
+      "title": "v3 Project costs with report data",
+      "type": "object"
+    },
+    "ProjectCostWithSummarizedServices": {
+      "description": "Costs for a project including summarized service costs",
+      "properties": {
+        "customerAccountId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "services": {
+          "description": "Summarized service costs",
+          "items": {
+            "$ref": "#/$defs/SummarizedServiceCost"
+          },
+          "type": "array"
+        },
+        "totalCharge": {
+          "description": "Total charge (including discounts) for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalDiscount": {
+          "description": "Total discount for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "customerAccountId",
+        "projectId",
+        "projectName",
+        "totalCharge",
+        "totalDiscount"
+      ],
+      "title": "v3 Project costs with summarized services",
+      "type": "object"
+    },
+    "ReportData": {
+      "description": "Costs report for a certain period of time",
+      "properties": {
+        "charge": {
+          "description": "Charge, value in cents",
+          "format": "double",
+          "type": "number"
+        },
+        "discount": {
+          "description": "Discount, value in cents",
+          "format": "double",
+          "type": "number"
+        },
+        "quantity": {
+          "description": "Quantity",
+          "format": "int32",
+          "type": "integer"
+        },
+        "quantityDecimal": {
+          "description": "Quantity in decimal format, returned as string to preserve precision.\nNOTE: This field will be removed in future versions and `totalQuantity` will become a decimal.\n",
+          "type": "string"
+        },
+        "timePeriod": {
+          "description": "Time period according to desired granularity",
+          "format": "date",
+          "properties": {
+            "end": {
+              "format": "date",
+              "type": "string"
+            },
+            "start": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "timePeriod",
+        "charge",
+        "discount",
+        "quantity",
+        "quantityDecimal"
+      ],
+      "title": "Costs",
+      "type": "object"
+    },
+    "SummarizedProjectCost": {
+      "description": "Summarized costs for a project",
+      "properties": {
+        "customerAccountId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "totalCharge": {
+          "description": "Total charge (including discounts) for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalDiscount": {
+          "description": "Total discount for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "customerAccountId",
+        "projectId",
+        "projectName",
+        "totalCharge",
+        "totalDiscount"
+      ],
+      "title": "v3 Summarized Project Costs",
+      "type": "object"
+    },
+    "SummarizedServiceCost": {
+      "description": "Summarized costs for a project",
+      "properties": {
+        "customerAccountId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "totalCharge": {
+          "description": "Total charge (including discounts) for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        },
+        "totalDiscount": {
+          "description": "Total discount for all services and the whole requested date range (value in cents)",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "customerAccountId",
+        "projectId",
+        "projectName",
+        "totalCharge",
+        "totalDiscount"
+      ],
+      "title": "V3 Summarized Service Costs",
+      "type": "object"
+    }
+  }
+}

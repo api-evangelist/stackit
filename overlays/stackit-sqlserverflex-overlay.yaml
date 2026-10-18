@@ -1,0 +1,105 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT MSSQL Service API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-sqlserverflex-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: sqlserverflex
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/flavors'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_flavors
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_instances
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_get_instance
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/backups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_backups
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/backups/{backupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_get_backup
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/collations'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_collations
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/compatibility'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_compatibilities
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/databases'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_databases
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/databases/{databaseName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/databases/{databaseName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_get_database
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/restore-jobs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_current_running_restore_jobs
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/roles'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_roles
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/users'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_users
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/users/{userId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/instances/{instanceId}/users/{userId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_get_user
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/storages/{flavorId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_storages
+- target: $.paths['/v3/projects/{projectId}/regions/{region}/versions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sqlserverflex_list_versions

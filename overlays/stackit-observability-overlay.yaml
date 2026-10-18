@@ -1,0 +1,335 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Observability API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-observability-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: observability
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_instances
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_instance
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/acl'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_a_c_l
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_alert_configs
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs/receivers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_alert_config_receivers
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs/receivers/{receiver}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs/receivers/{receiver}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_alert_config_receiver
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs/routes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_alert_config_routes
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs/routes/{receiver}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertconfigs/routes/{receiver}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_alert_config_route
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_alertgroups
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_alertgroup
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/alertrules'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/alertrules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_alertrules
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/alertrules/{alertName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/alertrules/{alertName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_alertrule
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/records'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/records'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_alert_records
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/records/{alertRecord}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/alertgroups/{groupName}/records/{alertRecord}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_alert_record
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/backup-retentions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_backup_retentions
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/backup-schedules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_backup_schedules
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/backups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_backups
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/cert-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_cert_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/cert-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/credentials'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_credentials
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/credentials/{username}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/credentials/{username}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_credentials
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/credentials/{username}/remote-write-limits'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/credentials/{username}/remote-write-limits'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_credentials_remote_write_config
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/elasticsearch-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_elasticsearch_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/elasticsearch-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/grafana-configs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_grafana_configs
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/http-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_http_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/http-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/logs-alertgroups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_logs_alertgroups
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/logs-alertgroups/{groupName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/logs-alertgroups/{groupName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_logs_alertgroup
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/logs-configs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_logs_configs
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/metrics-storage-retentions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_metrics_storage_retention
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/mongodb-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_mongodb_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/mongodb-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/mysql-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_mysql_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/mysql-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/network-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_network_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/network-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/ping-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_ping_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/ping-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/postgresql-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_postgresql_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/postgresql-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/rabbitmq-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_rabbitmq_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/rabbitmq-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/redis-checks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_redis_checks
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/redis-checks/{id}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/scrapeconfigs'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/scrapeconfigs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_scrape_configs
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/scrapeconfigs/{jobName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/scrapeconfigs/{jobName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_scrape_config
+- target: $.paths['/v1/projects/{projectId}/instances/{instanceId}/traces-configs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_get_traces_configs
+- target: $.paths['/v1/projects/{projectId}/offerings'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_offerings
+- target: $.paths['/v1/projects/{projectId}/plans'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: observability_list_plans

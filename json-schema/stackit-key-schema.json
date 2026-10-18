@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-key-schema.json",
+  "title": "key",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-kms-openapi.yml#/components/schemas/key",
+  "properties": {
+    "access_scope": {
+      "$ref": "#/$defs/access_scope"
+    },
+    "algorithm": {
+      "$ref": "#/$defs/algorithm"
+    },
+    "createdAt": {
+      "description": "The date and time the creation of the key was triggered.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "deletionDate": {
+      "description": "This date is set when a key is pending deletion and refers to the scheduled date of deletion",
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "description": "A user chosen description to distinguish multiple keys.",
+      "maxLength": 256,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The display name to distinguish multiple keys.",
+      "maxLength": 64,
+      "type": "string"
+    },
+    "id": {
+      "description": "A auto generated unique id which identifies the keys.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "importOnly": {
+      "default": false,
+      "description": "States whether versions can be created or only imported.",
+      "type": "boolean"
+    },
+    "keyRingId": {
+      "description": "The unique id of the key ring this key is assigned to.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "protection": {
+      "$ref": "#/$defs/protection"
+    },
+    "purpose": {
+      "$ref": "#/$defs/purpose"
+    },
+    "state": {
+      "description": "The current state of the key.",
+      "enum": [
+        "active",
+        "deleted",
+        "not_available",
+        "errors_exist",
+        "creating",
+        "no_version"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "displayName",
+    "state",
+    "createdAt",
+    "importOnly",
+    "keyRingId",
+    "protection",
+    "purpose",
+    "algorithm",
+    "access_scope"
+  ],
+  "$defs": {
+    "access_scope": {
+      "default": "PUBLIC",
+      "description": "The access scope of the key.",
+      "enum": [
+        "PUBLIC",
+        "SNA"
+      ],
+      "type": "string"
+    },
+    "algorithm": {
+      "description": "The algorithm the key material uses.",
+      "enum": [
+        "aes_256_gcm",
+        "rsa_2048_oaep_sha256",
+        "rsa_3072_oaep_sha256",
+        "rsa_4096_oaep_sha256",
+        "rsa_4096_oaep_sha512",
+        "hmac_sha256",
+        "hmac_sha384",
+        "hmac_sha512",
+        "ecdsa_p256_sha256",
+        "ecdsa_p384_sha384",
+        "ecdsa_p521_sha512"
+      ],
+      "type": "string"
+    },
+    "protection": {
+      "description": "The underlying system that is responsible for protecting the key material. Possible values are \"software\" or \"hsm\"",
+      "type": "string"
+    },
+    "purpose": {
+      "description": "The purpose of the key.",
+      "enum": [
+        "symmetric_encrypt_decrypt",
+        "asymmetric_encrypt_decrypt",
+        "message_authentication_code",
+        "asymmetric_sign_verify"
+      ],
+      "type": "string"
+    }
+  }
+}

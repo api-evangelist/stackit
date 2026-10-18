@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-space-schema.json",
+  "title": "Space",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-scf-openapi.yml#/components/schemas/Space",
+  "properties": {
+    "createdAt": {
+      "format": "date-time",
+      "title": "The time with zone when the space was created.",
+      "type": "string"
+    },
+    "guid": {
+      "$ref": "#/$defs/SpaceId"
+    },
+    "name": {
+      "title": "Name of the space",
+      "type": "string"
+    },
+    "orgId": {
+      "$ref": "#/$defs/OrgId"
+    },
+    "platformId": {
+      "$ref": "#/$defs/PlatformId"
+    },
+    "projectId": {
+      "$ref": "#/$defs/ProjectId"
+    },
+    "region": {
+      "$ref": "#/$defs/Region"
+    },
+    "updatedAt": {
+      "format": "date-time",
+      "title": "The time with zone when the space was last updated.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "guid",
+    "orgId",
+    "projectId",
+    "region",
+    "platformId",
+    "createdAt",
+    "updatedAt"
+  ],
+  "type": "object",
+  "$defs": {
+    "OrgId": {
+      "format": "uuid",
+      "title": "The unique id of the organization",
+      "type": "string"
+    },
+    "PlatformId": {
+      "format": "uuid",
+      "title": "The unique id of the platform",
+      "type": "string"
+    },
+    "ProjectId": {
+      "format": "uuid",
+      "title": "The unique id of the STACKIT Project",
+      "type": "string"
+    },
+    "Region": {
+      "title": "The region in which the resource is located",
+      "type": "string"
+    },
+    "SpaceId": {
+      "format": "uuid",
+      "title": "The unique id of the space",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Service Enablement API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-service-enablement-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: service-enablement
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/services'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: service_enablement_list_service_status_regional
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/services/{serviceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/services/{serviceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: service_enablement_get_service_status_regional

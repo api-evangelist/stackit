@@ -1,0 +1,128 @@
+openapi: 3.2.0
+info:
+  title: Stackit Resource Pool Performance Classes API
+  version: 1.0.0
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged ResourcePoolPerformanceClasses across 2 of this provider''s published API definitions: stackit-sfs-v1.json, stackit-sfs-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://sfs.api.stackit.cloud
+  variables:
+    region:
+      default: global
+security:
+- BearerAuth: []
+tags:
+- name: ResourcePoolPerformanceClasses
+paths:
+  /v1/resourcePoolPerformanceClasses:
+    get:
+      description: Lists all performances classes available
+      operationId: ListPerformanceClasses
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPerformanceClassesResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List Resource Performance Classes
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - ResourcePoolPerformanceClasses
+    servers:
+    - url: https://sfs.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    PerformanceClass:
+      properties:
+        iops:
+          description: IOPS of the Performance Class
+          format: int32
+          type: integer
+        name:
+          description: Name of the Performance Class
+          type: string
+        throughput:
+          description: Throughput of the Performance Class
+          format: int32
+          type: integer
+      type: object
+    Error:
+      properties:
+        error_description:
+          deprecated: true
+          description: Human-readable string of the error that occured
+        title:
+          description: Human-readable description of the error that occurred.
+          type: string
+        type:
+          description: URI Uniquely identifies the error type. It will be in the format of storage.stackit.cloud/<error-type> e.g. storage.stackit.cloud/validation-error
+          type: string
+      required:
+      - title
+      - type
+      type: object
+    ValidationError:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          fields:
+            items:
+              $ref: '#/components/schemas/ValidationErrorField'
+            type: array
+        required:
+        - fields
+        type: object
+    ValidationErrorField:
+      properties:
+        field:
+          description: The name of the field in the request that has failed the validation
+          type: string
+        reason:
+          description: The reason why the validation failed
+          type: string
+      required:
+      - field
+      - reason
+      type: object
+    ListPerformanceClassesResponse:
+      properties:
+        performanceClasses:
+          description: List of Performance Classes
+          items:
+            $ref: '#/components/schemas/PerformanceClass'
+          type: array
+      type: object
+  responses:
+    ValidationError:
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+      description: Some fields of the request have failed the validation procedure.
+    UnauthorizedError:
+      content:
+        text/plain:
+          schema:
+            type: string
+      description: Please make sure the Authorization Header is set and uses correct credentials
+    InternalServerError:
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Please retry again later or contact support if the issue persists
+x-refined-from:
+- stackit-sfs-v1.json
+- stackit-sfs-openapi.yml

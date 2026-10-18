@@ -1,0 +1,14 @@
+generated: '2026-10-18'
+method: searched
+source: https://docs.stackit.cloud/developer-tools/stackit-api/
+schemes:
+- type: apiKey
+  name: Key flow
+  description: Service account authentication using RSA key signing
+  location: header
+  docs: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/access-a-service-with-a-service-account/
+- type: apiKey
+  name: Workload Identity Federation flow
+  description: Federated identity authentication
+  location: header
+  docs: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/access-a-service-with-a-service-account/

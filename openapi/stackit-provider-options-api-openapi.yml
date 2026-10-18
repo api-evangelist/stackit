@@ -1,0 +1,258 @@
+openapi: 3.2.0
+info:
+  contact:
+    name: STACKIT Kubernetes Engine (SKE) Team
+    url: https://support.stackit.cloud/servicedesk
+  description: The SKE API provides endpoints to create, update, delete clusters within STACKIT portal projects and to trigger further cluster management tasks.
+  termsOfService: https://stackit.de/en/imprint
+  title: STACKIT Kubernetes Engine Provider Options API
+  version: '1.1'
+servers:
+- url: https://ske.api.{region}stackit.cloud
+  variables:
+    region:
+      default: eu01.
+      enum:
+      - eu01.
+security:
+- bearerAuth: []
+tags:
+- name: Provider Options
+paths:
+  /v1/provider-options:
+    get:
+      description: Returns a list of supported Kubernetes versions and a list of supported machine types for the cluster nodes.
+      operationId: ListProviderOptions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderOptions'
+          description: Request handled successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Unauthorized
+      summary: List provider options
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Provider Options
+components:
+  schemas:
+    MachineImage:
+      example:
+        name: name
+        versions:
+        - cri:
+          - name: containerd
+          - name: containerd
+          expirationDate: '2000-01-23T04:56:07Z'
+          state: state
+          version: version
+        - cri:
+          - name: containerd
+          - name: containerd
+          expirationDate: '2000-01-23T04:56:07Z'
+          state: state
+          version: version
+      properties:
+        name:
+          title: Image name
+          type: string
+        versions:
+          items:
+            $ref: '#/components/schemas/MachineImageVersion'
+          type: array
+      type: object
+    MachineImageVersion:
+      example:
+        cri:
+        - name: containerd
+        - name: containerd
+        expirationDate: '2000-01-23T04:56:07Z'
+        state: state
+        version: version
+      properties:
+        cri:
+          items:
+            $ref: '#/components/schemas/CRI'
+          title: supported container runtimes
+          type: array
+        expirationDate:
+          format: date-time
+          type: string
+        state:
+          type: string
+        version:
+          pattern: ^\d+\.\d+\.\d+$
+          title: Image version
+          type: string
+      type: object
+    CRI:
+      example:
+        name: containerd
+      properties:
+        name:
+          enum:
+          - containerd
+          title: Name of the cri library
+          type: string
+      type: object
+    MachineType:
+      example:
+        architecture: architecture
+        cpu: 0
+        gpu: 1
+        memory: 6
+        name: name
+      properties:
+        architecture:
+          title: architecture
+          type: string
+        cpu:
+          format: int32
+          title: number of CPU cores
+          type: integer
+        gpu:
+          format: int32
+          title: number of GPUs
+          type: integer
+        memory:
+          format: int32
+          title: memory in GiB
+          type: integer
+        name:
+          type: string
+      type: object
+    ProviderOptions:
+      example:
+        availabilityZones:
+        - name: name
+        - name: name
+        kubernetesVersions:
+        - expirationDate: '2000-01-23T04:56:07Z'
+          featureGates:
+            key: featureGates
+          state: state
+          version: version
+        - expirationDate: '2000-01-23T04:56:07Z'
+          featureGates:
+            key: featureGates
+          state: state
+          version: version
+        machineImages:
+        - name: name
+          versions:
+          - cri:
+            - name: containerd
+            - name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+          - cri:
+            - name: containerd
+            - name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+        - name: name
+          versions:
+          - cri:
+            - name: containerd
+            - name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+          - cri:
+            - name: containerd
+            - name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+        machineTypes:
+        - architecture: architecture
+          cpu: 0
+          gpu: 1
+          memory: 6
+          name: name
+        - architecture: architecture
+          cpu: 0
+          gpu: 1
+          memory: 6
+          name: name
+        volumeTypes:
+        - name: name
+        - name: name
+      properties:
+        availabilityZones:
+          items:
+            $ref: '#/components/schemas/AvailabilityZone'
+          type: array
+        kubernetesVersions:
+          items:
+            $ref: '#/components/schemas/KubernetesVersion'
+          title: List of supported Kubernetes versions
+          type: array
+        machineImages:
+          items:
+            $ref: '#/components/schemas/MachineImage'
+          type: array
+        machineTypes:
+          items:
+            $ref: '#/components/schemas/MachineType'
+          title: List of supported machine types
+          type: array
+        volumeTypes:
+          items:
+            $ref: '#/components/schemas/VolumeType'
+          type: array
+      type: object
+    KubernetesVersion:
+      example:
+        expirationDate: '2000-01-23T04:56:07Z'
+        featureGates:
+          key: featureGates
+        state: state
+        version: version
+      properties:
+        expirationDate:
+          format: date-time
+          title: Expiration date until the version will be supported if known yet
+          type: string
+        featureGates:
+          additionalProperties:
+            type: string
+          title: List of feature gates supported by the Kubernetes version
+          type: object
+        state:
+          title: State of the kubernetes version
+          type: string
+        version:
+          pattern: ^\d+\.\d+\.\d+$
+          title: Kubernetes version
+          type: string
+      type: object
+    VolumeType:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      type: object
+    AvailabilityZone:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      type: object

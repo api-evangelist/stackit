@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT CDN API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-cdn-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: cdn
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/distributions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_list_distributions
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_get_distribution
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/cache'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_get_cache_info
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/cache/paths'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_find_cache_paths
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/customDomains/{domain}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/customDomains/{domain}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_get_custom_domain
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/logs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_get_logs
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/logs/searchFilters'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_get_logs_search_filters
+- target: $.paths['/v1/projects/{projectId}/distributions/{distributionId}/statistics'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_get_statistics
+- target: $.paths['/v1/projects/{projectId}/waf/collections'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cdn_list_waf_collections

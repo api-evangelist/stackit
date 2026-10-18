@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT PubSub API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-pubsub-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: pubsub
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pubsub_list-topics
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pubsub_get-topic
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/publishers'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/publishers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pubsub_list-topic-publishers
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/subscriptions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pubsub_list-subscriptions
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/subscriptions/{subscriptionId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/subscriptions/{subscriptionId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pubsub_get-subscription
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/subscriptions/{subscriptionId}/subscribers'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/topics/{topicId}/subscriptions/{subscriptionId}/subscribers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pubsub_list-subscription-subscribers

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-volume-automation-schema.json",
+  "title": "VolumeAutomation",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-automation-openapi.yml#/components/schemas/VolumeAutomation",
+  "properties": {
+    "createTime": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "input": {
+      "$ref": "#/$defs/VolumeAutomationInput"
+    },
+    "name": {
+      "type": "string"
+    },
+    "output": {
+      "$ref": "#/$defs/VolumeOutput"
+    },
+    "templateId": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "triggers": {
+      "$ref": "#/$defs/AutomationTriggers"
+    },
+    "updateTime": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "createTime",
+    "updateTime"
+  ],
+  "$defs": {
+    "AutomationScheduleTrigger": {
+      "properties": {
+        "rrule": {
+          "description": "An rrule (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rrule"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "AutomationTriggers": {
+      "properties": {
+        "schedule": {
+          "$ref": "#/$defs/AutomationScheduleTrigger"
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "VolumeAutomationInput": {
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "VolumeOutput": {
+      "properties": {
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/VolumeOutputStep"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "VolumeOutputStep": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/VolumeOutputStepResult"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "VolumeOutputStepResult": {
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    }
+  }
+}

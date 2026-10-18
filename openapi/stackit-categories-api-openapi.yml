@@ -1,0 +1,338 @@
+openapi: 3.2.0
+info:
+  title: Stackit Categories API
+  version: 2.0.0
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Categories across 2 of this provider''s published API definitions: stackit-pim-v2.json, stackit-pim-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://pim.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Categories
+paths:
+  /v2/categories:
+    get:
+      description: Returns all categories, available for general public.
+      operationId: listCategories
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/categoryName'
+      - $ref: '#/components/parameters/language'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/PublicCategory'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaInformation'
+                type: object
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all categories
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Categories
+    servers:
+    - url: https://pim.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/categories/{categoryId}:
+    get:
+      description: Retrieves a specific category by its ID, available for general public.
+      operationId: getCategory
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      - $ref: '#/components/parameters/language'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicCategory'
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get category by ID
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Categories
+    servers:
+    - url: https://pim.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/categories/{categoryId}/products:
+    get:
+      description: Retrieves a specific category's products, available for general public.
+      operationId: listCategoryProducts
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/productName'
+      - $ref: '#/components/parameters/language'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/PublicProduct'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaInformation'
+                type: object
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List products in a category
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Categories
+    servers:
+    - url: https://pim.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The authenticated user lacks permission to access this resource
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Authentication credentials are required
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The request was invalid or malformed
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: An unexpected server common occurred
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The requested resource was not found
+  schemas:
+    Error:
+      properties:
+        code:
+          description: HTTP status code
+          format: int64
+          type: integer
+        details:
+          description: Additional common information
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        message:
+          description: Error description
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    PublicProduct:
+      properties:
+        apiIdentifier:
+          description: Api identifier
+          example: api-explorer
+          items:
+            type: string
+          type: array
+        categoryId:
+          description: The unique identifier for the category, which is object id from the DB
+          example: 5099803df3f4948bd2f98391
+          type:
+          - string
+          - 'null'
+        categoryName:
+          description: Generic categorization to structure the customer's invoice transparently (e.g. `Compute Engine`, `Database`, `Storage`)
+          example: Compute Engine
+          type:
+          - string
+          - 'null'
+        description:
+          description: Description of the product
+          example: An API Explorer description
+          type: string
+        id:
+          description: Unique identifier of the product, which is object id from the DB
+          example: 5099803df3f4948bd2f98392
+          type:
+          - string
+          - 'null'
+        image:
+          description: URI of the category image
+          example: https://example.com/image.jpg
+          format: uri
+          type: string
+        language:
+          description: Language of the product
+          example: en
+          type: string
+        longName:
+          description: Extended name of the product
+          example: STACKIT API Explorer
+          type: string
+        shortName:
+          description: An abbreviated name of the product
+          example: API Explorer
+          type: string
+        validStart:
+          description: Date when the current version was approved and became valid in PIM
+          example: '2023-01-15T10:30:00'
+          format: date-time
+          type: string
+        version:
+          description: Number of the revision from PIM
+          example: 10
+          type: string
+      type: object
+    PublicCategory:
+      properties:
+        description:
+          description: Description of the category
+          example: Compute Engine offers various services
+          type: string
+        id:
+          description: The unique identifier for the category, which is object id from the DB
+          example: 5099803df3f4948bd2f98391
+          type:
+          - string
+          - 'null'
+        image:
+          description: URI of the category image
+          example: https://example.com/image.jpg
+          format: uri
+          type: string
+        language:
+          description: Language of the category
+          example: en
+          type: string
+        name:
+          description: Category name
+          example: Compute Engine
+          type: string
+        validStart:
+          description: Date when the current version was approved and became valid in PIM
+          example: '2023-01-15T10:30:00'
+          format: date-time
+          type: string
+        version:
+          description: Number of the revision from PIM
+          example: 10
+          type: string
+      type: object
+    MetaInformation:
+      properties:
+        nextCursor:
+          description: The cursor base64 encoded is used to retrieve the next page of results
+          example: eyJ1dWlkIjoiZGU3NjllMzYtM2RlOS00Y2M4hjdsbhdsiuwbnLRDl9fZ29vZ2xlLmV4YW1wbGU6InJlYWx0IiwgImNvbnNlcnZlciI6eyJhYmNk
+          type: string
+        pageSize:
+          description: The number of items per page
+          example: 10
+          format: int64
+          type: integer
+      type: object
+  parameters:
+    categoryName:
+      description: The category's name to retrieve the data for
+      in: query
+      name: categoryName
+      schema:
+        type: string
+    language:
+      description: The language to retrieve the data in, available for en and de
+      in: query
+      name: language
+      schema:
+        enum:
+        - en
+        - de
+        type: string
+    productName:
+      description: The product's name to retrieve the data for
+      in: query
+      name: productName
+      schema:
+        type: string
+    cursor:
+      description: The cursor base64 encoded is used to retrieve the next page of results
+      in: query
+      name: cursor
+      schema:
+        type: string
+    pageSize:
+      description: The number of items to retrieve per page
+      in: query
+      name: pageSize
+      schema:
+        default: 10
+        format: int64
+        maximum: 100
+        minimum: 1
+        type: integer
+    categoryId:
+      description: The unique identifier for a category.
+      in: path
+      name: categoryId
+      required: true
+      schema:
+        type: string
+x-refined-from:
+- stackit-pim-v2.json
+- stackit-pim-openapi.yml

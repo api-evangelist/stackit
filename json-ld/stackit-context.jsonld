@@ -1,0 +1,691 @@
+{
+  "@context": {
+    "@vocab": "https://stackit.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "stackit": "https://stackit.com/schema#",
+    "ActiveHealthCheck": "stackit:ActiveHealthCheck",
+    "altPort": {
+      "@id": "stackit:altPort",
+      "@type": "xsd:integer"
+    },
+    "healthyThreshold": {
+      "@id": "stackit:healthyThreshold",
+      "@type": "xsd:integer"
+    },
+    "httpHealthChecks": {
+      "@id": "stackit:httpHealthChecks",
+      "@type": "@id"
+    },
+    "interval": {
+      "@id": "stackit:interval",
+      "@type": "xsd:string"
+    },
+    "intervalJitter": {
+      "@id": "stackit:intervalJitter",
+      "@type": "xsd:string"
+    },
+    "timeout": {
+      "@id": "stackit:timeout",
+      "@type": "xsd:string"
+    },
+    "unhealthyThreshold": {
+      "@id": "stackit:unhealthyThreshold",
+      "@type": "xsd:integer"
+    },
+    "CertificateConfig": "stackit:CertificateConfig",
+    "certificateIds": {
+      "@id": "stackit:certificateIds",
+      "@container": "@list"
+    },
+    "CookiePersistence": "stackit:CookiePersistence",
+    "name": {
+      "@id": "stackit:name",
+      "@type": "xsd:string"
+    },
+    "ttl": {
+      "@id": "stackit:ttl",
+      "@type": "xsd:string"
+    },
+    "CreateCredentialsPayload": "stackit:CreateCredentialsPayload",
+    "displayName": {
+      "@id": "stackit:displayName",
+      "@type": "xsd:string"
+    },
+    "password": {
+      "@id": "stackit:password",
+      "@type": "xsd:string"
+    },
+    "username": {
+      "@id": "stackit:username",
+      "@type": "xsd:string"
+    },
+    "CreateCredentialsResponse": "stackit:CreateCredentialsResponse",
+    "credential": {
+      "@id": "stackit:credential",
+      "@type": "@id"
+    },
+    "CreateLoadBalancerPayload": "stackit:CreateLoadBalancerPayload",
+    "disableTargetSecurityGroupAssignment": {
+      "@id": "stackit:disableTargetSecurityGroupAssignment",
+      "@type": "xsd:boolean"
+    },
+    "errors": {
+      "@id": "stackit:errors",
+      "@container": "@list"
+    },
+    "externalAddress": {
+      "@id": "stackit:externalAddress",
+      "@type": "xsd:string"
+    },
+    "labels": {
+      "@id": "stackit:labels"
+    },
+    "listeners": {
+      "@id": "stackit:listeners",
+      "@container": "@list"
+    },
+    "loadBalancerSecurityGroup": {
+      "@id": "stackit:loadBalancerSecurityGroup"
+    },
+    "networks": {
+      "@id": "stackit:networks",
+      "@container": "@list"
+    },
+    "options": {
+      "@id": "stackit:options",
+      "@type": "@id"
+    },
+    "planId": {
+      "@id": "stackit:planId",
+      "@type": "xsd:string"
+    },
+    "privateAddress": {
+      "@id": "stackit:privateAddress",
+      "@type": "xsd:string"
+    },
+    "region": {
+      "@id": "stackit:region",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "stackit:status",
+      "@type": "xsd:string"
+    },
+    "targetPools": {
+      "@id": "stackit:targetPools",
+      "@container": "@list"
+    },
+    "targetSecurityGroup": {
+      "@id": "stackit:targetSecurityGroup"
+    },
+    "version": {
+      "@id": "stackit:version",
+      "@type": "xsd:string"
+    },
+    "CredentialsResponse": "stackit:CredentialsResponse",
+    "credentialsRef": {
+      "@id": "stackit:credentialsRef",
+      "@type": "xsd:string"
+    },
+    "GetCredentialsResponse": "stackit:GetCredentialsResponse",
+    "GetQuotaResponse": "stackit:GetQuotaResponse",
+    "maxCredentials": {
+      "@id": "stackit:maxCredentials",
+      "@type": "xsd:integer"
+    },
+    "maxLoadBalancers": {
+      "@id": "stackit:maxLoadBalancers",
+      "@type": "xsd:integer"
+    },
+    "projectId": {
+      "@id": "stackit:projectId",
+      "@type": "xsd:string"
+    },
+    "usedCredentials": {
+      "@id": "stackit:usedCredentials",
+      "@type": "xsd:integer"
+    },
+    "usedLoadBalancers": {
+      "@id": "stackit:usedLoadBalancers",
+      "@type": "xsd:integer"
+    },
+    "GoogleProtobufAny": "stackit:GoogleProtobufAny",
+    "HostConfig": "stackit:HostConfig",
+    "host": {
+      "@id": "stackit:host",
+      "@type": "xsd:string"
+    },
+    "rules": {
+      "@id": "stackit:rules",
+      "@container": "@list"
+    },
+    "HttpHeader": "stackit:HttpHeader",
+    "exactMatch": {
+      "@id": "stackit:exactMatch",
+      "@type": "xsd:string"
+    },
+    "HttpHealthChecks": "stackit:HttpHealthChecks",
+    "okStatuses": {
+      "@id": "stackit:okStatuses",
+      "@container": "@list"
+    },
+    "path": {
+      "@id": "stackit:path",
+      "@type": "xsd:string"
+    },
+    "tls": {
+      "@id": "stackit:tls",
+      "@type": "@id"
+    },
+    "ListCredentialsResponse": "stackit:ListCredentialsResponse",
+    "credentials": {
+      "@id": "stackit:credentials",
+      "@container": "@list"
+    },
+    "ListLoadBalancersResponse": "stackit:ListLoadBalancersResponse",
+    "loadBalancers": {
+      "@id": "stackit:loadBalancers",
+      "@container": "@list"
+    },
+    "nextPageId": {
+      "@id": "stackit:nextPageId",
+      "@type": "xsd:string"
+    },
+    "ListPlansResponse": "stackit:ListPlansResponse",
+    "validPlans": {
+      "@id": "stackit:validPlans",
+      "@container": "@list"
+    },
+    "Listener": "stackit:Listener",
+    "http": {
+      "@id": "stackit:http",
+      "@type": "@id"
+    },
+    "https": {
+      "@id": "stackit:https",
+      "@type": "@id"
+    },
+    "port": {
+      "@id": "stackit:port",
+      "@type": "xsd:integer"
+    },
+    "protocol": {
+      "@id": "stackit:protocol",
+      "@type": "xsd:string"
+    },
+    "wafConfigName": {
+      "@id": "stackit:wafConfigName",
+      "@type": "xsd:string"
+    },
+    "LoadBalancer": "stackit:LoadBalancer",
+    "LoadBalancerError": "stackit:LoadBalancerError",
+    "description": {
+      "@id": "stackit:description",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "stackit:type",
+      "@type": "xsd:string"
+    },
+    "LoadBalancerOptions": "stackit:LoadBalancerOptions",
+    "accessControl": {
+      "@id": "stackit:accessControl",
+      "@type": "@id"
+    },
+    "ephemeralAddress": {
+      "@id": "stackit:ephemeralAddress",
+      "@type": "xsd:boolean"
+    },
+    "observability": {
+      "@id": "stackit:observability",
+      "@type": "@id"
+    },
+    "privateNetworkOnly": {
+      "@id": "stackit:privateNetworkOnly",
+      "@type": "xsd:boolean"
+    },
+    "LoadbalancerOptionAccessControl": "stackit:LoadbalancerOptionAccessControl",
+    "allowedSourceRanges": {
+      "@id": "stackit:allowedSourceRanges",
+      "@container": "@list"
+    },
+    "ipBlockListName": {
+      "@id": "stackit:ipBlockListName",
+      "@type": "xsd:string"
+    },
+    "LoadbalancerOptionLogs": "stackit:LoadbalancerOptionLogs",
+    "pushUrl": {
+      "@id": "stackit:pushUrl",
+      "@type": "xsd:string"
+    },
+    "LoadbalancerOptionMetrics": "stackit:LoadbalancerOptionMetrics",
+    "LoadbalancerOptionObservability": "stackit:LoadbalancerOptionObservability",
+    "logs": {
+      "@id": "stackit:logs",
+      "@type": "@id"
+    },
+    "metrics": {
+      "@id": "stackit:metrics",
+      "@type": "@id"
+    },
+    "Network": "stackit:Network",
+    "networkId": {
+      "@id": "stackit:networkId",
+      "@type": "xsd:string"
+    },
+    "role": {
+      "@id": "stackit:role",
+      "@type": "xsd:string"
+    },
+    "Path": "stackit:Path",
+    "prefix": {
+      "@id": "stackit:prefix",
+      "@type": "xsd:string"
+    },
+    "PlanDetails": "stackit:PlanDetails",
+    "flavorName": {
+      "@id": "stackit:flavorName",
+      "@type": "xsd:string"
+    },
+    "maxConnections": {
+      "@id": "stackit:maxConnections",
+      "@type": "xsd:integer"
+    },
+    "ProtocolOptionsHTTP": "stackit:ProtocolOptionsHTTP",
+    "hosts": {
+      "@id": "stackit:hosts",
+      "@container": "@list"
+    },
+    "ProtocolOptionsHTTPS": "stackit:ProtocolOptionsHTTPS",
+    "certificateConfig": {
+      "@id": "stackit:certificateConfig",
+      "@type": "@id"
+    },
+    "QueryParameter": "stackit:QueryParameter",
+    "Rule": "stackit:Rule",
+    "cookiePersistence": {
+      "@id": "stackit:cookiePersistence",
+      "@type": "@id"
+    },
+    "headers": {
+      "@id": "stackit:headers",
+      "@container": "@list"
+    },
+    "queryParameters": {
+      "@id": "stackit:queryParameters",
+      "@container": "@list"
+    },
+    "targetPool": {
+      "@id": "stackit:targetPool",
+      "@type": "xsd:string"
+    },
+    "webSocket": {
+      "@id": "stackit:webSocket",
+      "@type": "xsd:boolean"
+    },
+    "SecurityGroup": "stackit:SecurityGroup",
+    "id": {
+      "@id": "stackit:id",
+      "@type": "xsd:string"
+    },
+    "Status": "stackit:Status",
+    "code": {
+      "@id": "stackit:code",
+      "@type": "xsd:integer"
+    },
+    "details": {
+      "@id": "stackit:details",
+      "@container": "@list"
+    },
+    "message": {
+      "@id": "stackit:message",
+      "@type": "xsd:string"
+    },
+    "Target": "stackit:Target",
+    "ip": {
+      "@id": "stackit:ip",
+      "@type": "xsd:string"
+    },
+    "TargetPool": "stackit:TargetPool",
+    "activeHealthCheck": {
+      "@id": "stackit:activeHealthCheck",
+      "@type": "@id"
+    },
+    "targetPort": {
+      "@id": "stackit:targetPort",
+      "@type": "xsd:integer"
+    },
+    "targets": {
+      "@id": "stackit:targets",
+      "@container": "@list"
+    },
+    "tlsConfig": {
+      "@id": "stackit:tlsConfig",
+      "@type": "@id"
+    },
+    "TlsConfig": "stackit:TlsConfig",
+    "customCa": {
+      "@id": "stackit:customCa",
+      "@type": "xsd:string"
+    },
+    "enabled": {
+      "@id": "stackit:enabled",
+      "@type": "xsd:boolean"
+    },
+    "skipCertificateValidation": {
+      "@id": "stackit:skipCertificateValidation",
+      "@type": "xsd:boolean"
+    },
+    "UpdateCredentialsPayload": "stackit:UpdateCredentialsPayload",
+    "UpdateCredentialsResponse": "stackit:UpdateCredentialsResponse",
+    "UpdateLoadBalancerPayload": "stackit:UpdateLoadBalancerPayload",
+    "UpdateTargetPoolPayload": "stackit:UpdateTargetPoolPayload",
+    "Action": "stackit:Action",
+    "Behavior": "stackit:Behavior",
+    "action": {
+      "@id": "stackit:action",
+      "@type": "@id"
+    },
+    "log": {
+      "@id": "stackit:log",
+      "@type": "xsd:boolean"
+    },
+    "logMsg": {
+      "@id": "stackit:logMsg",
+      "@type": "xsd:string"
+    },
+    "CRGConfigQuota": "stackit:CRGConfigQuota",
+    "limit": {
+      "@id": "stackit:limit",
+      "@type": "xsd:integer"
+    },
+    "usage": {
+      "@id": "stackit:usage",
+      "@type": "xsd:integer"
+    },
+    "CRGUsage": "stackit:CRGUsage",
+    "count": {
+      "@id": "stackit:count",
+      "@type": "xsd:integer"
+    },
+    "items": {
+      "@id": "stackit:items",
+      "@container": "@list"
+    },
+    "Condition": "stackit:Condition",
+    "operator": {
+      "@id": "stackit:operator",
+      "@type": "@id"
+    },
+    "transformations": {
+      "@id": "stackit:transformations",
+      "@container": "@list"
+    },
+    "variable": {
+      "@id": "stackit:variable",
+      "@type": "@id"
+    },
+    "ConditionOperator": "stackit:ConditionOperator",
+    "value": {
+      "@id": "stackit:value",
+      "@type": "xsd:string"
+    },
+    "ConditionVariable": "stackit:ConditionVariable",
+    "CreateCustomRule": "stackit:CreateCustomRule",
+    "behavior": {
+      "@id": "stackit:behavior",
+      "@type": "@id"
+    },
+    "conditions": {
+      "@id": "stackit:conditions",
+      "@container": "@list"
+    },
+    "CreateCustomRuleGroupPayload": "stackit:CreateCustomRuleGroupPayload",
+    "CreateManagedRuleSetPayload": "stackit:CreateManagedRuleSetPayload",
+    "CreateWAFPayload": "stackit:CreateWAFPayload",
+    "customRuleGroupName": {
+      "@id": "stackit:customRuleGroupName",
+      "@type": "xsd:string"
+    },
+    "managedRuleSetName": {
+      "@id": "stackit:managedRuleSetName",
+      "@type": "xsd:string"
+    },
+    "GetBehavior": "stackit:GetBehavior",
+    "severity": {
+      "@id": "stackit:severity",
+      "@type": "@id"
+    },
+    "GetCustomRule": "stackit:GetCustomRule",
+    "GetCustomRuleGroupResponse": "stackit:GetCustomRuleGroupResponse",
+    "GetLimitedManagedRuleSetResponse": "stackit:GetLimitedManagedRuleSetResponse",
+    "GetManagedRuleSetResponse": "stackit:GetManagedRuleSetResponse",
+    "groups": {
+      "@id": "stackit:groups"
+    },
+    "GetWAFResponse": "stackit:GetWAFResponse",
+    "ListCustomRuleGroupResponse": "stackit:ListCustomRuleGroupResponse",
+    "ListManagedRuleSetResponse": "stackit:ListManagedRuleSetResponse",
+    "ListWAFResponse": "stackit:ListWAFResponse",
+    "MRSConfigQuota": "stackit:MRSConfigQuota",
+    "MRSRule": "stackit:MRSRule",
+    "mode": {
+      "@id": "stackit:mode",
+      "@type": "@id"
+    },
+    "MRSRuleGroup": "stackit:MRSRuleGroup",
+    "groupName": {
+      "@id": "stackit:groupName",
+      "@type": "xsd:string"
+    },
+    "MRSUsage": "stackit:MRSUsage",
+    "Mode": "stackit:Mode",
+    "Operator": "stackit:Operator",
+    "PatchMRSRule": "stackit:PatchMRSRule",
+    "PatchMRSRuleGroup": "stackit:PatchMRSRuleGroup",
+    "PatchManagedRuleSetPayload": "stackit:PatchManagedRuleSetPayload",
+    "Quotas": "stackit:Quotas",
+    "customRuleGroup": {
+      "@id": "stackit:customRuleGroup",
+      "@type": "@id"
+    },
+    "managedRuleSet": {
+      "@id": "stackit:managedRuleSet",
+      "@type": "@id"
+    },
+    "webApplicationFirewall": {
+      "@id": "stackit:webApplicationFirewall",
+      "@type": "@id"
+    },
+    "Severity": "stackit:Severity",
+    "Transformation": "stackit:Transformation",
+    "Type": "stackit:Type",
+    "UpdateCustomRuleGroupPayload": "stackit:UpdateCustomRuleGroupPayload",
+    "UpdateWAFPayload": "stackit:UpdateWAFPayload",
+    "Variable": "stackit:Variable",
+    "WAFConfigQuota": "stackit:WAFConfigQuota",
+    "WAFUsage": "stackit:WAFUsage",
+    "WAFUsageItem": "stackit:WAFUsageItem",
+    "listenerNames": {
+      "@id": "stackit:listenerNames",
+      "@container": "@list"
+    },
+    "loadBalancerName": {
+      "@id": "stackit:loadBalancerName",
+      "@type": "xsd:string"
+    },
+    "AddCustomRoleResponse": "stackit:AddCustomRoleResponse",
+    "resourceId": {
+      "@id": "stackit:resourceId",
+      "@type": "xsd:string"
+    },
+    "resourceType": {
+      "@id": "stackit:resourceType",
+      "@type": "xsd:string"
+    },
+    "AddMembersPayload": "stackit:AddMembersPayload",
+    "members": {
+      "@id": "stackit:members",
+      "@container": "@list"
+    },
+    "AddRolePayload": "stackit:AddRolePayload",
+    "permissions": {
+      "@id": "stackit:permissions",
+      "@container": "@list"
+    },
+    "DeleteRoleResponse": "stackit:DeleteRoleResponse",
+    "writtenAt": {
+      "@id": "stackit:writtenAt",
+      "@type": "@id"
+    },
+    "ErrorResponse": "stackit:ErrorResponse",
+    "error": {
+      "@id": "stackit:error",
+      "@type": "xsd:string"
+    },
+    "timeStamp": {
+      "@id": "stackit:timeStamp",
+      "@type": "xsd:dateTime"
+    },
+    "ExistingPermission": "stackit:ExistingPermission",
+    "GetRoleResponse": "stackit:GetRoleResponse",
+    "ListMembersResponse": "stackit:ListMembersResponse",
+    "ListPermissionsResponse": "stackit:ListPermissionsResponse",
+    "ListUserMembershipsResponse": "stackit:ListUserMembershipsResponse",
+    "ListUserPermissionsResponse": "stackit:ListUserPermissionsResponse",
+    "Member": "stackit:Member",
+    "subject": {
+      "@id": "stackit:subject",
+      "@type": "xsd:string"
+    },
+    "MembersResponse": "stackit:MembersResponse",
+    "Permission": "stackit:Permission",
+    "PermissionRequest": "stackit:PermissionRequest",
+    "RemoveMembersPayload": "stackit:RemoveMembersPayload",
+    "forceRemove": {
+      "@id": "stackit:forceRemove",
+      "@type": "xsd:boolean"
+    },
+    "Role": "stackit:Role",
+    "etag": {
+      "@id": "stackit:etag",
+      "@type": "xsd:string"
+    },
+    "RolesResponse": "stackit:RolesResponse",
+    "roles": {
+      "@id": "stackit:roles",
+      "@container": "@list"
+    },
+    "UpdateRolePayload": "stackit:UpdateRolePayload",
+    "UpdateRoleResponse": "stackit:UpdateRoleResponse",
+    "UserMembership": "stackit:UserMembership",
+    "UserPermission": "stackit:UserPermission",
+    "Zookie": "stackit:Zookie",
+    "zookie": {
+      "@id": "stackit:zookie",
+      "@type": "xsd:string"
+    },
+    "AutomationScheduleTrigger": "stackit:AutomationScheduleTrigger",
+    "rrule": {
+      "@id": "stackit:rrule",
+      "@type": "xsd:string"
+    },
+    "AutomationTriggers": "stackit:AutomationTriggers",
+    "schedule": {
+      "@id": "stackit:schedule",
+      "@type": "@id"
+    },
+    "CreateSnapshotsResult": "stackit:CreateSnapshotsResult",
+    "createdSnapshotIDs": {
+      "@id": "stackit:createdSnapshotIDs",
+      "@container": "@list"
+    },
+    "kind": {
+      "@id": "stackit:kind",
+      "@type": "xsd:string"
+    },
+    "CreateVolumeAutomationPayload": "stackit:CreateVolumeAutomationPayload",
+    "input": {
+      "@id": "stackit:input",
+      "@type": "@id"
+    },
+    "templateId": {
+      "@id": "stackit:templateId",
+      "@type": "xsd:string"
+    },
+    "triggers": {
+      "@id": "stackit:triggers",
+      "@type": "@id"
+    },
+    "ErrorInfoDetail": "stackit:ErrorInfoDetail",
+    "domain": {
+      "@id": "stackit:domain",
+      "@type": "xsd:string"
+    },
+    "metadata": {
+      "@id": "stackit:metadata"
+    },
+    "reason": {
+      "@id": "stackit:reason",
+      "@type": "xsd:string"
+    },
+    "ErrorResponseContent": "stackit:ErrorResponseContent",
+    "ErrorResponseContentDetails": "stackit:ErrorResponseContentDetails",
+    "EventCreateResponse": "stackit:EventCreateResponse",
+    "GetVolumeIDsResult": "stackit:GetVolumeIDsResult",
+    "volumeIDs": {
+      "@id": "stackit:volumeIDs",
+      "@container": "@list"
+    },
+    "GetVolumeTemplateResponse": "stackit:GetVolumeTemplateResponse",
+    "createTime": {
+      "@id": "stackit:createTime",
+      "@type": "xsd:dateTime"
+    },
+    "output": {
+      "@id": "stackit:output",
+      "@type": "@id"
+    },
+    "HelpErrorDetail": "stackit:HelpErrorDetail",
+    "url": {
+      "@id": "stackit:url",
+      "@type": "xsd:string"
+    },
+    "ListAutomationsItem": "stackit:ListAutomationsItem",
+    "updateTime": {
+      "@id": "stackit:updateTime",
+      "@type": "xsd:dateTime"
+    },
+    "ListAutomationsResponse": "stackit:ListAutomationsResponse",
+    "nextPageToken": {
+      "@id": "stackit:nextPageToken",
+      "@type": "xsd:string"
+    },
+    "ListExecutionsItem": "stackit:ListExecutionsItem",
+    "endTime": {
+      "@id": "stackit:endTime",
+      "@type": "xsd:dateTime"
+    },
+    "ListExecutionsResponse": "stackit:ListExecutionsResponse",
+    "ListTemplatesResponse": "stackit:ListTemplatesResponse",
+    "LocalizedMessageErrorDetail": "stackit:LocalizedMessageErrorDetail",
+    "locale": {
+      "@id": "stackit:locale",
+      "@type": "xsd:string"
+    },
+    "PartialUpdateVolumeAutomationPayload": "stackit:PartialUpdateVolumeAutomationPayload"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "STACKIT API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects STACKIT's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-18) from openapi/stackit-alb-openapi.yml, openapi/stackit-alb-waf-openapi.yml, openapi/stackit-authorization-openapi.yml.",
+  "dcterms:created": "2026-10-18",
+  "dcterms:source": [
+    "openapi/stackit-alb-openapi.yml",
+    "openapi/stackit-alb-waf-openapi.yml",
+    "openapi/stackit-authorization-openapi.yml",
+    "openapi/stackit-automation-openapi.yml",
+    "openapi/stackit-cdn-openapi.yml"
+  ]
+}

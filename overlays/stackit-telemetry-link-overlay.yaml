@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Telemetry Link API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-telemetry-link-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: telemetry-link
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/folders/{folderId}/regions/{regionId}/telemetry-link'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/folders/{folderId}/regions/{regionId}/telemetry-link'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_get-folder-telemetry-link
+- target: $.paths['/v1/folders/{folderId}/regions/{regionId}/telemetry-link/backflush-jobs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_list-folder-backflush-jobs
+- target: $.paths['/v1/folders/{folderId}/regions/{regionId}/telemetry-link/backflush-jobs/{backflushJobId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_get-folder-backflush-job
+- target: $.paths['/v1/organizations/{organizationId}/regions/{regionId}/telemetry-link'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/organizations/{organizationId}/regions/{regionId}/telemetry-link'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_get-organization-telemetry-link
+- target: $.paths['/v1/organizations/{organizationId}/regions/{regionId}/telemetry-link/backflush-jobs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_list-organization-backflush-jobs
+- target: $.paths['/v1/organizations/{organizationId}/regions/{regionId}/telemetry-link/backflush-jobs/{backflushJobId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_get-organization-backflush-job
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-link'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-link'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_get-project-telemetry-link
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-link/backflush-jobs'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_list-project-backflush-jobs
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-link/backflush-jobs/{backflushJobId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_link_get-project-backflush-job

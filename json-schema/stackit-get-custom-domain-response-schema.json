@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-custom-domain-response-schema.json",
+  "title": "GetCustomDomainResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-cdn-openapi.yml#/components/schemas/GetCustomDomainResponse",
+  "properties": {
+    "certificate": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/GetCustomDomainManagedCertificate"
+        },
+        {
+          "$ref": "#/$defs/GetCustomDomainCustomCertificate"
+        }
+      ]
+    },
+    "customDomain": {
+      "$ref": "#/$defs/CustomDomain"
+    }
+  },
+  "required": [
+    "customDomain",
+    "certificate"
+  ],
+  "type": "object",
+  "$defs": {
+    "CustomDomain": {
+      "description": "Definition of a custom domain",
+      "properties": {
+        "errors": {
+          "description": "This object is present if the custom domain has errors.",
+          "items": {
+            "$ref": "#/$defs/StatusError"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "name": {
+          "description": "The domain. Can be used as input for the GetCustomDomain endpoint",
+          "maxLength": 72,
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/DomainStatus"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ],
+      "type": "object"
+    },
+    "DomainStatus": {
+      "description": "The status of the domain: CREATING indicates that the custom domain is being set up. UPDATING means that requested changes are being applied to the custom domain. ACTIVE means the custom domain is currently configured and active. DELETING means that the domain is in the process of being removed from the distribution. In case the domain has the ERROR state, more information will be available in the errors list.",
+      "enum": [
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "ERROR"
+      ],
+      "type": "string"
+    },
+    "GetCustomDomainCustomCertificate": {
+      "description": "Returned if a custom certificate is used. Response does not contain the certificate or key.",
+      "properties": {
+        "skipDnsCheck": {
+          "default": false,
+          "description": "Returns if the CNAME Check has been disabled for this Custom Domain. This is usually set for migrations to allow for no downtime.",
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "version": {
+          "description": "Whenever a new custom certificate is added the version is increased by 1.",
+          "format": "int32",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type",
+        "version",
+        "skipDnsCheck"
+      ],
+      "type": "object"
+    },
+    "GetCustomDomainManagedCertificate": {
+      "description": "This is returned when no custom certificate is used. We provision and manage a Let's Encrypt Certificate for you",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "StatusError": {
+      "properties": {
+        "de": {
+          "description": "A german translation string corresponding to the error key. Note that we do not guarantee german translations are present.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "en": {
+          "description": "An english translation string corresponding to the error key. An english translation key is always present.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "key": {
+          "description": "An enum value that describes a Status Error.",
+          "enum": [
+            "UNKNOWN",
+            "CUSTOM_DOMAIN_CNAME_MISSING",
+            "CUSTOM_DOMAIN_ALREADY_IN_USE",
+            "PUBLIC_BETA_QUOTA_REACHED",
+            "LOG_SINK_INSTANCE_UNAVAILABLE",
+            "EXTERNAL_QUOTA_REACHED"
+          ],
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "en",
+        "key"
+      ],
+      "type": "object"
+    }
+  }
+}

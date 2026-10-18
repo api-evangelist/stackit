@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-managed-rule-set-response-schema.json",
+  "title": "GetManagedRuleSetResponse",
+  "description": "GetManagedRuleSetResponse returns rule configuration name and it's rules.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetManagedRuleSetResponse",
+  "properties": {
+    "groups": {
+      "additionalProperties": {
+        "$ref": "#/$defs/MRSRuleGroup"
+      },
+      "description": "Inventory of all available Managed Rule Set groups and their current configuration. The key is the unique Group ID.",
+      "type": "object"
+    },
+    "name": {
+      "description": "Managed rule set configuration name.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/Type"
+    },
+    "usage": {
+      "$ref": "#/$defs/MRSUsage"
+    },
+    "version": {
+      "description": "Managed rule set version.",
+      "pattern": "^v\\d+\\.\\d+\\.\\d+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "version"
+  ],
+  "type": "object",
+  "$defs": {
+    "MRSRule": {
+      "description": "Rule represents an individual security or validation rule.",
+      "properties": {
+        "description": {
+          "description": "A description of what this rule covers.",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/$defs/Mode"
+        },
+        "severity": {
+          "description": "Impact level.",
+          "pattern": "^(CRITICAL|ERROR|WARNING|INFO)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "description",
+        "severity",
+        "mode"
+      ],
+      "type": "object"
+    },
+    "MRSRuleGroup": {
+      "description": "RuleGroup represents a collection of rules associated with a specific group.",
+      "properties": {
+        "description": {
+          "description": "A description of what this group covers.",
+          "type": "string"
+        },
+        "groupName": {
+          "description": "The name for the rule group.",
+          "pattern": "^[a-zA-Z\\(\\) ]+$",
+          "type": "string"
+        },
+        "rules": {
+          "additionalProperties": {
+            "$ref": "#/$defs/MRSRule"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "groupName",
+        "description"
+      ],
+      "type": "object"
+    },
+    "MRSUsage": {
+      "properties": {
+        "count": {
+          "description": "Number of WAFs using this Managed Rule Set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "description": "List of WAFs that use this Managed Rule Set.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Mode": {
+      "description": "The current mode of the rule.",
+      "enum": [
+        "MODE_ENABLED",
+        "MODE_DISABLED",
+        "MODE_LOG_ONLY"
+      ],
+      "pattern": "^(MODE_ENABLED|MODE_DISABLED|MODE_LOG_ONLY)$",
+      "title": "Mode",
+      "type": "string"
+    },
+    "Type": {
+      "description": "Set the managed rule set type.",
+      "enum": [
+        "TYPE_OWASP_CRS"
+      ],
+      "pattern": "^(TYPE_OWASP_CRS)$",
+      "title": "MRS Type",
+      "type": "string"
+    }
+  }
+}

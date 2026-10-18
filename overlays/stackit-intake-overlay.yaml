@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Intake API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-intake-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: intake
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intake-runners'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: intake_list-intake-runners
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intake-runners/{intakeRunnerId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intake-runners/{intakeRunnerId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: intake_get-intake-runner
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intakes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: intake_list-intakes
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intakes/{intakeId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intakes/{intakeId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: intake_get-intake
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intakes/{intakeId}/users'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: intake_list-intake-users
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intakes/{intakeId}/users/{intakeUserId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/regions/{regionId}/intakes/{intakeId}/users/{intakeUserId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: intake_get-intake-user

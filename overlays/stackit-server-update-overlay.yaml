@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Server Update Management API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-server-update-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: server-update
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/service'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/service'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_update_get_service_resource
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/update-schedules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_update_list_update_schedules
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/update-schedules/{scheduleId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/update-schedules/{scheduleId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_update_get_update_schedule
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/updates'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_update_list_updates
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/servers/{serverId}/updates/{updateId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_update_get_update
+- target: $.paths['/v2/projects/{projectId}/update-policies'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: server_update_list_update_policies

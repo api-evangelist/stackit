@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Load Balancer IP Lists API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-lb-ip-lists-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: lb-ip-lists
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{region}/ip-lists'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: lb_ip_lists_list_i_p_lists
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{region}/ip-lists/{name}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{region}/ip-lists/{name}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: lb_ip_lists_get_i_p_list
+- target: $.paths['/v1alpha/projects/{projectId}/regions/{region}/quotas'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: lb_ip_lists_get_quota

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-list-models-response-schema.json",
+  "title": "ListModelsResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-model-serving-openapi.yml#/components/schemas/ListModelsResponse",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "models": {
+      "items": {
+        "$ref": "#/$defs/Model"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "models"
+  ],
+  "type": "object",
+  "$defs": {
+    "Model": {
+      "properties": {
+        "category": {
+          "enum": [
+            "standard",
+            "plus",
+            "premium"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 2000,
+          "pattern": "^[0-9a-zA-Z\\s.:\\/\\-]+$",
+          "type": "string"
+        },
+        "displayedName": {
+          "maxLength": 200,
+          "minLength": 1,
+          "pattern": "^[0-9a-zA-Z\\s_-]+$",
+          "type": "string"
+        },
+        "id": {
+          "description": "generated uuid to identify a model",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "description": "huggingface name",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "skus": {
+          "items": {
+            "$ref": "#/$defs/SKU"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "type": {
+          "enum": [
+            "chat",
+            "embedding",
+            "audio",
+            "image"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "description": "url of the model",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "displayedName",
+        "description",
+        "type",
+        "url",
+        "region",
+        "category",
+        "skus"
+      ],
+      "type": "object"
+    },
+    "SKU": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    }
+  }
+}

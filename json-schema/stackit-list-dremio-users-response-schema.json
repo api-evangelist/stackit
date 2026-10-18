@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-list-dremio-users-response-schema.json",
+  "title": "listDremioUsersResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dremio-openapi.yml#/components/schemas/listDremioUsersResponse",
+  "properties": {
+    "dremioUsers": {
+      "items": {
+        "$ref": "#/$defs/dremioUserResponse"
+      },
+      "type": "array"
+    },
+    "nextPageToken": {
+      "description": "A token to retrieve the next page of results.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dremioUsers"
+  ],
+  "$defs": {
+    "dremioUserResponse": {
+      "properties": {
+        "create_time": {
+          "description": "The point in time the resource was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description is a longer text chosen by the user to provide more context for the resource.",
+          "maxLength": 1024,
+          "type": "string"
+        },
+        "email": {
+          "description": "This is the admin user's email address.",
+          "format": "email",
+          "maxLength": 256,
+          "minLength": 5,
+          "type": "string"
+        },
+        "errorMessage": {
+          "description": "A message describing an actionable error the user can resolve. This field is empty if no such error exists.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "firstName": {
+          "description": "This is the admin user's first name.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "description": "A auto generated unique id which identifies the resource.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "lastName": {
+          "description": "This is the  admin user's last name.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
+          "description": "This is the username used to login the admin user.",
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "state": {
+          "description": "The current state of the resource.",
+          "enum": [
+            "reconciling",
+            "active",
+            "deleting",
+            "error"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "firstName",
+        "lastName",
+        "email",
+        "createTime",
+        "state"
+      ]
+    }
+  }
+}

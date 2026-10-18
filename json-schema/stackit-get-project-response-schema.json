@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-get-project-response-schema.json",
+  "title": "GetProjectDetailsResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-resource-manager-openapi.yml#/components/schemas/GetProjectResponse",
+  "properties": {
+    "containerId": {
+      "description": "Globally unique identifier.",
+      "type": "string"
+    },
+    "creationTime": {
+      "description": "Timestamp at which the project was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "labels": {
+      "$ref": "#/$defs/Labels"
+    },
+    "lifecycleState": {
+      "$ref": "#/$defs/LifecycleState"
+    },
+    "name": {
+      "description": "Project name.",
+      "type": "string"
+    },
+    "parent": {
+      "$ref": "#/$defs/Parent"
+    },
+    "parents": {
+      "$ref": "#/$defs/ParentList"
+    },
+    "projectId": {
+      "description": "Globally unique identifier.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "updateTime": {
+      "description": "Timestamp at which the project was last modified.",
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "parent",
+    "containerId",
+    "projectId",
+    "lifecycleState",
+    "updateTime",
+    "creationTime"
+  ],
+  "type": "object",
+  "$defs": {
+    "Labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.\n\n* **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.\n* **Value:** Must be 63 characters or less. May be empty (\"\"). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).\n\n> Note: Additional naming restrictions may apply depending on your specific organization.*",
+      "maxProperties": 64,
+      "title": "Labels",
+      "type": "object"
+    },
+    "LifecycleState": {
+      "description": "Lifecycle state of the resource container.\n\n| LIFECYCLE STATE | DESCRIPTION |\n|----------|--------------------|\n| CREATING | The creation process has been triggered. The state remains until resource manager gets notified about successful process completion. |\n| ACTIVE   | Resource container can be fully used. |\n| INACTIVE | Resource container usage has been disabled. |\n| DELETING | The deletion process has been triggered. The state remains until resource manager gets notified about successful process completion. Afterwards, the record will be deleted. |",
+      "enum": [
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "INACTIVE"
+      ],
+      "title": "LifecycleState",
+      "type": "string"
+    },
+    "Parent": {
+      "description": "Parent container.",
+      "properties": {
+        "containerId": {
+          "description": "User-friendly identifier of either organization or folder (will replace id).",
+          "type": "string"
+        },
+        "id": {
+          "description": "Identifier of either organization or folder.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "type": {
+          "description": "Container type of parent container.",
+          "enum": [
+            "ORGANIZATION",
+            "FOLDER"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "containerId",
+        "id",
+        "type"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "ParentList": {
+      "items": {
+        "properties": {
+          "containerId": {
+            "description": "User-friendly identifier of either organization or folder (will replace id).",
+            "type": "string"
+          },
+          "containerParentId": {
+            "description": "User-friendly parent identifier of either organization or folder (will replace parentId).",
+            "type": "string"
+          },
+          "id": {
+            "description": "Identifier.",
+            "format": "uuid",
+            "type": "string"
+          },
+          "name": {
+            "description": "Parent container name.",
+            "type": "string"
+          },
+          "parentId": {
+            "description": "Identifier of the parent resource container.",
+            "format": "uuid",
+            "type": "string"
+          },
+          "type": {
+            "description": "Parent container type.",
+            "enum": [
+              "FOLDER",
+              "ORGANIZATION"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "id",
+          "containerId"
+        ],
+        "type": "object"
+      },
+      "title": "ParentList",
+      "type": "array"
+    }
+  }
+}

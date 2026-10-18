@@ -1,0 +1,620 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-distribution-payload-schema.json",
+  "title": "CreateDistributionPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-cdn-openapi.yml#/components/schemas/CreateDistributionPayload",
+  "properties": {
+    "backend": {
+      "description": "Configuration for the content origin backend.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/HttpBackendCreate"
+        },
+        {
+          "$ref": "#/$defs/BucketBackendCreate"
+        }
+      ]
+    },
+    "blockedCountries": {
+      "description": "Restricts access to your content based on country.\nWe use the ISO 3166-1 alpha-2 standard for country codes (e.g., DE, ES, GB).\nThis setting blocks users from the specified countries.\n",
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "blockedIps": {
+      "description": "Restricts access to your content by specifying a list of blocked IPv4 addresses.\nThis feature enhances security and privacy by preventing these addresses from accessing your distribution.\n",
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "cacheConfig": {
+      "$ref": "#/$defs/CacheConfigCreate"
+    },
+    "defaultCacheDuration": {
+      "description": "Sets the default cache duration for the distribution.\nThe default cache duration is applied when a 'Cache-Control' header is not presented in the origin's response.\nWe use ISO8601 duration format for cache duration (e.g. P1DT2H30M)\n",
+      "type": "string",
+      "x-go-type": "string"
+    },
+    "forwardHostHeader": {
+      "description": "Enabling this allows the 'Host' header to be passed through to the origin.\n",
+      "type": "boolean"
+    },
+    "intentId": {
+      "description": "While optional, it is greatly encouraged to provide an `intentId`.\nThis is used to deduplicate requests.\nIf multiple POST-Requests with the same `intentId` for a given `projectId` are received, all but the first request are dropped.\n",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels are key-value string pairs that can be attached to a distribution.",
+      "type": "object"
+    },
+    "logSink": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/LokiLogSinkCreate"
+        },
+        {
+          "$ref": "#/$defs/OtlpLogSinkCreate"
+        }
+      ]
+    },
+    "monthlyLimitBytes": {
+      "description": "Sets the monthly limit of bandwidth in bytes that the pullzone is allowed to use.\n",
+      "format": "int64",
+      "minimum": 0,
+      "type": "integer",
+      "x-go-type": "uint64"
+    },
+    "optimizer": {
+      "$ref": "#/$defs/Optimizer"
+    },
+    "redirects": {
+      "$ref": "#/$defs/RedirectConfig"
+    },
+    "regions": {
+      "description": "Define in which regions you would like your content to be cached.\n",
+      "items": {
+        "$ref": "#/$defs/Region"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "stripResponseCookies": {
+      "description": "Enable this to prevent origin-level cookies from being forwarded to the end user.\n",
+      "type": "boolean"
+    },
+    "tls": {
+      "$ref": "#/$defs/TlsConfig"
+    },
+    "waf": {
+      "$ref": "#/$defs/WafConfig"
+    }
+  },
+  "required": [
+    "backend",
+    "regions"
+  ],
+  "type": "object",
+  "$defs": {
+    "BucketBackendCreate": {
+      "properties": {
+        "bucketUrl": {
+          "description": "The fully qualified URL of your cloud storage bucket (for example, `https://s3.eu-central-1.amazonaws.com/my-bucket`).",
+          "type": "string"
+        },
+        "credentials": {
+          "$ref": "#/$defs/BucketCredentials"
+        },
+        "region": {
+          "description": "The cloud provider region where your storage bucket is located (for example, `us-west-1` for AWS or `eu01` for STACKIT).",
+          "type": "string"
+        },
+        "type": {
+          "description": "Defines the type of content origin. For this schema, it must be set to `bucket`.",
+          "enum": [
+            "bucket"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "bucketUrl",
+        "region",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "BucketCredentials": {
+      "properties": {
+        "accessKeyId": {
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        },
+        "secretAccessKey": {
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        }
+      },
+      "required": [
+        "accessKeyId",
+        "secretAccessKey"
+      ],
+      "type": "object"
+    },
+    "CacheConfigCreate": {
+      "description": "Groups the cache options that influence how the CDN builds its cache key on distribution creation.\n\n**Cache cardinality warning:** enabling query-string vary produces one cache entry per unique\nquery-string combination (**unbounded** when `queryStringVaryParameters` is empty). Each entry in\n`cacheKeyHeaders` multiplies the number of cache variants by the number of distinct values\nobserved for that header. Use these settings sparingly.\n\n`queryStringVaryParameters` is stored independently of `queryStringVaryEnabled` so that this feature\ncan be toggled on and off without losing the configured allowlist.\nOnly `queryStringVaryEnabled` gates whether the parameter allowlist actually varies the cache.\n\n**Optimizer interaction:** when the Optimizer is enabled, the CDN automatically enables\nquery-string vary for image responses regardless of this setting.\n",
+      "properties": {
+        "cacheKeyHeaders": {
+          "description": "HTTP request header names whose values participate in the cache key. Each entry multiplies\nthe number of cache variants by the number of distinct values observed for that header.\n",
+          "items": {
+            "pattern": "^[!#$%&'*+.^_`|~0-9A-Za-z-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "queryStringVaryEnabled": {
+          "default": false,
+          "description": "When true, the CDN varies its cache by the request query string. If\n`queryStringVaryParameters` is empty, every unique query-string combination produces its\nown cache entry; if non-empty, only the listed parameters influence the cache key.\n",
+          "type": "boolean"
+        },
+        "queryStringVaryParameters": {
+          "description": "Allowlist of query-string parameter names that participate in the cache key when\n`queryStringVaryEnabled` is true. Ignored while `queryStringVaryEnabled` is false, but\nstill stored so it can be re-activated without losing the list.\n",
+          "items": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "HttpBackendCreate": {
+      "properties": {
+        "geofencing": {
+          "additionalProperties": {
+            "items": {
+              "description": "ISO 3166-1 alpha-2 country code (e.g., DE, ES, GB)",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "description": "An object mapping multiple alternative origins to country codes.\n\nAny request from one of those country codes will route to the alternative origin. Do note that\ncountry codes may only be used once. You cannot have a country be assigned to multiple alternative origins.\n",
+          "type": "object"
+        },
+        "originRequestHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Headers that will be sent with every request to the configured origin.\n\n**WARNING**: Do not store sensitive values in the headers.\nThe configuration is stored as plain text.\n",
+          "type": "object"
+        },
+        "originUrl": {
+          "description": "The origin of the content that should be made available through the CDN.\nNote that the path and query parameters are ignored. Ports are allowed. If no protocol is provided, `https` is assumed.\nSo `www.example.com:1234/somePath?q=123` is normalized to `https://www.example.com:1234`\n",
+          "format": "uri",
+          "type": "string"
+        },
+        "type": {
+          "description": "Defines the type of content origin. For this schema, it must be set to `http`.",
+          "enum": [
+            "http"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "originUrl"
+      ],
+      "type": "object"
+    },
+    "LokiLogSinkCreate": {
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/LokiLogSinkCredentials"
+        },
+        "pushUrl": {
+          "description": "The fully qualified URL where the CDN should push logs to your Loki instance (for example, `https://loki.example.com/loki/api/v1/push`).",
+          "type": "string"
+        },
+        "type": {
+          "description": "Defines the type of the log sink. For Grafana Loki, this must be set to `loki`.",
+          "enum": [
+            "loki"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "pushUrl",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "LokiLogSinkCredentials": {
+      "description": "The authentication credentials required for the CDN to push logs to your Loki instance.",
+      "properties": {
+        "password": {
+          "description": "The password corresponding to your username.",
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        },
+        "username": {
+          "description": "The username used to authenticate against your Loki instance.",
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ],
+      "type": "object"
+    },
+    "MatchCondition": {
+      "default": "ANY",
+      "description": "Defines how multiple matchers within this rule are combined (ALL, ANY, NONE). Defaults to ANY.",
+      "enum": [
+        "ANY",
+        "ALL",
+        "NONE"
+      ],
+      "type": "string"
+    },
+    "Matcher": {
+      "description": "A matcher containing a list of string values to compare against the request path.",
+      "properties": {
+        "valueMatchCondition": {
+          "$ref": "#/$defs/MatchCondition"
+        },
+        "values": {
+          "description": "A list of glob patterns to match against the request path. At least one value is required. Examples: \"/shop/*\" or \"*/img/*\"",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "values"
+      ],
+      "type": "object"
+    },
+    "Optimizer": {
+      "description": "Optimizer is paid feature, a real-time on the fly image manipulation and optimization service that automatically optimizes your images for faster image delivery.\n",
+      "properties": {
+        "enabled": {
+          "description": "Determines if the optimizer should be enabled for this distribution and incurs a monthly fee",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "type": "object"
+    },
+    "OtlpLogSinkBasicCredentials": {
+      "description": "Basic authentication credentials for OTLP.",
+      "properties": {
+        "password": {
+          "description": "The password corresponding to your username.",
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        },
+        "type": {
+          "description": "Defines basic authentication.",
+          "enum": [
+            "basic"
+          ],
+          "type": "string"
+        },
+        "username": {
+          "description": "The username used to authenticate against your OTLP endpoint.",
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        }
+      },
+      "required": [
+        "type",
+        "username",
+        "password"
+      ],
+      "type": "object"
+    },
+    "OtlpLogSinkBearerCredentials": {
+      "description": "Bearer token authentication credentials for OTLP.",
+      "properties": {
+        "token": {
+          "description": "The bearer token used to authenticate against your OTLP endpoint.",
+          "type": "string",
+          "x-go-type": "secret.Secret"
+        },
+        "type": {
+          "description": "Defines bearer token authentication.",
+          "enum": [
+            "bearer"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "token"
+      ],
+      "type": "object"
+    },
+    "OtlpLogSinkCreate": {
+      "properties": {
+        "credentials": {
+          "description": "The authentication credentials required for the CDN to push logs to your OTLP endpoint.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/OtlpLogSinkBearerCredentials"
+            },
+            {
+              "$ref": "#/$defs/OtlpLogSinkBasicCredentials"
+            }
+          ],
+          "type": "object"
+        },
+        "pushUrl": {
+          "description": "The fully qualified URL where the CDN should push logs to your OTLP endpoint (for example, `https://otlp.example.com/otlp/v1/logs`).",
+          "type": "string"
+        },
+        "type": {
+          "description": "Defines the type of the log sink.",
+          "enum": [
+            "otlp"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "pushUrl",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "RedirectConfig": {
+      "description": "A wrapper for a list of redirect rules that allows for redirect settings on a distribution.",
+      "properties": {
+        "rules": {
+          "description": "A list of redirect rules. The order of rules matters for evaluation.",
+          "items": {
+            "$ref": "#/$defs/RedirectRule"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "RedirectRule": {
+      "description": "A single redirect rule defining a source pattern and a target URL.",
+      "properties": {
+        "description": {
+          "description": "An optional description for the redirect rule.",
+          "type": "string"
+        },
+        "enabled": {
+          "default": true,
+          "description": "A toggle to enable or disable the redirect rule.",
+          "type": "boolean"
+        },
+        "matchers": {
+          "description": "A list of matchers that define when this rule should apply. At least one matcher is required.",
+          "items": {
+            "$ref": "#/$defs/Matcher"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "ruleMatchCondition": {
+          "$ref": "#/$defs/MatchCondition"
+        },
+        "statusCode": {
+          "description": "The HTTP status code for the redirect. Must be one of 301, 302, 303, 307, or 308.",
+          "enum": [
+            301,
+            302,
+            303,
+            307,
+            308
+          ],
+          "format": "int32",
+          "maximum": 399,
+          "minimum": 300,
+          "type": "integer",
+          "x-go-type": "int32"
+        },
+        "targetUrl": {
+          "description": "The target URL to redirect to. Must be a valid URI.",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetUrl",
+        "statusCode",
+        "matchers"
+      ],
+      "type": "object"
+    },
+    "Region": {
+      "description": "The following regions exist:\n- `EU` - Europe\n- `US` - United States / North America\n- `AF` - Africa\n- `SA` - South America\n- `ASIA` - Asia and Oceania\n",
+      "enum": [
+        "EU",
+        "US",
+        "AF",
+        "SA",
+        "ASIA"
+      ],
+      "type": "string"
+    },
+    "TlsConfig": {
+      "description": "Configuration for TLS protocol versions.\nNote: Enabling older TLS versions (1.0, 1.1) is generally discouraged for security reasons.\n",
+      "properties": {
+        "enableTls10": {
+          "description": "If set to true, the distribution will accept connections using TLS 1.0.",
+          "type": "boolean"
+        },
+        "enableTls11": {
+          "description": "If set to true, the distribution will accept connections using TLS 1.1.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enableTls10",
+        "enableTls11"
+      ],
+      "type": "object"
+    },
+    "WafConfig": {
+      "description": "Configuration of the WAF of a distribution\n\nA WAF Config always contains a WAF Mode and Type. If a WAF was never enabled, most of the properties are not present.\nTo **enable** the WAF for your Distribution, you must set the `mode` to `ENABLED` or `LOG_ONLY`.\n\nThis causes the other properties to be populated.\n\n## Rules\nThere are 9 properties used to control which Rules are enabled, disabled or set to Log-Only. These properties can be grouped in 3 groups of 3. Each of these groups varies in specificity:\nRules are more specific than Rule Groups, which in turn are more specific than Collections. More specific definitions override more generic definitions.\n\n### Collections\n- `enabledRuleCollectionIds`\n- `disabledRuleCollectionIds`\n- `logOnlyRuleCollectionIds`\nThese are the least specific selectors. As of 2025, only two collections exist:\n  - `@builtin/crs/response`, containing all Rules regarding Responses\n  - `@builtin/crs/request`, containing all Rules regarding Requests\n  More collections may be added in the future\n### Rule Groups\n- `enabledRuleGroupIds`\n- `disabledRuleGroupIds`\n- `logOnlyRuleGroupIds`\nThese are more specific than Collections and will override their selector. You can find all available Rule Groups by calling the\n`ListWafCollections` Operation.\n### Rules\n- `enabledRuleIds`\n- `disabledRuleIds`\n- `logOnlyRuleGds`\nBeing the most specific selectors, these will override both Collection and Rule Group selectors. You can find all available Rule Groups by calling the\n`ListWafCollections` Operation.\n\n### TIP: Review resolved config\nIf you call `GetDistribution` with `?withWafStatus=true`, you get back a resolved WAF Rules Config which contains a `waf` property which you can inspect to see why a Rule is either enabled, disabled or logOnly.\n",
+      "properties": {
+        "allowedHttpMethods": {
+          "description": "This whitelist restricts which HTTP methods the distribution accepts. Requests using\nnon-whitelisted methods are blocked by the WAF before reaching the origin.\n\nCommon methods: `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, `OPTIONS`, `CONNECT`, `TRACE`\n\nValidation ensures:\n1. At least one method is allowed\n2. No duplicate methods (e.g., `GET` appearing twice)\n3. Each method is valid per HTTP standards\n",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "allowedHttpVersions": {
+          "items": {
+            "description": "This whitelist restricts which HTTP protocol versions are accepted.\n may have security vulnerabilities or lack modern security features.\n\n Supported versions:\n - HTTP/0.9\n - HTTP/1.0\n - HTTP/1.1\n - HTTP/2.0\n - HTTP/3.0\n",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "allowedRequestContentTypes": {
+          "description": "This allow list restricts which Content-Type headers are accepted in request bodies.\n\nFormat: Must be `type/subtype` with no spaces.\n\nCommon content types:\n- `application/json`\n- `application/x-www-form-urlencoded`\n- `multipart/form-data`\n- `text/html`\n- `text/plain`\n- `application/xml`\n",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "disabledRuleCollectionIds": {
+          "description": "Ids of WAF Collections to mark as disabled\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "disabledRuleGroupIds": {
+          "description": "Ids of WAF Rule Groups to mark as disabled\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "disabledRuleIds": {
+          "description": "Ids of WAF Rules that are **explicitly** disabled for this distribution.\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enabledRuleCollectionIds": {
+          "description": "Ids of WAF Collections to mark as enabled\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enabledRuleGroupIds": {
+          "description": "Ids of WAF Rule Groups to mark as enabled\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enabledRuleIds": {
+          "description": "Ids of the WAF rules that are **explicitly** enabled for this distribution.\nIf this rule is in a disabled / log Only RuleGroup or Collection,\nit will be enabled regardless as `enabledRuleIds` overrides those in specificity.\n\nDo note that rules can also be enabled because a Rulegroup or Collection is enabled.\n**DO NOT** use this property to find all active rules. Instead, pass `?withWafStatus=true` as a query parameter\nto `GetDistribution` or `ListDistributions`. This will expose the `waf` Property on distribution Level.\n\nFrom there you can `$.waf.enabledRules.map(e => e.id)` to get a list of all enabled rules.\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "logOnlyRuleCollectionIds": {
+          "description": "Ids of WAF Collections to mark as log Only.\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "logOnlyRuleGroupIds": {
+          "description": "Ids of WAF Rule Groups to mark as log Only.\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "logOnlyRuleIds": {
+          "description": "Ids of WAF Rules that are **explicitly** marked as Log Only for this distribution.\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mode": {
+          "$ref": "#/$defs/WafMode"
+        },
+        "paranoiaLevel": {
+          "$ref": "#/$defs/WafParanoiaLevel"
+        },
+        "type": {
+          "$ref": "#/$defs/WafType"
+        }
+      },
+      "required": [
+        "mode",
+        "type",
+        "enabledRuleIds"
+      ],
+      "type": "object"
+    },
+    "WafMode": {
+      "description": "- `ENABLED`: The WAF actively inspects and blocks malicious requests.\n- `DISABLED`: The WAF is completely off. No inspection occurs.\n- `LOG_ONLY`: The WAF inspects requests and logs matches but never blocks.\n",
+      "enum": [
+        "DISABLED",
+        "ENABLED",
+        "LOG_ONLY"
+      ],
+      "type": "string"
+    },
+    "WafParanoiaLevel": {
+      "description": "The paranoia level defines how aggressively the WAF should action on requests.\nIt ranges from `L1` (least strict, lowest chance of false positives) to `L4` (most strict, highest chance of false positives).\nA higher paranoia level is more effective at catching attacks but can also block legitimate traffic.\n",
+      "enum": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "type": "string"
+    },
+    "WafType": {
+      "description": "Enable or disable the Premium WAF. Do note that enabling the Premium WAF will cause additional fees.\n\nSome features are gated behind the Premium WAF, like additional, **premium-only rules** and the ability to create **custom rules** (not yet implemented)\n",
+      "enum": [
+        "FREE",
+        "PREMIUM"
+      ],
+      "type": "string"
+    }
+  }
+}

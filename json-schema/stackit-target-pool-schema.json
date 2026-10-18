@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-target-pool-schema.json",
+  "title": "TargetPool",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-alb-openapi.yml#/components/schemas/TargetPool",
+  "properties": {
+    "activeHealthCheck": {
+      "$ref": "#/$defs/ActiveHealthCheck"
+    },
+    "name": {
+      "description": "Target pool name",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "type": "string"
+    },
+    "targetPort": {
+      "description": "The number identifying the port where each target listens for traffic.",
+      "format": "int32",
+      "maximum": 65535,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "targets": {
+      "description": "List of all targets which will be used in the pool. Limited to 250.",
+      "items": {
+        "$ref": "#/$defs/Target"
+      },
+      "type": "array"
+    },
+    "tlsConfig": {
+      "$ref": "#/$defs/TlsConfig"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ActiveHealthCheck": {
+      "description": "Set this to customize active health checks for targets in this pool.",
+      "properties": {
+        "altPort": {
+          "description": "Overrides the default port used for health check probes.",
+          "format": "int32",
+          "title": "Health Check Port",
+          "type": "integer"
+        },
+        "healthyThreshold": {
+          "description": "Healthy threshold of the health checking",
+          "format": "int32",
+          "minimum": 1,
+          "title": "Healthy threshold",
+          "type": "integer"
+        },
+        "httpHealthChecks": {
+          "$ref": "#/$defs/HttpHealthChecks"
+        },
+        "interval": {
+          "description": "Interval duration of health checking in seconds",
+          "pattern": "^-?(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,9})?s$",
+          "title": "Interval",
+          "type": "string"
+        },
+        "intervalJitter": {
+          "description": "Interval duration threshold of the health checking in seconds",
+          "pattern": "^-?(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,9})?s$",
+          "title": "Interval threshold",
+          "type": "string"
+        },
+        "timeout": {
+          "description": "Active health checking timeout duration in seconds",
+          "pattern": "^-?(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,9})?s$",
+          "title": "Timeout",
+          "type": "string"
+        },
+        "unhealthyThreshold": {
+          "description": "Unhealthy threshold of the health checking",
+          "format": "int32",
+          "minimum": 1,
+          "title": "Unhealthy threshold",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "HttpHealthChecks": {
+      "description": "Options for the HTTP health checking.",
+      "properties": {
+        "okStatuses": {
+          "description": "List of HTTP status codes that indicate a healthy response",
+          "items": {
+            "type": "string"
+          },
+          "maximum": 299,
+          "minimum": 200,
+          "title": "HTTP Health Checks' status code",
+          "type": "array"
+        },
+        "path": {
+          "description": "Path to send the health check request to",
+          "type": "string"
+        },
+        "tls": {
+          "$ref": "#/$defs/TlsConfig"
+        }
+      },
+      "type": "object"
+    },
+    "Target": {
+      "properties": {
+        "displayName": {
+          "description": "Target display name.",
+          "pattern": "^[0-9a-zA-Z](?:(?:[0-9a-zA-Z]|-){0,61}[0-9a-zA-Z])?$",
+          "type": "string"
+        },
+        "ip": {
+          "description": "Private target IP, which must by unique within a target pool.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TlsConfig": {
+      "description": "Set this to configure TLS settings.",
+      "properties": {
+        "customCa": {
+          "description": "Specifies a custom Certificate Authority (CA). When provided, the target pool will trust certificates signed by this CA, in addition to any system-trusted CAs. This is useful for scenarios where the target pool needs to communicate with servers using self-signed or internally-issued certificates. Enabled needs to be set to true and skip validation to false for this option.",
+          "format": "bytes",
+          "title": "Custom Certificate Authority",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enable TLS (Transport Layer Security) bridging for the connection between Application Load Balancer and targets in this pool. When enabled, public CAs are trusted. Can be used in tandem with the options either custom CA or skip validation or alone.",
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "skipCertificateValidation": {
+          "description": "Bypass certificate validation for TLS bridging in this target pool. This option is insecure and can only be used with public CAs by setting enabled true. Meant to be used for testing purposes only!",
+          "title": "Skip Certificate Validation",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

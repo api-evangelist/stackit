@@ -1,0 +1,162 @@
+openapi: 3.2.0
+info:
+  title: Stackit Command Templates API
+  contact:
+    email: support@stackit.de
+  termsOfService: https://stackit.de/en/imprint
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Command Templates across 3 of this provider''s published API definitions: stackit-run-command-v1.json, stackit-run-command-v2.json, stackit-run-command-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://run-command.api.{region}stackit.cloud
+  variables:
+    region:
+      default: eu01.
+      enum:
+      - eu01.
+- url: https://run-command.api.stackit.cloud
+  variables:
+    region:
+      default: global
+security:
+- bearerAuth: []
+tags:
+- name: Command Templates
+paths:
+  /v1/command-templates:
+    get:
+      description: Returns a list of command templates
+      operationId: ListCommandTemplates
+      parameters:
+      - description: The type of the Operating System (windows or linux). If not provided will return data for all OS types.
+        in: query
+        name: osType
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                commandTemplatesExample:
+                  $ref: '#/components/examples/commandTemplatesResponseExample'
+              schema:
+                $ref: '#/components/schemas/CommandTemplateResponse'
+          description: response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+      security: []
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Command Templates
+      summary: List command templates
+      x-summary-source: derived
+    servers:
+    - url: https://run-command.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v2/command-templates:
+    get:
+      description: Returns a list of command templates
+      operationId: getV2CommandTemplates
+      parameters:
+      - description: The type of the Operating System (windows or linux). If not provided will return data for all OS types.
+        in: query
+        name: osType
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                commandTemplatesExample:
+                  $ref: '#/components/examples/commandTemplatesResponseExample'
+              schema:
+                $ref: '#/components/schemas/CommandTemplateResponse'
+          description: response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+      security: []
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Command Templates
+      summary: List command templates
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: ListCommandTemplates
+    servers:
+    - url: https://run-command.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    ErrorResponse:
+      properties:
+        message:
+          description: Details about the error
+          type: string
+        status:
+          description: The string representation of the http status code (i.e. Not Found, Bad Request, etc)
+          type: string
+      required:
+      - status
+      - message
+      type: object
+    CommandTemplate:
+      properties:
+        name:
+          type: string
+        osType:
+          items:
+            type: string
+          type: array
+        title:
+          type: string
+      type: object
+    CommandTemplateResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/CommandTemplate'
+          type: array
+      type: object
+  examples:
+    commandTemplatesResponseExample:
+      value:
+        items:
+        - name: RunShellScript
+          osType:
+          - linux
+          title: Run Shell Script
+x-refined-from:
+- stackit-run-command-v1.json
+- stackit-run-command-v2.json
+- stackit-run-command-openapi.yml

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-partial-update-record-set-payload-schema.json",
+  "title": "PartialUpdateRecordSetPayload",
+  "description": "RRSetPatch for rr patch set info.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dns-openapi.yml#/components/schemas/PartialUpdateRecordSetPayload",
+  "properties": {
+    "comment": {
+      "description": "user comment",
+      "maxLength": 255,
+      "type": "string"
+    },
+    "name": {
+      "description": "rfc1035 Section 2.3.4",
+      "maxLength": 253,
+      "minLength": 1,
+      "type": "string"
+    },
+    "records": {
+      "description": "records",
+      "items": {
+        "$ref": "#/$defs/RecordPayload"
+      },
+      "type": "array"
+    },
+    "ttl": {
+      "description": "time to live",
+      "format": "int32",
+      "maximum": 99999999,
+      "minimum": 30,
+      "type": "integer"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "RecordPayload": {
+      "description": "RecordPost for rr set info.",
+      "properties": {
+        "content": {
+          "description": "content of the record",
+          "maxLength": 64000,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "type": "object"
+    }
+  }
+}

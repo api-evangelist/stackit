@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-authentication-schema.json",
+  "title": "Authentication",
+  "description": "Describes an authentication definition associated to a STACKIT Git instance. The provider type will be an openidConnect type.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-git-openapi.yml#/components/schemas/Authentication",
+  "properties": {
+    "auto_discover_url": {
+      "description": "The well-known configuration url to use for this authentication definition.",
+      "pattern": "^https://[a-zA-Z0-9\\-\\.]+(\\.[a-zA-Z]{2,})+(/.*)?$",
+      "type": "string"
+    },
+    "client_id": {
+      "description": "The IDP client id to use.",
+      "type": "string"
+    },
+    "created_at": {
+      "description": "The date and time the creation of the authentication definition was triggered.",
+      "format": "date-time",
+      "maxLength": 48,
+      "type": "string"
+    },
+    "icon_url": {
+      "description": "The url of the icon to use for this authentication definition.",
+      "pattern": "^https://[a-zA-Z0-9\\-\\.]+(\\.[a-zA-Z]{2,})+(/.*)?$",
+      "type": "string"
+    },
+    "id": {
+      "description": "An auto generated unique uuid which identifies the authentication definition in STACKIT Git instances.",
+      "format": "uuid",
+      "maxLength": 36,
+      "type": "string"
+    },
+    "name": {
+      "description": "The name to identify an authentication definition associated with a STACKIT Git instance.",
+      "maxLength": 32,
+      "type": "string"
+    },
+    "provider": {
+      "description": "The Oauth2 provider to use.",
+      "type": "string"
+    },
+    "scopes": {
+      "description": "Scopes defines the OIDC scopes to request.",
+      "type": "string"
+    },
+    "status": {
+      "description": "The current status of the authentication definition.",
+      "enum": [
+        "Creating",
+        "Updating",
+        "Deleting",
+        "Ready",
+        "Error"
+      ],
+      "type": "string"
+    },
+    "status_message": {
+      "description": "Provides additional information or error details when the status is 'Error'.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "created_at",
+    "name",
+    "client_id",
+    "icon_url",
+    "auto_discover_url",
+    "provider",
+    "scopes",
+    "status"
+  ]
+}

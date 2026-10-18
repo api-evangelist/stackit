@@ -1,0 +1,399 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-update-application-payload-schema.json",
+  "title": "UpdateApplicationPayload",
+  "description": "ApplicationPatch describes application patch fields.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-sca-openapi.yml#/components/schemas/UpdateApplicationPayload",
+  "properties": {
+    "containers": {
+      "description": "Containers to deploy for the application.",
+      "items": {
+        "$ref": "#/$defs/Container"
+      },
+      "type": "array"
+    },
+    "network": {
+      "$ref": "#/$defs/Network"
+    },
+    "registry": {
+      "description": "Image registry configuration for the application.",
+      "items": {
+        "$ref": "#/$defs/ApplicationRegistry"
+      },
+      "type": "array"
+    },
+    "scaling": {
+      "$ref": "#/$defs/Scaling"
+    },
+    "secrets": {
+      "description": "Secrets associated with the application.",
+      "items": {
+        "$ref": "#/$defs/ApplicationSecret"
+      },
+      "type": "array"
+    },
+    "stopped": {
+      "description": "Indicates if the application resources are stopped.",
+      "type": "boolean"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ApplicationRegistry": {
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/ApplicationRegistryCredentialsAuth"
+        },
+        "type": {
+          "$ref": "#/$defs/ApplicationRegistryAuthType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "ApplicationRegistry defines the credentials to authenticate to a registry",
+      "type": "object"
+    },
+    "ApplicationRegistryAuthType": {
+      "default": "AUTH_TYPE_NONE",
+      "enum": [
+        "AUTH_TYPE_NONE",
+        "AUTH_TYPE_CREDENTIALS"
+      ],
+      "title": "- AUTH_TYPE_NONE: Used as none required.\n - AUTH_TYPE_CREDENTIALS: Credentials authentication type",
+      "type": "string"
+    },
+    "ApplicationRegistryCredentialsAuth": {
+      "properties": {
+        "password": {
+          "description": "Password to authenticate to the registry.\nOmit or set to null to indicate deletion in updates.",
+          "type": "string"
+        },
+        "url": {
+          "title": "URL pointing to the registry",
+          "type": "string"
+        },
+        "user": {
+          "title": "Username to authenticate to the registry",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "user"
+      ],
+      "type": "object"
+    },
+    "ApplicationSecret": {
+      "description": "ApplicationSecret defines a single secret key-value pair.",
+      "properties": {
+        "key": {
+          "description": "Secret key.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Secret value.\nOmit or set to null to keep the existing value unchanged.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object"
+    },
+    "AutoScaling": {
+      "description": "AutoScaling configuration.",
+      "properties": {
+        "allowScaleToZero": {
+          "description": "Allow automatically scale to zero.",
+          "type": "boolean"
+        },
+        "maxInstances": {
+          "description": "Maximum number of instances.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minInstances": {
+          "description": "Minimum number of instances.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "rules": {
+          "description": "Scaling rules.",
+          "items": {
+            "$ref": "#/$defs/ScaleRule"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "minInstances",
+        "maxInstances",
+        "rules"
+      ],
+      "type": "object"
+    },
+    "Container": {
+      "description": "Container describes a simplified container configuration for the application.",
+      "properties": {
+        "args": {
+          "description": "Container argument override.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "description": "Container command override.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "cpu": {
+          "description": "CPU limit for the container.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "environmentVariables": {
+          "description": "Environment variables exposed to the container.",
+          "items": {
+            "$ref": "#/$defs/EnvVar"
+          },
+          "type": "array"
+        },
+        "image": {
+          "description": "Container image configuration.",
+          "type": "string"
+        },
+        "memory": {
+          "description": "Memory limit for the container.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Container name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "image"
+      ],
+      "type": "object"
+    },
+    "CustomRuleParameter": {
+      "description": "CustomRuleParameter defines a single scaler parameter.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "CustomRuleSecretMapping": {
+      "description": "CustomRuleSecretMapping maps a scaler parameter to an environment secret.",
+      "properties": {
+        "parameter": {
+          "description": "Secret parameter name.",
+          "type": "string"
+        },
+        "secret": {
+          "description": "Environment secret name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "secret",
+        "parameter"
+      ],
+      "type": "object"
+    },
+    "CustomScaleRule": {
+      "description": "CustomScaleRule defines parameters for custom scalers (e.g., KEDA).",
+      "properties": {
+        "parameters": {
+          "description": "Scaler parameters.",
+          "items": {
+            "$ref": "#/$defs/CustomRuleParameter"
+          },
+          "type": "array"
+        },
+        "secretsMapping": {
+          "description": "Secret mappings for the scaler.",
+          "items": {
+            "$ref": "#/$defs/CustomRuleSecretMapping"
+          },
+          "type": "array"
+        },
+        "type": {
+          "description": "Scaler type.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "EnvVar": {
+      "description": "EnvVar defines a single environment variable.",
+      "properties": {
+        "key": {
+          "description": "Environment variable key.",
+          "type": "string"
+        },
+        "origin": {
+          "$ref": "#/$defs/EnvVarType"
+        },
+        "value": {
+          "description": "Environment variable value.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "type": "object"
+    },
+    "EnvVarType": {
+      "default": "ENV_FROM_SOURCE_TYPE_UNSPECIFIED",
+      "description": "EnvVarType identifies the origin of an environment variable.\n\n - ENV_FROM_SOURCE_TYPE_UNSPECIFIED: Used as zero value.\n - ENV_FROM_SOURCE_TYPE_MANUAL: Environment source from a literal value.\n - ENV_FROM_SOURCE_TYPE_SECRET: Environment source from a secret.",
+      "enum": [
+        "ENV_FROM_SOURCE_TYPE_UNSPECIFIED",
+        "ENV_FROM_SOURCE_TYPE_MANUAL",
+        "ENV_FROM_SOURCE_TYPE_SECRET"
+      ],
+      "type": "string"
+    },
+    "HttpScaleRule": {
+      "description": "HttpScaleRule defines parameters for HTTP-based scaling.",
+      "properties": {
+        "concurrency": {
+          "description": "Target concurrency per instance.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "rps": {
+          "description": "Target requests per second per instance.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ManualScaling": {
+      "description": "ManualScaling configuration.",
+      "properties": {
+        "instances": {
+          "description": "Number of instances to run.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "instances"
+      ],
+      "type": "object"
+    },
+    "Network": {
+      "description": "Network configuration for an application.",
+      "properties": {
+        "ingressAcl": {
+          "description": "Allowed destination CIDRs for Ingress traffic.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "internalPort": {
+          "description": "Internal port number for inter application communication.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "port": {
+          "description": "Port number.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "publicIngress": {
+          "description": "Whether the application should be accessible from the internet.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RuleType": {
+      "default": "RULE_TYPE_UNSPECIFIED",
+      "description": " - RULE_TYPE_UNSPECIFIED: Used as zero value.\n - RULE_TYPE_HTTP: HTTP scaling rule.\n - RULE_TYPE_CUSTOM: Custom scaling rule (e.g. KEDA).",
+      "enum": [
+        "RULE_TYPE_UNSPECIFIED",
+        "RULE_TYPE_HTTP",
+        "RULE_TYPE_CUSTOM"
+      ],
+      "type": "string"
+    },
+    "ScaleRule": {
+      "description": "ScaleRule defines one autoscaling trigger.",
+      "properties": {
+        "customRule": {
+          "$ref": "#/$defs/CustomScaleRule"
+        },
+        "httpRule": {
+          "$ref": "#/$defs/HttpScaleRule"
+        },
+        "name": {
+          "description": "Rule name.",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/RuleType"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Scaling": {
+      "description": "Scaling configuration for the application.",
+      "properties": {
+        "autoScaling": {
+          "$ref": "#/$defs/AutoScaling"
+        },
+        "manualScaling": {
+          "$ref": "#/$defs/ManualScaling"
+        },
+        "type": {
+          "$ref": "#/$defs/ScalingType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "ScalingType": {
+      "default": "SCALING_TYPE_UNSPECIFIED",
+      "description": " - SCALING_TYPE_UNSPECIFIED: Used as zero value.\n - SCALING_TYPE_AUTO: Auto scaling based on rules.\n - SCALING_TYPE_MANUAL: Manual scaling with fixed number of instances.",
+      "enum": [
+        "SCALING_TYPE_UNSPECIFIED",
+        "SCALING_TYPE_AUTO",
+        "SCALING_TYPE_MANUAL"
+      ],
+      "type": "string"
+    }
+  }
+}

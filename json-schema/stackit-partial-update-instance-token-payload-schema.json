@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-partial-update-instance-token-payload-schema.json",
+  "title": "PartialUpdateInstanceTokenPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-model-experiments-openapi.yml#/components/schemas/PartialUpdateInstanceTokenPayload",
+  "properties": {
+    "description": {
+      "maxLength": 2000,
+      "pattern": "^[0-9a-zA-Z\\s.:\\/\\-]*$",
+      "type": "string",
+      "x-go-type-skip-optional-pointer": false
+    },
+    "labels": {
+      "$ref": "#/$defs/LabelPatch"
+    },
+    "name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "pattern": "^[0-9a-zA-Z\\s_-]*$",
+      "type": "string",
+      "x-go-type-skip-optional-pointer": false
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "LabelPatch": {
+      "additionalProperties": {
+        "maxLength": 63,
+        "pattern": "^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])*$",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "description": "Object that represents the labels of an object. Regex for keys: `^([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$`. Regex for values: `^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])*$`. Providing a `null` value for a key will remove that key. The `stackit-` prefix is reserved and cannot be used for Keys.",
+      "type": "object"
+    }
+  }
+}

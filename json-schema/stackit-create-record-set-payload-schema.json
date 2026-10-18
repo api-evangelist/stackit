@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-record-set-payload-schema.json",
+  "title": "CreateRecordSetPayload",
+  "description": "RRSetPost for rr set info.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dns-openapi.yml#/components/schemas/CreateRecordSetPayload",
+  "properties": {
+    "comment": {
+      "description": "user comment",
+      "maxLength": 255,
+      "type": "string"
+    },
+    "name": {
+      "description": "name of the record which should be a valid domain according to rfc1035 Section 2.3.4. For APEX records (same as zone name), the zone name itself has to be put in here.",
+      "maxLength": 253,
+      "minLength": 1,
+      "type": "string"
+    },
+    "records": {
+      "description": "records",
+      "items": {
+        "$ref": "#/$defs/RecordPayload"
+      },
+      "type": "array"
+    },
+    "ttl": {
+      "description": "time to live. If nothing provided we will set the zone ttl.",
+      "format": "int32",
+      "maximum": 99999999,
+      "minimum": 60,
+      "type": "integer"
+    },
+    "type": {
+      "description": "record set type",
+      "enum": [
+        "A",
+        "AAAA",
+        "SOA",
+        "CNAME",
+        "NS",
+        "MX",
+        "TXT",
+        "SRV",
+        "PTR",
+        "ALIAS",
+        "DNAME",
+        "CAA",
+        "DNSKEY",
+        "DS",
+        "LOC",
+        "NAPTR",
+        "SSHFP",
+        "TLSA",
+        "URI",
+        "CERT",
+        "SVCB",
+        "TYPE",
+        "CSYNC",
+        "HINFO",
+        "HTTPS"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "records",
+    "type"
+  ],
+  "type": "object",
+  "$defs": {
+    "RecordPayload": {
+      "description": "RecordPost for rr set info.",
+      "properties": {
+        "content": {
+          "description": "content of the record",
+          "maxLength": 64000,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "type": "object"
+    }
+  }
+}

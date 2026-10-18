@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Edge Cloud API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-edge-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: edge
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1beta1/listcompatiblekubernetesreleases'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_list-compatible-kubernetes-releases
+- target: $.paths['/v1beta1/projects/{projectId}/plans'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_list-plans-project
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_list_instances
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_get-instance
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instances/{instanceId}/kubeconfig'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_get-kubeconfig-by-instance-id
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instances/{instanceId}/token'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_get-token-by-instance-id
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instancesbyname/{displayName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instancesbyname/{displayName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_get-instance-by-name
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instancesbyname/{displayName}/kubeconfig'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_get-kubeconfig-by-instance-name
+- target: $.paths['/v1beta1/projects/{projectId}/regions/{regionId}/instancesbyname/{displayName}/token'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: edge_get-token-by-instance-name

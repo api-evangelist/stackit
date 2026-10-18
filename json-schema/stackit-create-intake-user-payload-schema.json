@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-intake-user-payload-schema.json",
+  "title": "create-intake-userPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-intake-openapi.yml#/components/schemas/create-intake-userPayload",
+  "properties": {
+    "description": {
+      "description": "The description is a longer text chosen by the user to provide more context for the resource.",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The display name is a short name chosen by the user to identify the resource.",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{N} -]{1,32}$",
+      "type": "string"
+    },
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels are key-value pairs associated with the resource.",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "password": {
+      "description": "A password chosen by the user.\n\nThe password must consist of at least of each of these categories:\n* lower case letter\n* upper case letter\n* number\n* other character\n",
+      "maxLength": 128,
+      "minLength": 12,
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/userType"
+    }
+  },
+  "required": [
+    "displayName",
+    "password"
+  ],
+  "$defs": {
+    "userType": {
+      "default": "intake",
+      "description": "Type of user, 'intake' allows writing to the Intake, 'dead-letter' allows reading from the dead-letter queue",
+      "enum": [
+        "intake",
+        "dead-letter"
+      ],
+      "type": "string"
+    }
+  }
+}

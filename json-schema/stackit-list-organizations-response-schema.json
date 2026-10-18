@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-list-organizations-response-schema.json",
+  "title": "ListOrganizationsResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-resource-manager-openapi.yml#/components/schemas/ListOrganizationsResponse",
+  "properties": {
+    "items": {
+      "items": {
+        "properties": {
+          "containerId": {
+            "description": "Globally unique, user-friendly identifier.",
+            "type": "string"
+          },
+          "creationTime": {
+            "description": "Timestamp at which the organization was created.",
+            "format": "date-time",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/$defs/Labels"
+          },
+          "lifecycleState": {
+            "$ref": "#/$defs/LifecycleState"
+          },
+          "name": {
+            "description": "Name of the organization.",
+            "type": "string"
+          },
+          "organizationId": {
+            "description": "Globally unique, organization identifier.",
+            "format": "uuid",
+            "type": "string"
+          },
+          "updateTime": {
+            "description": "Timestamp at which the organization was last modified.",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "containerId",
+          "organizationId",
+          "lifecycleState",
+          "creationTime",
+          "updateTime"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "limit": {
+      "$ref": "#/$defs/Limit"
+    },
+    "offset": {
+      "$ref": "#/$defs/Offset"
+    }
+  },
+  "required": [
+    "items",
+    "offset",
+    "limit"
+  ],
+  "type": "object",
+  "$defs": {
+    "Labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.\n\n* **Key:** Must be between 1 and 63 characters long (excluding an optional domain prefix). Must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.). May include an optional domain prefix up to 250 characters (a lowercase DNS subdomain containing `[a-z0-9]`, `-`, and `.`) followed by a slash (/). Total maximum key length is 314 characters.\n* **Value:** Must be 63 characters or less. May be empty (\"\"). If non-empty, must start and end with an alphanumeric character `[a-zA-Z0-9]` and can contain alphanumerics, dashes (-), underscores (_), and dots (.).\n\n> Note: Additional naming restrictions may apply depending on your specific organization.*",
+      "maxProperties": 64,
+      "title": "Labels",
+      "type": "object"
+    },
+    "LifecycleState": {
+      "description": "Lifecycle state of the resource container.\n\n| LIFECYCLE STATE | DESCRIPTION |\n|----------|--------------------|\n| CREATING | The creation process has been triggered. The state remains until resource manager gets notified about successful process completion. |\n| ACTIVE   | Resource container can be fully used. |\n| INACTIVE | Resource container usage has been disabled. |\n| DELETING | The deletion process has been triggered. The state remains until resource manager gets notified about successful process completion. Afterwards, the record will be deleted. |",
+      "enum": [
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "INACTIVE"
+      ],
+      "title": "LifecycleState",
+      "type": "string"
+    },
+    "Limit": {
+      "default": 50,
+      "description": "The maximum number of projects to return in the response. If not present, an appropriate default will be used.",
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Limit",
+      "type": "number"
+    },
+    "Offset": {
+      "default": 0,
+      "description": "The offset of the first item in the collection to return.",
+      "minimum": 0,
+      "title": "Offset",
+      "type": "number"
+    }
+  }
+}

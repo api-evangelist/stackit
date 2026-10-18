@@ -1,0 +1,1102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-public-sku-schema.json",
+  "title": "PublicSKU",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-pim-openapi.yml#/components/schemas/PublicSKU",
+  "allOf": [
+    {
+      "$ref": "#/$defs/SKU"
+    },
+    {
+      "properties": {
+        "productSpecificAttributes": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PublicDatabaseSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/ArchivingSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/ComputeEngineSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/ComputeEngineGPUSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/NetworkSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/MessagingSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/LoggingAndMonitoringSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/ConfidentialComputingSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/StorageSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/DataAndAI"
+            },
+            {
+              "$ref": "#/$defs/RuntimeSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/SupportSpecificAttributes"
+            },
+            {
+              "$ref": "#/$defs/DeveloperPlatformSpecificAttributes"
+            }
+          ]
+        },
+        "savingsPlans": {
+          "items": {
+            "$ref": "#/$defs/PublicSavingsPlan"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "validStart",
+        "categoryName",
+        "categoryId",
+        "deprecated",
+        "documentation",
+        "generalProductGroup",
+        "maturityModelState",
+        "name",
+        "productName",
+        "productId",
+        "title",
+        "priceListVisibility",
+        "unit",
+        "quantityInputUnit",
+        "unitBilling",
+        "meteringType",
+        "focusConsumedUnit",
+        "hourlyAggregation",
+        "denominator",
+        "region",
+        "prices",
+        "finOpsFocus"
+      ],
+      "type": "object"
+    }
+  ],
+  "type": "object",
+  "$defs": {
+    "ArchivingSpecificAttributes": {
+      "properties": {
+        "metro": {
+          "description": "metro",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "ComputeEngineGPUSpecificAttributes": {
+      "properties": {
+        "flavor": {
+          "description": "Flavor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hardware": {
+          "description": "Hardware",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "metro": {
+          "description": "metro",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "os": {
+          "description": "Operating System (e.g. `windows`, `windows-managed`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ram": {
+          "description": "RAM (in GB)",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "vCPU": {
+          "description": "Number of vCPU",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "ComputeEngineSpecificAttributes": {
+      "properties": {
+        "flavor": {
+          "description": "Flavor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hardware": {
+          "description": "Hardware",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "metro": {
+          "description": "metro",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "os": {
+          "description": "Operating System (e.g. `windows`, `windows-managed`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ram": {
+          "description": "RAM (in GB)",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "vCPU": {
+          "description": "Number of vCPU",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "ConfidentialComputingSpecificAttributes": {
+      "properties": {
+        "flavor": {
+          "description": "Flavor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hardware": {
+          "description": "Hardware",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "metro": {
+          "description": "metro",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "os": {
+          "description": "Operating System (e.g. `windows`, `windows-managed`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ram": {
+          "description": "RAM (in GB)",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "vCPU": {
+          "description": "Number of vCPU",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "DataAndAI": {
+      "properties": {
+        "type": {
+          "description": "Type (e.g. `capacity`, `performance`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "DeveloperPlatformSpecificAttributes": {
+      "properties": {
+        "diskStoragePerNode": {
+          "description": "diskStoragePerNode",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "storage": {
+          "description": "Storage (e.g. `image`, `postgresql`, `snapshot`, `volume`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. `single`, `replica`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "FinOpsFocus": {
+      "properties": {
+        "serviceCategory": {
+          "description": "FinOps Focus service category",
+          "type": "string"
+        },
+        "serviceSubCategory": {
+          "description": "FinOps Focus service subcategory",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LoggingAndMonitoringSpecificAttributes": {
+      "properties": {
+        "diskStoragePerNode": {
+          "description": "diskStoragePerNode",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "metricPerMin": {
+          "description": "metricPerMin",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "nodes": {
+          "description": "Nodes",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "targets": {
+          "description": "Targets",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. `single`, `replica`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "MessagingSpecificAttributes": {
+      "properties": {
+        "diskStoragePerNode": {
+          "description": "diskStoragePerNode",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nodes": {
+          "description": "Nodes",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "ram": {
+          "description": "RAM (in GB)",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. `single`, `replica`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vCPU": {
+          "description": "Number of vCPU",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "NetworkSpecificAttributes": {
+      "properties": {
+        "connectionLimitPerLoadBalancer": {
+          "description": "Connection limit per Load Balancer",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "maxBandWidth": {
+          "description": "Maximum Bandwidth",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "maxConnections": {
+          "description": "Maximum Connections",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "planId": {
+          "description": "Plan ID",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recordLimitPerZone": {
+          "description": "Record limit per zone",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. `single`, `replica`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "Price": {
+      "properties": {
+        "currencyCode": {
+          "$ref": "#/$defs/currencyCodes"
+        },
+        "currencySymbol": {
+          "$ref": "#/$defs/currencySymbols"
+        },
+        "monthlyPrice": {
+          "description": "Monthly price value that is valid at request time, shown with full precision",
+          "format": "decimal",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "priceId": {
+          "description": "Price ID",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "roundedMonthlyPrice": {
+          "description": "Used in Portal rounded to the minimal usable precision 2 digits after 0",
+          "format": "decimal",
+          "type": "string"
+        },
+        "roundedValue": {
+          "description": "Used in Portal rounded to the minimal usable precision 2 digits after 0",
+          "format": "decimal",
+          "type": "string"
+        },
+        "validFrom": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "value": {
+          "description": "Price value that is valid at request time, shown with full precision with 11 decimals",
+          "format": "decimal",
+          "type": "string"
+        },
+        "valueAsInt": {
+          "description": "Price as integer representation 1e11",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "PublicDatabaseSpecificAttributes": {
+      "properties": {
+        "diskStoragePerNode": {
+          "description": "diskStoragePerNode",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "flavor": {
+          "description": "Flavor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nodes": {
+          "description": "Nodes",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "performanceClasses": {
+          "description": "Performance Classes",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ram": {
+          "description": "RAM (in GB)",
+          "format": "float",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "storageMaxGb": {
+          "description": "Max Storage in Gb",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "storageMinGb": {
+          "description": "Min Storage in Gb",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. `single`, `replica`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vCPU": {
+          "description": "Number of vCPU",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "PublicSavingsPlan": {
+      "properties": {
+        "discount": {
+          "description": "Discount percentage for the savings plan",
+          "format": "double",
+          "type": "number"
+        },
+        "validityPeriodInYears": {
+          "description": "Number of years the savings plan is valid",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeSpecificAttributes": {
+      "properties": {
+        "planId": {
+          "description": "Plan ID",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. `single`, `replica`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "SKU": {
+      "properties": {
+        "categoryId": {
+          "description": "The unique identifier for the category, which is object id from the DB",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "categoryName": {
+          "description": "Generic categorization to structure the customer's invoice transparently (e.g. `Compute Engine`, `Database`, `Storage`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "chargeDescription": {
+          "description": "Charge description",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cpuOverprovisioning": {
+          "description": "CPU overprovisioning",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "denominator": {
+          "description": "Conversion of the quantity value from the quantity input unit to the invoice unit.",
+          "format": "float",
+          "type": "number"
+        },
+        "deprecated": {
+          "description": "Attribute that indicates if product is deprecated or not.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "documentation": {
+          "description": "Documentation URL",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "finOpsFocus": {
+          "$ref": "#/$defs/FinOpsFocus"
+        },
+        "focusConsumedUnit": {
+          "description": "The unit displayed in the Focus Report.",
+          "type": "string"
+        },
+        "focusDocumentation": {
+          "description": "The documentation in the Focus Report.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "generalProductGroup": {
+          "description": "Category designation one level below the generic designation that describes the overall product group to which all the SKUs are allocated to.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hourlyAggregation": {
+          "description": "Aggregation logic to be applied to the sent events within the metering bucket (currently 1 day)",
+          "type": "string"
+        },
+        "id": {
+          "description": "SKU ID \\ Complete SAP article number with prefix. Will be shown on the invoice like this",
+          "type": "string"
+        },
+        "language": {
+          "description": "Language of sku",
+          "type": "string"
+        },
+        "licenseName": {
+          "description": "Name of license",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maturityModelState": {
+          "description": "State of the SKU following the mandatory product‘s maturity model progress (e.g. `beta`, `ga`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "meteringType": {
+          "description": "Defines which type of calculation is applied. Either discrete (point-in-time) or continuously (continuous).",
+          "type": "string"
+        },
+        "metric": {
+          "description": "Metric of service",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "How the line item will appear on the bill",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "priceListVisibility": {
+          "description": "Attribute that indicates if PriceList is visible or not.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prices": {
+          "description": "List of prices",
+          "items": {
+            "$ref": "#/$defs/Price"
+          },
+          "type": "array"
+        },
+        "productId": {
+          "description": "The unique identifier for the product, which is object id from the DB",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "productName": {
+          "description": "Generic product (e.g. `Windows Server`, `Server Backup Management`, `Server`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quantityInputUnit": {
+          "description": "The unit sent in the quantity field of the Consumption API and Metering API.",
+          "type": "string"
+        },
+        "rateType": {
+          "description": "Rate type of service",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "region": {
+          "description": "Region of sku",
+          "type": "string"
+        },
+        "serviceId": {
+          "description": "List of unique service look up ids (ASCII ordered, ascending)",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "technicalProductGroup": {
+          "description": "Technical differentiation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tierMaxValue": {
+          "description": "Tier max value",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "tierMinValue": {
+          "description": "Tier min value",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "title": {
+          "description": "Service name",
+          "type": "string"
+        },
+        "unit": {
+          "description": "The unit of measurement for the invoiced items, as to be displayed on the invoice.",
+          "type": "string"
+        },
+        "unitBilling": {
+          "description": "Unit billing",
+          "type": "string"
+        },
+        "validStart": {
+          "description": "Date when the current version was approved and became valid in PIM",
+          "format": "date-time",
+          "type": "string"
+        },
+        "version": {
+          "description": "Number of the revision from PIM",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StorageSpecificAttributes": {
+      "properties": {
+        "class": {
+          "description": "Storage Class type",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxIOPerSec": {
+          "description": "Storage maxIOPerSec",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "maxTroughInMB": {
+          "description": "Storage maxTroughInMB",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "metro": {
+          "description": "metro",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "storage": {
+          "description": "Storage (e.g. `image`, `postgresql`, `snapshot`, `volume`)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Type (e.g. 'capacity', 'input')",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "SupportSpecificAttributes": {
+      "properties": {
+        "communicationChannel": {
+          "description": "Communication Channel",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "contractNoticePeriodInDays": {
+          "description": "Contract notice period in days",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "escalationAvailabilityBCINC": {
+          "description": "Escalation availability BC INC",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "escalationAvailabilityINC": {
+          "description": "Escalation availability INC",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "escalationAvailabilitySR": {
+          "description": "Escalation availability for Service Requests",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "escalationThresholdBCINCInMins": {
+          "description": "Escalation threshold BC INC (in minutes)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "escalationThresholdINCInMins": {
+          "description": "Escalation threshold INC (in minutes)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "escalationThresholdSRInMins": {
+          "description": "Escalation threshold for Service Requests",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "finPenaltySLAVio80Pct": {
+          "description": "Financial Penalty for SLA Violation <80 (in %)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "finPenaltySLAVio90-80Pct": {
+          "description": "Financial Penalty for SLA Violation <90 - 80 (in %)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "initialRuntimeInMonths": {
+          "description": "Initial runtime in months",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "leadTimeInWorkDays": {
+          "description": "Lead time in workdays",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "location": {
+          "description": "Location",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "projectNoticePeriodInWorkDays": {
+          "description": "Project notice period in workdays",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "reactionTimeInMins": {
+          "description": "Reaction time (in minutes)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "repeatedRuntimeInMonths": {
+          "description": "Repeated runtime in months",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "responseTimeBCINCInMins": {
+          "description": "Response time BC INC (in minutes)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "responseTimeINCInMins": {
+          "description": "Response time INC (in minutes)",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "responseTimeSRInMins": {
+          "description": "Response time (in minutes) for Service Requests",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "serviceHoursBCINC": {
+          "description": "Service hours BC INC",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "serviceHoursINC": {
+          "description": "Service hours INC",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "serviceHoursSR": {
+          "description": "Service hours for Service Requests",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "slaGoalInPercentage": {
+          "description": "SLA goal in percentage",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "discriminator"
+      ],
+      "type": "object"
+    },
+    "currencyCodes": {
+      "description": "Prices' currency code regarding ISO4217",
+      "enum": [
+        "EUR",
+        "USD",
+        "GBP"
+      ],
+      "format": "iso4217",
+      "type": "string"
+    },
+    "currencySymbols": {
+      "description": "Prices' currency symbol",
+      "enum": [
+        "€",
+        "$"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

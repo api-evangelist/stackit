@@ -1,0 +1,85 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Git API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-git-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: git
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1beta/projects/{projectId}/flavors'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_list_flavors
+- target: $.paths['/v1beta/projects/{projectId}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_list_instances
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_get_instance
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/authentications'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_list_authentication
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/authentications/{authenticationId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/authentications/{authenticationId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_get_authentication
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/runner'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/runner'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_get_runner
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/users'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_get_users
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/users/{username}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1beta/projects/{projectId}/instances/{instanceId}/users/{username}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_get_user
+- target: $.paths['/v1beta/projects/{projectId}/runner-families'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_list_runner_families
+- target: $.paths['/v1beta/projects/{projectId}/runner-runtimes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: git_list_runner_runtimes

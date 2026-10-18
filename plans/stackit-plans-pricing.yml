@@ -1,0 +1,47 @@
+generated: '2026-10-18'
+method: searched
+source: https://stackit.com/en/prices
+name: STACKIT pricing
+audience: developer-api
+pricing_basis: usage-other
+published: true
+delivery:
+  delivery: managed
+  evidence: "STACKIT Cloud Services use pay-as-you-go pricing with no hidden fees"
+plans:
+- name: Pay-as-you-go
+  description: Flexible cloud services pricing based on actual usage
+  price_text: Pay-as-you-go
+  features:
+  - No upfront costs
+  - No long-term commitments
+  - Transparent pricing
+  - No hidden fees
+  limits:
+  - name: Compute Engine
+    limit_text: Variable based on instance type and usage
+  - name: Storage
+    limit_text: Variable based on storage type and usage
+  - name: Network
+    limit_text: Variable based on bandwidth usage
+- name: Colocation
+  description: Premium colocation services with individual pricing
+  price_text: Contact sales
+  features:
+  - Individual infrastructure requirements
+  - Transparent offer
+  - Premium colocation services
+  limits:
+  - name: Infrastructure
+    limit_text: Custom based on energy, space, and connectivity requirements
+- name: Consulting
+  description: Individual consulting and cloud consulting services
+  price_text: Contact sales
+  features:
+  - Project-based pricing
+  - Individual scope assessment
+  - Expert consultation
+  limits:
+  - name: Consulting hours
+    limit_text: Variable based on project requirements
+note: Cloud services use pay-as-you-go pricing with a calculator available at https://calculator.stackit.cloud/

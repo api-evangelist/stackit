@@ -1,0 +1,423 @@
+generated: '2026-10-18'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/stackit-alb-openapi.yml
+- openapi/stackit-alb-waf-openapi.yml
+- openapi/stackit-authorization-openapi.yml
+- openapi/stackit-automation-openapi.yml
+- openapi/stackit-cdn-openapi.yml
+vocabulary:
+  name: STACKIT Domain Vocabulary
+  description: 'Terms declared by STACKIT''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-18'
+  terms:
+  - term: ActiveHealthCheck
+    definition: Set this to customize active health checks for targets in this pool.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/ActiveHealthCheck
+  - term: CertificateConfig
+    definition: TLS termination certificate configuration.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/CertificateConfig
+  - term: CookiePersistence
+    definition: CookiePersistence contains the cookie-based session persistence configuration.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/CookiePersistence
+  - term: CreateCredentialsPayload
+    definition: 'Object declared by the contract with fields: displayName, password, username.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/CreateCredentialsPayload
+  - term: CreateCredentialsResponse
+    definition: 'Object declared by the contract with fields: credential.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/CreateCredentialsResponse
+  - term: CreateLoadBalancerPayload
+    definition: 'Object declared by the contract with fields: disableTargetSecurityGroupAssignment, errors, externalAddress, labels, listeners,
+      loadBalancerSecurityGroup, name, networks, options, planId, privateAddress, region. (4 more)'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/CreateLoadBalancerPayload
+  - term: CredentialsResponse
+    definition: 'Object declared by the contract with fields: credentialsRef, displayName, region, username.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/CredentialsResponse
+  - term: DeleteLoadBalancerResponse
+    definition: Response for deleting a Application Load Balancer has an empty body if successful.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/DeleteLoadBalancerResponse
+  - term: GetCredentialsResponse
+    definition: 'Object declared by the contract with fields: credential.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/GetCredentialsResponse
+  - term: GetQuotaResponse
+    definition: 'Object declared by the contract with fields: maxCredentials, maxLoadBalancers, projectId, region, usedCredentials, usedLoadBalancers.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/GetQuotaResponse
+  - term: GoogleProtobufAny
+    definition: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/GoogleProtobufAny
+  - term: HostConfig
+    definition: 'Object declared by the contract with fields: host, rules.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/HostConfig
+  - term: HttpHeader
+    definition: 'Object declared by the contract with fields: exactMatch, name.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/HttpHeader
+  - term: HttpHealthChecks
+    definition: Options for the HTTP health checking.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/HttpHealthChecks
+  - term: ListCredentialsResponse
+    definition: 'Object declared by the contract with fields: credentials.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/ListCredentialsResponse
+  - term: ListLoadBalancersResponse
+    definition: 'Object declared by the contract with fields: loadBalancers, nextPageId.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/ListLoadBalancersResponse
+  - term: ListPlansResponse
+    definition: 'Object declared by the contract with fields: validPlans.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/ListPlansResponse
+  - term: Listener
+    definition: 'Object declared by the contract with fields: http, https, name, port, protocol, wafConfigName.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/Listener
+  - term: LoadBalancer
+    definition: 'Object declared by the contract with fields: disableTargetSecurityGroupAssignment, errors, externalAddress, labels, listeners,
+      loadBalancerSecurityGroup, name, networks, options, planId, privateAddress, region. (4 more)'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadBalancer
+  - term: LoadBalancerError
+    definition: 'Object declared by the contract with fields: description, type.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadBalancerError
+  - term: LoadBalancerOptions
+    definition: Defines any optional functionality you want to have enabled on your Application Load Balancer.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadBalancerOptions
+  - term: LoadbalancerOptionAccessControl
+    definition: Use this option to limit the IP ranges that can use the Application Load Balancer. `allowed_source_ranges` and `ip_block_list_name`
+      may be set together. When both are set, `allowed_source_ranges` is evaluated first, then `ip_block_list_name` is evaluated.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadbalancerOptionAccessControl
+  - term: LoadbalancerOptionLogs
+    definition: Observability logs configuration.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadbalancerOptionLogs
+  - term: LoadbalancerOptionMetrics
+    definition: Observability metrics configuration.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadbalancerOptionMetrics
+  - term: LoadbalancerOptionObservability
+    definition: We offer Load Balancer observability via STACKIT Observability or external solutions.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/LoadbalancerOptionObservability
+  - term: Network
+    definition: 'Object declared by the contract with fields: networkId, role.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/Network
+  - term: Path
+    definition: Path match. Optional. Contains either an exact or prefix match. If not set, defaults to root path '/' of prefix type. Cannot be
+      set if 'path_prefix' is used. Prefer using this field over 'path_prefix'.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/Path
+  - term: PlanDetails
+    definition: 'Object declared by the contract with fields: description, flavorName, maxConnections, name, planId, region.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/PlanDetails
+  - term: ProtocolOptionsHTTP
+    definition: Configuration for handling HTTP traffic on this listener.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/ProtocolOptionsHTTP
+  - term: ProtocolOptionsHTTPS
+    definition: Configuration for handling HTTPS traffic on this listener.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/ProtocolOptionsHTTPS
+  - term: QueryParameter
+    definition: 'Object declared by the contract with fields: exactMatch, name.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/QueryParameter
+  - term: Rule
+    definition: 'Object declared by the contract with fields: cookiePersistence, headers, path, queryParameters, targetPool, webSocket.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/Rule
+  - term: SecurityGroup
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/SecurityGroup
+  - term: Status
+    definition: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs
+      and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message,
+      and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/Status
+  - term: Target
+    definition: 'Object declared by the contract with fields: displayName, ip.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/Target
+  - term: TargetPool
+    definition: 'Object declared by the contract with fields: activeHealthCheck, name, targetPort, targets, tlsConfig.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/TargetPool
+  - term: TlsConfig
+    definition: Set this to configure TLS settings.
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/TlsConfig
+  - term: UpdateCredentialsPayload
+    definition: 'Object declared by the contract with fields: displayName, password, username.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/UpdateCredentialsPayload
+  - term: UpdateCredentialsResponse
+    definition: 'Object declared by the contract with fields: credential.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/UpdateCredentialsResponse
+  - term: UpdateLoadBalancerPayload
+    definition: 'Object declared by the contract with fields: disableTargetSecurityGroupAssignment, errors, externalAddress, labels, listeners,
+      loadBalancerSecurityGroup, name, networks, options, planId, privateAddress, region. (4 more)'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/UpdateLoadBalancerPayload
+  - term: UpdateTargetPoolPayload
+    definition: 'Object declared by the contract with fields: activeHealthCheck, name, targetPort, targets, tlsConfig.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-openapi.yml#/components/schemas/UpdateTargetPoolPayload
+  - term: Action
+    definition: The protective stance action. ACTION_DENY forces a 403 status response code.
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Action
+  - term: Behavior
+    definition: 'Object declared by the contract with fields: action, log, logMsg.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Behavior
+  - term: CRGConfigQuota
+    definition: CRG quotas holds the limit and usage for CRG resources
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/CRGConfigQuota
+  - term: CRGUsage
+    definition: Tracking metrics for CRG resource utilization
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/CRGUsage
+  - term: Condition
+    definition: 'Object declared by the contract with fields: operator, transformations, variable.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Condition
+  - term: ConditionOperator
+    definition: 'Object declared by the contract with fields: type, value.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/ConditionOperator
+  - term: ConditionVariable
+    definition: 'Object declared by the contract with fields: type, value.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/ConditionVariable
+  - term: CreateCustomRule
+    definition: 'Object declared by the contract with fields: behavior, conditions, description.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/CreateCustomRule
+  - term: CreateCustomRuleGroupPayload
+    definition: Request payload for creating a CRG.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/CreateCustomRuleGroupPayload
+  - term: CreateManagedRuleSetPayload
+    definition: CreateManagedRuleSetRequest creates a rule configuration.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/CreateManagedRuleSetPayload
+  - term: CreateWAFPayload
+    definition: CreateWAFRequest creates a WAF with rules.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/CreateWAFPayload
+  - term: DeleteCustomRuleGroupResponse
+    definition: DeleteCustomRuleGroupResponse returns has empty body if successful.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/DeleteCustomRuleGroupResponse
+  - term: DeleteManagedRuleSetResponse
+    definition: DeleteManagedRuleSetResponse returns has empty body if successful.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/DeleteManagedRuleSetResponse
+  - term: DeleteWAFResponse
+    definition: DeleteWAFResponse returns has empty body if successful.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/DeleteWAFResponse
+  - term: GetBehavior
+    definition: 'Object declared by the contract with fields: action, log, logMsg, severity.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetBehavior
+  - term: GetCustomRule
+    definition: 'Object declared by the contract with fields: behavior, conditions, description, id.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetCustomRule
+  - term: GetCustomRuleGroupResponse
+    definition: Response payload delivering the detailed CRG configuration name and it's rule content.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetCustomRuleGroupResponse
+  - term: GetLimitedManagedRuleSetResponse
+    definition: 'Object declared by the contract with fields: name, type, usage, version.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetLimitedManagedRuleSetResponse
+  - term: GetManagedRuleSetResponse
+    definition: GetManagedRuleSetResponse returns rule configuration name and it's rules.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetManagedRuleSetResponse
+  - term: GetWAFResponse
+    definition: GetWAFResponse returns detailed information about the WAF, which includes the identifying name, references to MRS/CRG and usage.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/GetWAFResponse
+  - term: ListCustomRuleGroupResponse
+    definition: ListCustomRuleGroupResponse returns a list of Custom Rule Group responses.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/ListCustomRuleGroupResponse
+  - term: ListManagedRuleSetResponse
+    definition: ListManagedRuleSetResponse returns a list of rule configuration responses.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/ListManagedRuleSetResponse
+  - term: ListWAFResponse
+    definition: ListWAFResponse returns a list of WAF responses.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/ListWAFResponse
+  - term: MRSConfigQuota
+    definition: MRS Config quota holds the limit and usage for Managed Rule Set configuration resources
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/MRSConfigQuota
+  - term: MRSRule
+    definition: Rule represents an individual security or validation rule.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/MRSRule
+  - term: MRSRuleGroup
+    definition: RuleGroup represents a collection of rules associated with a specific group.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/MRSRuleGroup
+  - term: MRSUsage
+    definition: 'Object declared by the contract with fields: count, items.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/MRSUsage
+  - term: Mode
+    definition: The current mode of the rule.
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Mode
+  - term: Operator
+    definition: The operational evaluation type definition macro.
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Operator
+  - term: PatchMRSRule
+    definition: 'Object declared by the contract with fields: mode.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/PatchMRSRule
+  - term: PatchMRSRuleGroup
+    definition: 'Object declared by the contract with fields: rules.'
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/PatchMRSRuleGroup
+  - term: PatchManagedRuleSetPayload
+    definition: PatchManagedRuleSetRequest updates a rules configuration.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/PatchManagedRuleSetPayload
+  - term: Quotas
+    definition: Quotas holds the specific quota elements for different resources
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Quotas
+  - term: Severity
+    definition: Severity classification metric used by internal analytics graphs.
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Severity
+  - term: Transformation
+    definition: 'Enumeration declared by the contract with values: TRANSFORMATION_LENGTH, TRANSFORMATION_LOWERCASE, TRANSFORMATION_NONE, TRANSFORMATION_TRIM,
+      TRANSFORMATION_UPPERCASE, TRANSFORMATION_UTF8_TO_UNICODE.'
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Transformation
+  - term: MRS Type
+    definition: Set the managed rule set type.
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Type
+  - term: UpdateCustomRuleGroupPayload
+    definition: Request payload for updating an existing CRG. Replaces the rules array atomically.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/UpdateCustomRuleGroupPayload
+  - term: UpdateWAFPayload
+    definition: UpdateWAFRequest updates a WAF if rules changed.
+    tags:
+    - Object
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/UpdateWAFPayload
+  - term: Variable
+    definition: The targeted validation engine variable macro.
+    tags:
+    - Enumeration
+    source: openapi/stackit-alb-waf-openapi.yml#/components/schemas/Variable

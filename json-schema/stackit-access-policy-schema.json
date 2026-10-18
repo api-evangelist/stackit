@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-access-policy-schema.json",
+  "title": "accessPolicy",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-logs-openapi.yml#/components/schemas/accessPolicy",
+  "properties": {
+    "description": {
+      "description": "The description of the access policy.",
+      "maxLength": 100,
+      "type": "string"
+    },
+    "email": {
+      "description": "The email address of the STACKIT IAM subject (user, group, or service account).",
+      "format": "email",
+      "maxLength": 254,
+      "minLength": 3,
+      "type": "string"
+    },
+    "id": {
+      "description": "An auto generated unique id which identifies the access policy.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "permissions": {
+      "$ref": "#/$defs/permissions"
+    }
+  },
+  "required": [
+    "id",
+    "email",
+    "permissions"
+  ],
+  "$defs": {
+    "permissions": {
+      "description": "The access permissions granted to the access token or access policy.",
+      "items": {
+        "enum": [
+          "read",
+          "write"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-update-custom-rule-group-payload-schema.json",
+  "title": "UpdateCustomRuleGroupPayload",
+  "description": "Request payload for updating an existing CRG. Replaces the rules array atomically.",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-alb-waf-openapi.yml#/components/schemas/UpdateCustomRuleGroupPayload",
+  "properties": {
+    "name": {
+      "description": "Custom rule group name. Immutable resource key. Provided via URL path.",
+      "pattern": "^[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "projectId": {
+      "description": "Project identifier",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "region": {
+      "description": "Region",
+      "format": "string",
+      "pattern": "^[a-z]{2,4}[0-9]{2}$",
+      "readOnly": true,
+      "type": "string"
+    },
+    "rules": {
+      "description": "The collection of custom rule group SecLang parameters forming this execution group. Replaces the existing rules atomically.",
+      "items": {
+        "$ref": "#/$defs/CreateCustomRule"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "rules"
+  ],
+  "type": "object",
+  "$defs": {
+    "Action": {
+      "description": "The protective stance action. ACTION_DENY forces a 403 status response code.",
+      "enum": [
+        "ACTION_DENY",
+        "ACTION_PASS",
+        "ACTION_ALLOW"
+      ],
+      "type": "string"
+    },
+    "Behavior": {
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/Action"
+        },
+        "log": {
+          "description": "Determines whether an entry should be generated in the security ledger upon a rule hit.",
+          "type": "boolean"
+        },
+        "logMsg": {
+          "description": "Custom notification message string mapped to underlying logdata contexts.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "type": "object"
+    },
+    "Condition": {
+      "properties": {
+        "operator": {
+          "$ref": "#/$defs/ConditionOperator"
+        },
+        "transformations": {
+          "description": "[HINT] Ordered processing adjustments applied to clean inputs before match checking.",
+          "items": {
+            "$ref": "#/$defs/Transformation"
+          },
+          "type": "array"
+        },
+        "variable": {
+          "$ref": "#/$defs/ConditionVariable"
+        }
+      },
+      "required": [
+        "variable",
+        "operator"
+      ],
+      "type": "object"
+    },
+    "ConditionOperator": {
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/Operator"
+        },
+        "value": {
+          "description": "The text or rule regex pattern arguments applied inside the operator execution loop.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "ConditionVariable": {
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/Variable"
+        },
+        "value": {
+          "description": "Optional key element context for map variables (e.g., matching a 'Host' header key).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "CreateCustomRule": {
+      "properties": {
+        "behavior": {
+          "$ref": "#/$defs/Behavior"
+        },
+        "conditions": {
+          "description": "[HINT] Order matters! First condition match triggers execution.",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "A clear description explaining the threat vector or criteria addressed by this rule.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "behavior",
+        "conditions"
+      ],
+      "type": "object"
+    },
+    "Operator": {
+      "description": "The operational evaluation type definition macro.",
+      "enum": [
+        "OPERATOR_BEGINS_WITH",
+        "OPERATOR_CONTAINS",
+        "OPERATOR_ENDS_WITH",
+        "OPERATOR_EQ",
+        "OPERATOR_GE",
+        "OPERATOR_GT",
+        "OPERATOR_IP_MATCH",
+        "OPERATOR_LE",
+        "OPERATOR_LT",
+        "OPERATOR_RX",
+        "OPERATOR_STREQ",
+        "OPERATOR_STRMATCH",
+        "OPERATOR_VALIDATE_SCHEMA",
+        "OPERATOR_VALIDATE_URL_ENCODING",
+        "OPERATOR_VALIDATE_UTF8_ENCODING",
+        "OPERATOR_WITHIN"
+      ],
+      "type": "string"
+    },
+    "Transformation": {
+      "enum": [
+        "TRANSFORMATION_LENGTH",
+        "TRANSFORMATION_LOWERCASE",
+        "TRANSFORMATION_NONE",
+        "TRANSFORMATION_TRIM",
+        "TRANSFORMATION_UPPERCASE",
+        "TRANSFORMATION_UTF8_TO_UNICODE"
+      ],
+      "type": "string"
+    },
+    "Variable": {
+      "description": "The targeted validation engine variable macro.",
+      "enum": [
+        "VARIABLE_ARGS_GET",
+        "VARIABLE_ARGS_POST",
+        "VARIABLE_FULL_REQUEST_LENGTH",
+        "VARIABLE_MATCHED_VAR",
+        "VARIABLE_QUERY_STRING",
+        "VARIABLE_REMOTE_ADDR",
+        "VARIABLE_REMOTE_PORT",
+        "VARIABLE_REQUEST_BASENAME",
+        "VARIABLE_REQUEST_BODY",
+        "VARIABLE_REQUEST_BODY_LENGTH",
+        "VARIABLE_REQUEST_COOKIES",
+        "VARIABLE_REQUEST_HEADERS",
+        "VARIABLE_REQUEST_HEADERS_NAMES",
+        "VARIABLE_REQUEST_METHOD",
+        "VARIABLE_REQUEST_PROTOCOL",
+        "VARIABLE_REQUEST_URI_RAW",
+        "VARIABLE_RESPONSE_BODY",
+        "VARIABLE_RESPONSE_CONTENT_LENGTH",
+        "VARIABLE_RESPONSE_HEADERS",
+        "VARIABLE_RESPONSE_HEADERS_NAMES",
+        "VARIABLE_RESPONSE_PROTOCOL",
+        "VARIABLE_RESPONSE_STATUS"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-create-logs-instance-payload-schema.json",
+  "title": "CreateLogsInstancePayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-logs-openapi.yml#/components/schemas/CreateLogsInstancePayload",
+  "properties": {
+    "acl": {
+      "description": "The access control list for the Logs instance.",
+      "items": {
+        "type": "string"
+      },
+      "maxLength": 30,
+      "type": "array"
+    },
+    "description": {
+      "description": "The description of the access token.",
+      "maxLength": 100,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The displayed name to distinguish multiple Logs instances.",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z][\\w -]*$",
+      "type": "string"
+    },
+    "retentionDays": {
+      "description": "The log retention time in days.",
+      "format": "int32",
+      "maximum": 180,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "displayName",
+    "retentionDays"
+  ]
+}

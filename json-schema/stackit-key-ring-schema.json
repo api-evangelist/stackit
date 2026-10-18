@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-key-ring-schema.json",
+  "title": "keyRing",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-kms-openapi.yml#/components/schemas/keyRing",
+  "properties": {
+    "createdAt": {
+      "description": "The date and time the creation of the key ring was triggered.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "description": "A user chosen description to distinguish multiple key rings.",
+      "maxLength": 256,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The display name to distinguish multiple key rings.",
+      "maxLength": 64,
+      "type": "string"
+    },
+    "id": {
+      "description": "A auto generated unique id which identifies the key ring.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "state": {
+      "description": "The current state of the key ring.",
+      "enum": [
+        "creating",
+        "active",
+        "deleted"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "displayName",
+    "state",
+    "createdAt"
+  ]
+}

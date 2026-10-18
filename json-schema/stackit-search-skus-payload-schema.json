@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-search-skus-payload-schema.json",
+  "title": "searchSKUsPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-pim-openapi.yml#/components/schemas/searchSKUsPayload",
+  "additionalProperties": false,
+  "properties": {
+    "categoryName": {
+      "description": "Generic categorization to structure the customer's invoice transparently (e.g. `Compute Engine`, `Database`, `Storage`)",
+      "type": "string"
+    },
+    "class": {
+      "description": "Storage Class type",
+      "type": "string"
+    },
+    "communicationChannel": {
+      "description": "Communication Channel",
+      "type": "string"
+    },
+    "connectionLimitPerLoadBalancer": {
+      "description": "Connection limit per Load Balancer",
+      "format": "float",
+      "type": "number"
+    },
+    "contractNoticePeriodInDays": {
+      "description": "Contract notice period in days",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "denominator": {
+      "description": "Conversion of the quantity value from the quantity input unit to the invoice unit.",
+      "format": "float",
+      "type": "number"
+    },
+    "deprecated": {
+      "description": "Attribute that indicates if product is deprecated or not.",
+      "type": "string"
+    },
+    "diskStoragePerNode": {
+      "description": "diskStoragePerNode",
+      "type": "string"
+    },
+    "documentation": {
+      "description": "Documentation URL",
+      "type": "string"
+    },
+    "escalationAvailabilityBCINC": {
+      "description": "Escalation availability BC INC",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "escalationAvailabilityINC": {
+      "description": "Escalation availability INC",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "escalationAvailabilitySR": {
+      "description": "Escalation availability for Service Requests",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "escalationThresholdBCINCInMins": {
+      "description": "Escalation threshold BC INC (in minutes)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "escalationThresholdINCInMins": {
+      "description": "Escalation threshold INC (in minutes)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "escalationThresholdSRInMins": {
+      "description": "Escalation threshold for Service Requests",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "finPenaltySLAVio80Pct": {
+      "description": "Financial Penalty for SLA Violation <80 (in %)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "finPenaltySLAVio90-80Pct": {
+      "description": "Financial Penalty for SLA Violation <90 - 80 (in %)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "flavor": {
+      "description": "Flavor",
+      "type": "string"
+    },
+    "focusConsumedUnit": {
+      "description": "The unit displayed in the Focus Report.",
+      "type": "string"
+    },
+    "focusDocumentation": {
+      "description": "The documentation in the Focus Report.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "generalProductGroup": {
+      "description": "Category designation one level below the generic designation that describes the overall product group to which all the SKUs are allocated to.",
+      "type": "string"
+    },
+    "hardware": {
+      "description": "Hardware",
+      "type": "string"
+    },
+    "hourlyAggregation": {
+      "description": "Aggregation logic to be applied to the sent events within the metering bucket (currently 1 day)",
+      "type": "string"
+    },
+    "initialRuntimeInMonths": {
+      "description": "Initial runtime in months",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "leadTimeInWorkDays": {
+      "description": "Lead time in workdays",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "location": {
+      "description": "Location",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "maturityModelState": {
+      "description": "State of the SKU following the mandatory product‘s maturity model progress (e.g. `beta`, `ga`)",
+      "type": "string"
+    },
+    "maxIOPerSec": {
+      "description": "Storage maxIOPerSec",
+      "format": "int64",
+      "type": "integer"
+    },
+    "maxTroughInMB": {
+      "description": "Storage maxTroughInMB",
+      "format": "int64",
+      "type": "integer"
+    },
+    "meteringType": {
+      "description": "Defines which type of calculation is applied. Either discrete (point-in-time) or continuously (continuous).",
+      "type": "string"
+    },
+    "metricPerMin": {
+      "description": "metricPerMin",
+      "format": "int64",
+      "type": "integer"
+    },
+    "metro": {
+      "description": "metro",
+      "type": "boolean"
+    },
+    "monthlyPrice": {
+      "description": "Monthly price value that is valid at request time, shown with full precision",
+      "format": "decimal",
+      "type": "string"
+    },
+    "name": {
+      "description": "How the line item will appear on the bill",
+      "type": "string"
+    },
+    "nodes": {
+      "description": "Nodes",
+      "format": "int64",
+      "type": "integer"
+    },
+    "os": {
+      "description": "Operating System (e.g. `windows`, `windows-managed`)",
+      "type": "string"
+    },
+    "priceListVisibility": {
+      "description": "Attribute that indicates if PriceList is visible or not.",
+      "type": "string"
+    },
+    "productName": {
+      "description": "Generic product (e.g. `Windows Server`, `Server Backup Management`, `Server`)",
+      "type": "string"
+    },
+    "projectNoticePeriodInWorkDays": {
+      "description": "Project notice period in workdays",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "quantityInputUnit": {
+      "description": "Quantity input unit",
+      "type": "string"
+    },
+    "ram": {
+      "description": "RAM (in GB)",
+      "format": "float",
+      "type": "number"
+    },
+    "reactionTimeInMins": {
+      "description": "Reaction time (in minutes)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "recordLimitPerZone": {
+      "description": "Record limit per zone",
+      "format": "float",
+      "type": "number"
+    },
+    "region": {
+      "description": "Region of sku",
+      "type": "string"
+    },
+    "repeatedRuntimeInMonths": {
+      "description": "Repeated runtime in months",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "responseTimeBCINCInMins": {
+      "description": "Response time BC INC (in minutes)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "responseTimeINCInMins": {
+      "description": "Response time INC (in minutes)",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "responseTimeSRInMins": {
+      "description": "Response time (in minutes) for Service Requests",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "serviceHoursBCINC": {
+      "description": "Service hours BC INC",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "serviceHoursINC": {
+      "description": "Service hours INC",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "serviceHoursSR": {
+      "description": "Service hours for Service Requests",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "serviceId": {
+      "description": "List of unique service look up ids (ASCII ordered, ascending)",
+      "type": "string"
+    },
+    "sku": {
+      "description": "SKU ID \\ Complete SAP article number with prefix. Will be shown on the invoice like this",
+      "type": "string"
+    },
+    "slaGoalInPercentage": {
+      "description": "SLA goal in percentage",
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "storage": {
+      "description": "Storage (e.g. `image`, `postgresql`, `snapshot`, `volume`)",
+      "type": "string"
+    },
+    "storageMaxGb": {
+      "description": "Max Storage in Gb",
+      "format": "int64",
+      "type": "integer"
+    },
+    "storageMinGb": {
+      "description": "Min Storage in Gb",
+      "format": "int64",
+      "type": "integer"
+    },
+    "targets": {
+      "description": "Targets",
+      "format": "int64",
+      "type": "integer"
+    },
+    "technicalProductGroup": {
+      "description": "Technical differentiation",
+      "type": "string"
+    },
+    "title": {
+      "description": "Service name",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type (e.g. `single`, `replica`)",
+      "type": "string"
+    },
+    "unit": {
+      "description": "The unit of measurement for the invoiced items, as to be displayed on the invoice.",
+      "type": "string"
+    },
+    "unitBilling": {
+      "description": "Unit billing",
+      "type": "string"
+    },
+    "vCPU": {
+      "description": "Number of vCPU",
+      "format": "int64",
+      "type": "integer"
+    },
+    "validFrom": {
+      "description": "Price valid from",
+      "format": "date-time",
+      "type": "string"
+    },
+    "value": {
+      "description": "Price value that is valid at request time, shown with full precision with 11 decimals",
+      "format": "decimal",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

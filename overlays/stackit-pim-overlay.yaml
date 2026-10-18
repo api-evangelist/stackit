@@ -1,0 +1,80 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT PIM API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-pim-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: pim
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/categories'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_categories
+- target: $.paths['/v2/categories/{categoryId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_get_category
+- target: $.paths['/v2/categories/{categoryId}/products'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_category_products
+- target: $.paths['/v2/marketing'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_marketing_data
+- target: $.paths['/v2/products'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_products
+- target: $.paths['/v2/products/{productId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_get_product
+- target: $.paths['/v2/products/{productId}/marketing'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_get_product_marketing_data
+- target: $.paths['/v2/products/{productId}/skus'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_product_s_k_us
+- target: $.paths['/v2/products/{productId}/stackitx/skus'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_product_s_t_a_x_s_k_us
+- target: $.paths['/v2/skus'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_s_k_us
+- target: $.paths['/v2/skus/{skuId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_get_s_k_u
+- target: $.paths['/v2/stackitx/skus'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_list_s_t_a_x_s_k_us
+- target: $.paths['/v2/stackitx/skus/{skuId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: pim_get_s_t_a_x_s_k_u

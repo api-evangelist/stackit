@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-replication-adapter-list-schema.json",
+  "title": "ReplicationAdapterList",
+  "description": "A list of replication adapters",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-registry-openapi.yml#/components/schemas/ReplicationAdapterList",
+  "properties": {
+    "next_page_token": {
+      "description": "A token to retrieve the next page of results. Pass this value as `page_token` in the subsequent request. If empty, there are no more pages.",
+      "type": "string"
+    },
+    "replication_adapters": {
+      "items": {
+        "$ref": "#/$defs/ReplicationAdapter"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "replication_adapters"
+  ],
+  "type": "object",
+  "$defs": {
+    "ReplicationAdapter": {
+      "properties": {
+        "credential_type": {
+          "description": "User-hint for what type of credentials are expected for replication\nadapter type. Values are one of `basic` for username/password, `oauth`\nfor token based access, and `secret` for json-secret file.\n",
+          "enum": [
+            "basic",
+            "oauth",
+            "secret"
+          ],
+          "type": "string"
+        },
+        "display_name": {
+          "description": "Human-friendly name of the provider the adapter relates to.",
+          "type": "string"
+        },
+        "registry_type": {
+          "description": "Identifies the replication adapter",
+          "type": "string"
+        }
+      },
+      "required": [
+        "registry_type",
+        "display_name",
+        "credential_type"
+      ],
+      "type": "object"
+    }
+  }
+}

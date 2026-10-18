@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Unified Firewall API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-ufw-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: ufw
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/folders/{folderId}/children'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ufw_list_folder_containers
+- target: $.paths['/v1/organizations/{organizationId}/children'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ufw_list_organization_containers
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/rules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ufw_list_rules
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/rules/{ruleId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/rules/{ruleId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ufw_get_rule
+- target: $.paths['/v1/regions/{regionId}/provider-options'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ufw_list_provider_options

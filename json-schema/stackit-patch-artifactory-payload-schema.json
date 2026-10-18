@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-patch-artifactory-payload-schema.json",
+  "title": "PatchArtifactoryPayload",
+  "description": "Patch artifactory request",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-registry-openapi.yml#/components/schemas/PatchArtifactoryPayload",
+  "properties": {
+    "proxy": {
+      "$ref": "#/$defs/UpdateProxyRequest"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "Credentials": {
+      "description": "Credentials for upstream registry",
+      "properties": {
+        "access_key": {
+          "type": "string"
+        },
+        "access_secret": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "access_key",
+        "access_secret"
+      ],
+      "type": "object"
+    },
+    "UpdateProxyRequest": {
+      "description": "Update an upstream repository for a proxy-cache project",
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/Credentials"
+        },
+        "description": {
+          "description": "Description of the registry.",
+          "type": "string"
+        },
+        "url": {
+          "description": "Upstream registry url to proxy",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

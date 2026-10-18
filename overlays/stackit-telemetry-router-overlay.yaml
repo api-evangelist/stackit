@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Telemetry Router API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-telemetry-router-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: telemetry-router
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_router_list-telemetry-routers
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_router_get-telemetry-router
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}/access-tokens'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_router_list-access-tokens
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}/access-tokens/{accessTokenId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}/access-tokens/{accessTokenId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_router_get-access-token
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}/destinations'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_router_list-destinations
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}/destinations/{destinationId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/telemetry-routers/{telemetryRouterId}/destinations/{destinationId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: telemetry_router_get-destination

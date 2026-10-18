@@ -1,0 +1,85 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Object Storage API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-object-storage-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: object-storage
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/project/{projectId}/regions/{region}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/project/{projectId}/regions/{region}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_get_service_status
+- target: $.paths['/v2/project/{projectId}/regions/{region}/access-key/{keyId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/project/{projectId}/regions/{region}/access-keys'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_list_access_keys
+- target: $.paths['/v2/project/{projectId}/regions/{region}/bucket/{bucketName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/project/{projectId}/regions/{region}/bucket/{bucketName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_get_bucket
+- target: $.paths['/v2/project/{projectId}/regions/{region}/bucket/{bucketName}/default-retention'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/project/{projectId}/regions/{region}/bucket/{bucketName}/default-retention'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_get_default_retention
+- target: $.paths['/v2/project/{projectId}/regions/{region}/buckets'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_list_buckets
+- target: $.paths['/v2/project/{projectId}/regions/{region}/compliance-lock'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/project/{projectId}/regions/{region}/compliance-lock'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_get_compliance_lock
+- target: $.paths['/v2/project/{projectId}/regions/{region}/credentials-group/{groupId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/project/{projectId}/regions/{region}/credentials-group/{groupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_get_credentials_group
+- target: $.paths['/v2/project/{projectId}/regions/{region}/credentials-groups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: object_storage_list_credentials_groups

@@ -1,0 +1,1624 @@
+openapi: 3.2.0
+info:
+  title: Stackit Regions API
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Regions across 15 of this provider''s published API definitions: stackit-alb-v2.json, stackit-iaas-v2.json, stackit-model-serving-v1.json, stackit-sfs-v1.json, stackit-ske-v2.json, stackit-ufw-v1.json, stackit-vpn-v1.json, stackit-alb-openapi.yml, stackit-iaas-openapi.yml, stackit-load-balancer-openapi.yml, stackit-model-serving-openapi.yml, stackit-sfs-openapi.yml, stackit-ske-openapi.yml, stackit-ufw-openapi.yml, stackit-vpn-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://alb.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://iaas.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://model-serving.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://sfs.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://ske.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://ufw.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://vpn.api.stackit.cloud
+  variables:
+    region:
+      default: global
+- url: https://load-balancer.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Regions
+paths:
+  /v2/regions/{region}/plans:
+    get:
+      description: Lists the configured service plans for a project.
+      operationId: ListPlans
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPlansResponse'
+          description: OK
+        '400':
+          description: One or more fields are invalid.
+        '401':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: Unauthorized
+        '403':
+          description: this projectId is not allowed to try this API
+        '500':
+          description: internal error - please retry again later or contact support if the issue persists
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: Default error response
+      summary: List available service plans
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://alb.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/regions/{region}/availability-zones:
+    parameters:
+    - $ref: '#/components/parameters/v1Region'
+    get:
+      description: Get a list of all availability zones.
+      operationId: ListAvailabilityZones
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityZoneListResponse'
+          description: Get a list of availability zones.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all availability zones
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/regions/{regionId}/chat/models/{modelId}:
+    parameters:
+    - $ref: '#/components/parameters/regionId'
+    - $ref: '#/components/parameters/modelId'
+    get:
+      operationId: GetChatModel
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetChatModelResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequestResp'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResp'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResp'
+      summary: details of a llm model
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+    servers:
+    - url: https://model-serving.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/regions/{regionId}/embedding/models/{modelId}:
+    parameters:
+    - $ref: '#/components/parameters/regionId'
+    - $ref: '#/components/parameters/modelId'
+    get:
+      operationId: GetEmbeddingModel
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEmbeddingsModelResp'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequestResp'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResp'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResp'
+      summary: details of an embedding model
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+    servers:
+    - url: https://model-serving.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/regions/{regionId}/models:
+    parameters:
+    - $ref: '#/components/parameters/regionId'
+    get:
+      operationId: ListModels
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequestResp'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResp'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResp'
+      summary: List of shared model
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+    servers:
+    - url: https://model-serving.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/regions/{region}/project/{projectId}/locks:
+    delete:
+      description: Clean up locks for a project so that it can be deleted successfully.
+      operationId: DisableLock
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisableLockResponse'
+          description: OK
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: Default error response
+      x-stackit-authorization:
+        actions:
+        - file-storage.resource-pool.create
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - Regions
+      security:
+      - BearerAuth: []
+      summary: Disable lock
+      x-summary-source: derived
+    get:
+      description: Get lock status for a project.
+      operationId: GetLock
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLockResponse'
+          description: OK
+      x-stackit-authorization:
+        actions:
+        - file-storage.resource-pool.create
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - Regions
+      security:
+      - BearerAuth: []
+      summary: Get lock
+      x-summary-source: derived
+    post:
+      description: Enable Lock for a project. Necessary for immutable snapshots and to prevent accidental deletion of resources.
+      operationId: EnableLock
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnableLockResponse'
+          description: OK
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: Default error response
+      x-stackit-authorization:
+        actions:
+        - file-storage.resource-pool.create
+        resource-id: projectId
+        resource-id-type: dynamic
+        resource-type: project
+      tags:
+      - Regions
+      security:
+      - BearerAuth: []
+      summary: Enable lock
+      x-summary-source: derived
+    servers:
+    - url: https://sfs.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/regions/{region}/provider-options:
+    get:
+      description: Returns available Kubernetes versions, availability zones, machine types, OS versions and volume types for the cluster nodes.
+      operationId: ListProviderOptions
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: versionState
+        schema:
+          enum:
+          - SUPPORTED
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderOptions'
+          description: Request handled successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Invalid request
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Unauthorized
+      summary: List provider options
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://ske.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/regions/{regionId}/provider-options:
+    parameters:
+    - $ref: '#/components/parameters/regionId_2'
+    get:
+      description: Returns a list of supported configuration options for this region.
+      operationId: getV1RegionsByRegionIdProviderOptions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderOptionsResponse'
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '500':
+          $ref: '#/components/responses/internalServerError'
+      security:
+      - BearerAuth: []
+      summary: Get Provider Options
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+      x-operation-id-source: normalized
+      x-operation-id-original: ListProviderOptions
+    servers:
+    - url: https://ufw.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v1/regions/{region}/plans:
+    get:
+      description: 'Retrieve a list of available service plans available for provisioning a VPN in a specific `region`.
+
+        Use this to identify the `planId` required for gateway creation.'
+      operationId: getV1RegionsByRegionPlans
+      parameters:
+      - in: path
+        name: region
+        required: true
+        schema:
+          $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanList'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest_2'
+        '401':
+          $ref: '#/components/responses/Unauthorized_2'
+      summary: List available service plans for a project
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Regions
+      security:
+      - bearerAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: ListPlans
+    servers:
+    - url: https://vpn.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    GoogleProtobufAny:
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+      properties:
+        '@type':
+          description: The type of the serialized message.
+          type: string
+      type: object
+    Status:
+      description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          format: int32
+          type: integer
+        details:
+          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+          items:
+            $ref: '#/components/schemas/GoogleProtobufAny'
+          type: array
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      type: object
+    ListPlansResponse:
+      properties:
+        validPlans:
+          description: List of available service plans.
+          items:
+            $ref: '#/components/schemas/PlanDetails'
+          type: array
+      type: object
+    PlanDetails:
+      properties:
+        description:
+          description: Description
+          example: Description for p10
+          type: string
+        flavorName:
+          description: Flavor Name
+          example: t1.2
+          type: string
+        maxConnections:
+          description: Maximum number of concurrent connections per Application Load Balancer VM instance.
+          format: int32
+          title: Application Load Balancer max supported connections
+          type: integer
+        name:
+          description: Service Plan Name
+          example: Essential-Network-Load-Balancer-10-EU01
+          type: string
+        planId:
+          description: Service Plan Identifier
+          example: p10
+          type: string
+        region:
+          description: Region this Plan is available in
+          example: eu01
+          type: string
+      type: object
+    v1RegionName:
+      description: Name of the region.
+      example: eu01
+      type: string
+    AvailabilityZoneListResponse:
+      description: Availability Zone list response.
+      properties:
+        items:
+          $ref: '#/components/schemas/AvailabilityZoneList'
+      required:
+      - items
+      type: object
+    Error:
+      description: Error with HTTP error code and an error message.
+      properties:
+        code:
+          example: 404
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        msg:
+          $ref: '#/components/schemas/errorMessage'
+      required:
+      - code
+      - msg
+      type: object
+    errorMessage:
+      description: An error message.
+      example: Project not found
+      type: string
+    AvailabilityZoneList:
+      description: A list of availability zones.
+      items:
+        $ref: '#/components/schemas/AvailabilityZone'
+      type: array
+    AvailabilityZone:
+      description: Object that represents an availability zone.
+      example: eu01-1
+      type: string
+    GetChatModelResponse:
+      properties:
+        message:
+          type: string
+        model:
+          $ref: '#/components/schemas/ChatModelDetails'
+      required:
+      - model
+      type: object
+    GetEmbeddingsModelResp:
+      properties:
+        message:
+          type: string
+        model:
+          $ref: '#/components/schemas/EmbeddingModelDetails'
+      required:
+      - model
+      type: object
+    ListModelsResponse:
+      properties:
+        message:
+          type: string
+        models:
+          items:
+            $ref: '#/components/schemas/Model'
+          type: array
+      required:
+      - models
+      type: object
+    EmbeddingModelDetails:
+      properties:
+        category:
+          enum:
+          - standard
+          - plus
+          - premium
+          example: standard
+          type: string
+        description:
+          example: An embedding model
+          maxLength: 2000
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+        displayedName:
+          example: Llama 3 8B Instruct
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s_-]+$
+          type: string
+        id:
+          description: generated uuid to identify a model
+          format: uuid
+          type: string
+        name:
+          description: huggingface name
+          example: meta-llama/Meta-Llama-3-8B-Instruct
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+        outputDimension:
+          example: 8192
+          format: int64
+          type: integer
+        region:
+          example: eu01
+          type: string
+        skus:
+          items:
+            $ref: '#/components/schemas/SKU'
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+        url:
+          description: url of the model
+          example: https://api.openai-compat.model-serving.eu01.onstackit.cloud
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+      required:
+      - id
+      - name
+      - displayedName
+      - description
+      - outputDimension
+      - url
+      - skus
+      - category
+      - region
+      type: object
+    SKU:
+      properties:
+        description:
+          example: Sku for input tokens for chat models
+          type: string
+        id:
+          example: ST-00000
+          type: string
+        type:
+          example: input
+          type: string
+      required:
+      - id
+      type: object
+    Model:
+      properties:
+        category:
+          enum:
+          - standard
+          - plus
+          - premium
+          example: standard
+          type: string
+        description:
+          example: A chat model
+          maxLength: 2000
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+        displayedName:
+          example: Llama 3 8B Instruct
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s_-]+$
+          type: string
+        id:
+          description: generated uuid to identify a model
+          format: uuid
+          type: string
+        name:
+          description: huggingface name
+          example: meta-llama/Meta-Llama-3-8B-Instruct
+          maxLength: 200
+          minLength: 1
+          type: string
+        region:
+          example: eu01
+          type: string
+        skus:
+          items:
+            $ref: '#/components/schemas/SKU'
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          enum:
+          - chat
+          - embedding
+          - audio
+          - image
+          type: string
+        url:
+          description: url of the model
+          example: https://api.openai-compat.model-serving.eu01.onstackit.cloud
+          maxLength: 200
+          minLength: 1
+          type: string
+      required:
+      - id
+      - name
+      - displayedName
+      - description
+      - type
+      - url
+      - region
+      - category
+      - skus
+      type: object
+    ErrorMessageResponse:
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      type: object
+    ChatModelDetails:
+      properties:
+        bits:
+          enum:
+          - 1
+          - 2
+          - 4
+          - 8
+          - 16
+          format: int32
+          type: integer
+          x-enum-varnames:
+          - ONE_BIT
+          - TWO_BITS
+          - FOUR_BITS
+          - EIGHT_BITS
+          - SIXTEEN_BITS
+        category:
+          enum:
+          - standard
+          - plus
+          - premium
+          example: standard
+          type: string
+        contextLength:
+          format: int64
+          type: integer
+        description:
+          example: A chat model
+          maxLength: 2000
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+        displayedName:
+          example: Llama 3 8B Instruct
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s_-]+$
+          type: string
+        id:
+          description: generated uuid to identify a model
+          format: uuid
+          type: string
+        name:
+          description: huggingface name
+          example: meta-llama/Meta-Llama-3-8B-Instruct
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+        quantizationMethod:
+          enum:
+          - PTQ
+          - QAT
+          type: string
+          x-enum-descriptions:
+          - Post training quanitization
+          - Quantization-aware training
+        region:
+          example: eu01
+          type: string
+        size:
+          description: model size in bytes
+          format: int64
+          type: integer
+        skus:
+          items:
+            $ref: '#/components/schemas/SKU'
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+        url:
+          description: url of the model
+          example: https://api.openai-compat.model-serving.eu01.onstackit.cloud
+          maxLength: 200
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\s.:\/\-]+$
+          type: string
+      required:
+      - id
+      - name
+      - displayedName
+      - description
+      - size
+      - contextLength
+      - tags
+      - url
+      - category
+      - skus
+      - region
+      type: object
+    ConflictError:
+      description: Conflict error response
+      example:
+        detail: resource pool 'test-rp' already exists
+        error_description: An error occurred
+        status_code: 409
+        type: storage.stackit.cloud/conflict
+      properties:
+        detail:
+          description: Human-readable explanation of the specific problem
+          example: resource pool 'test-rp' already exists
+          type: string
+        error_description:
+          description: Human-readable string of the error that occurred
+          example: An error occurred
+          type: string
+        status_code:
+          description: The HTTP status code
+          example: 409
+          type: integer
+        type:
+          description: URI Uniquely identifies the error type. It will be in the format of storage.stackit.cloud/<error-type> e.g. storage.stackit.cloud/conflict
+          example: storage.stackit.cloud/conflict
+          type: string
+      required:
+      - detail
+      - error_description
+      - status_code
+      - type
+      type: object
+    DisableLockResponse:
+      type: object
+    GetLockResponse:
+      properties:
+        lockId:
+          type: string
+      type: object
+    EnableLockResponse:
+      properties:
+        lockId:
+          type: string
+      type: object
+    MachineImage:
+      example:
+        name: name
+        versions:
+        - cri:
+          - kata:
+              enabled: true
+            name: containerd
+          - kata:
+              enabled: true
+            name: containerd
+          expirationDate: '2000-01-23T04:56:07Z'
+          state: state
+          version: version
+        - cri:
+          - kata:
+              enabled: true
+            name: containerd
+          - kata:
+              enabled: true
+            name: containerd
+          expirationDate: '2000-01-23T04:56:07Z'
+          state: state
+          version: version
+      properties:
+        name:
+          title: Image name
+          type: string
+        versions:
+          items:
+            $ref: '#/components/schemas/MachineImageVersion'
+          type: array
+      type: object
+    MachineImageVersion:
+      example:
+        cri:
+        - kata:
+            enabled: true
+          name: containerd
+        - kata:
+            enabled: true
+          name: containerd
+        expirationDate: '2000-01-23T04:56:07Z'
+        state: state
+        version: version
+      properties:
+        cri:
+          items:
+            $ref: '#/components/schemas/CRI'
+          title: supported container runtimes
+          type: array
+        expirationDate:
+          format: date-time
+          type: string
+        state:
+          type: string
+        version:
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+          title: Image version
+          type: string
+      type: object
+    CRI:
+      example:
+        kata:
+          enabled: true
+        name: containerd
+      properties:
+        kata:
+          $ref: '#/components/schemas/Kata'
+        name:
+          enum:
+          - containerd
+          title: Name of the cri library
+          type: string
+      type: object
+    MachineType:
+      example:
+        architecture: architecture
+        cpu: 0
+        gpu: 1
+        memory: 6
+        name: name
+      properties:
+        architecture:
+          title: architecture
+          type: string
+        cpu:
+          format: int32
+          title: number of CPU cores
+          type: integer
+        gpu:
+          format: int32
+          title: number of GPUs
+          type: integer
+        memory:
+          format: int32
+          title: memory in GiB
+          type: integer
+        name:
+          type: string
+      type: object
+    ProviderOptions:
+      example:
+        availabilityZones:
+        - name: name
+        - name: name
+        kubernetesVersions:
+        - expirationDate: '2000-01-23T04:56:07Z'
+          featureGates:
+            key: featureGates
+          state: state
+          version: version
+        - expirationDate: '2000-01-23T04:56:07Z'
+          featureGates:
+            key: featureGates
+          state: state
+          version: version
+        machineImages:
+        - name: name
+          versions:
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+        - name: name
+          versions:
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+        machineTypes:
+        - architecture: architecture
+          cpu: 0
+          gpu: 1
+          memory: 6
+          name: name
+        - architecture: architecture
+          cpu: 0
+          gpu: 1
+          memory: 6
+          name: name
+        volumeTypes:
+        - name: name
+        - name: name
+      properties:
+        availabilityZones:
+          items:
+            $ref: '#/components/schemas/AvailabilityZone_2'
+          type: array
+        kubernetesVersions:
+          items:
+            $ref: '#/components/schemas/KubernetesVersion'
+          title: List of available Kubernetes versions
+          type: array
+        machineImages:
+          items:
+            $ref: '#/components/schemas/MachineImage'
+          type: array
+        machineTypes:
+          items:
+            $ref: '#/components/schemas/MachineType'
+          title: List of available machine types
+          type: array
+        volumeTypes:
+          items:
+            $ref: '#/components/schemas/VolumeType'
+          type: array
+      type: object
+    KubernetesVersion:
+      example:
+        expirationDate: '2000-01-23T04:56:07Z'
+        featureGates:
+          key: featureGates
+        state: state
+        version: version
+      properties:
+        expirationDate:
+          format: date-time
+          title: Expiration date until the version will be supported if known yet
+          type: string
+        featureGates:
+          additionalProperties:
+            type: string
+          title: List of feature gates supported by the Kubernetes version
+          type: object
+        state:
+          title: State of the kubernetes version
+          type: string
+        version:
+          pattern: ^\d+\.\d+\.\d+$
+          title: Kubernetes version
+          type: string
+      type: object
+    VolumeType:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      type: object
+    AvailabilityZone_2:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      type: object
+    Kata:
+      example:
+        enabled: true
+      properties:
+        enabled:
+          description: 'Enable workload isolation via Kata Containers for pods scheduled on this node pool.
+
+            ⚠️ Note: This feature is in private preview. Enabling is only possible for enabled accounts. Otherwise the request will be rejected.'
+          type: boolean
+      required:
+      - enabled
+      type: object
+    ErrorResponse:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+    ProviderOptionsResponse:
+      properties:
+        productMeta:
+          additionalProperties:
+            $ref: '#/components/schemas/ProviderOptionsProductMeta'
+          type: object
+        products:
+          items:
+            type: string
+          type: array
+        types:
+          items:
+            type: string
+          type: array
+      required:
+      - types
+      - products
+      - productMeta
+      type: object
+    ProviderOptionsProductMeta:
+      properties:
+        actions:
+          items:
+            type: string
+          type: array
+        types:
+          items:
+            type: string
+          type: array
+      required:
+      - types
+      - actions
+      type: object
+    PlanList:
+      properties:
+        defaultPlanId:
+          $ref: '#/components/schemas/PlanID'
+        plans:
+          items:
+            $ref: '#/components/schemas/Plan'
+          type: array
+    Plan:
+      properties:
+        maxBandwidth:
+          description: The maximum throughput supported by the gateway in each direction, measured in MBit/s
+          example: 1000
+          format: int32
+          type: integer
+        maxConnections:
+          description: The maximum number of connections supported by the VPN Gateway.
+          example: 5
+          format: int32
+          type: integer
+        name:
+          description: The name of the service plan.
+          example: VPN-IPSec-1000-HA-EU01
+          type: string
+        planId:
+          $ref: '#/components/schemas/PlanID'
+        sku:
+          description: The SKU identifier used for billing.
+          example: ST-0174901
+          type: string
+      type: object
+    APIErrorDetail:
+      properties:
+        domain:
+          default: vpn.access.stackit.cloud
+          description: The domain of the error source.
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata contains more information. For bad requests this would be field information.
+          type: object
+        reason:
+          description: 'The reason why the error occurs. RESOURCE_IN_USE is returned when a referenced resource
+
+            cannot be deleted; the ''metadata.references'' field then lists the referencing resources
+
+            (e.g. connection IDs and displayNames pointing at a BGPFilter on DELETE).
+
+            '
+          enum:
+          - INVALID_FIELD
+          - INVALID_PATH_PARAMETER
+          - RESOURCE_IN_USE
+          type: string
+      required:
+      - reason
+      - domain
+      type: object
+    APIErrorResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/APIError'
+      required:
+      - error
+      type: object
+    PlanID:
+      description: The service plan identifier.
+      example: p1000
+      type: string
+    Region:
+      description: 'The region in which the resource is located.
+
+        '
+      enum:
+      - eu01
+      - eu02
+      example: eu01
+      type: string
+    APIError:
+      properties:
+        code:
+          description: The HTTP status code.
+          example: 400
+          format: int32
+          type: integer
+        details:
+          description: Can contain more details on the error.
+          items:
+            $ref: '#/components/schemas/APIErrorDetail'
+          type: array
+        message:
+          description: A message describing the error.
+          example: One or more fields are invalid.
+          type: string
+        status:
+          description: The HTTP status code text.
+          example: BAD_REQUEST
+          type: string
+      required:
+      - code
+      - message
+      - status
+      type: object
+    ListPlansResponse_2:
+      properties:
+        validPlans:
+          items:
+            $ref: '#/components/schemas/PlanDetails_2'
+          type: array
+      type: object
+    PlanDetails_2:
+      properties:
+        description:
+          description: Description
+          example: Description for p10
+          type: string
+        flavorName:
+          description: Flavor Name
+          example: t1.2
+          type: string
+        maxConnections:
+          description: Maximum number of concurrent connections per load balancer VM instance.
+          format: int32
+          title: Load Balancer max supported connections
+          type: integer
+        name:
+          description: Service Plan Name
+          example: Essential-Network-Load-Balancer-10-EU01
+          type: string
+        planId:
+          description: Service Plan Identifier
+          example: p10
+          type: string
+        region:
+          description: Region this Plan is available in
+          example: eu01
+          type: string
+      type: object
+    ProviderOptions_2:
+      example:
+        availabilityZones:
+        - name: name
+        - name: name
+        kubernetesVersions:
+        - expirationDate: '2000-01-23T04:56:07Z'
+          featureGates:
+            key: featureGates
+          state: state
+          version: version
+        - expirationDate: '2000-01-23T04:56:07Z'
+          featureGates:
+            key: featureGates
+          state: state
+          version: version
+        machineImages:
+        - name: name
+          versions:
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+        - name: name
+          versions:
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+          - cri:
+            - kata:
+                enabled: true
+              name: containerd
+            - kata:
+                enabled: true
+              name: containerd
+            expirationDate: '2000-01-23T04:56:07Z'
+            state: state
+            version: version
+        machineTypes:
+        - architecture: architecture
+          cpu: 0
+          gpu: 1
+          memory: 6
+          name: name
+        - architecture: architecture
+          cpu: 0
+          gpu: 1
+          memory: 6
+          name: name
+        volumeTypes:
+        - name: name
+        - name: name
+      properties:
+        availabilityZones:
+          items:
+            $ref: '#/components/schemas/AvailabilityZone_3'
+          type: array
+        kubernetesVersions:
+          items:
+            $ref: '#/components/schemas/KubernetesVersion'
+          title: List of available Kubernetes versions
+          type: array
+        machineImages:
+          items:
+            $ref: '#/components/schemas/MachineImage'
+          type: array
+        machineTypes:
+          items:
+            $ref: '#/components/schemas/MachineType'
+          title: List of available machine types
+          type: array
+        volumeTypes:
+          items:
+            $ref: '#/components/schemas/VolumeType'
+          type: array
+      type: object
+    AvailabilityZone_3:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      type: object
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          example:
+            code: 403
+            msg: Forbidden
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A request which was forbidden.
+    Unauthorized:
+      content:
+        application/json:
+          example:
+            code: 401
+            msg: Unauthorized
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A request which was not authorized.
+    BadRequest:
+      content:
+        application/json:
+          examples:
+            InvalidAffinityGroupPolicy:
+              value:
+                code: 400
+                msg: The affinity group policy is not supported
+            InvalidBootDeviceSize:
+              value:
+                code: 400
+                msg: boot device size is not valid or missing
+            InvalidMachineType:
+              value:
+                code: 400
+                msg: machine type is not valid
+            InvalidParameter:
+              value:
+                code: 400
+                msg: 'request body has an error: doesn''t match schema: Error at "/name": value must be a string'
+            InvalidPublicKey:
+              value:
+                code: 400
+                msg: invalid pubkey
+            InvalidUUID:
+              value:
+                code: 400
+                msg: invalid uuid
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A bad request.
+    InternalServerError:
+      content:
+        application/json:
+          example:
+            code: 500
+            msg: internal server error
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal Server Error, returns a 500 if something is broken on IaaS API Side.
+    NotFound:
+      content:
+        application/json:
+          examples:
+            AreaNotFound:
+              value:
+                code: 404
+                msg: area not found
+            KeypairNotFound:
+              value:
+                code: 404
+                msg: keypair not found
+            NetworkNotFound:
+              value:
+                code: 404
+                msg: network not found
+            NetworkRangeNotFound:
+              value:
+                code: 404
+                msg: network range not found
+            OrganizationNotFound:
+              value:
+                code: 404
+                msg: organization not found
+            ProjectNotFound:
+              value:
+                code: 404
+                msg: project not found
+            RequestNotFound:
+              value:
+                code: 404
+                msg: request not found
+            RouteNotFound:
+              value:
+                code: 404
+                msg: route not found
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The object was not found.
+    BadRequestResp:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessageResponse'
+      description: invalid input
+    InternalServerErrorResp:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessageResponse'
+      description: internal server error
+    UnauthorizedResp:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessageResponse'
+      description: unauthorized
+    ConflictError:
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ConflictError'
+      description: The request conflicts with the current state of the resource.
+    badRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Bad Request. The data provided by the client did not match expectations.
+    internalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Internal server error. The application experienced some unexpected situation.
+    unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Unauthorized. You may have provided no or wrong credentials.
+    Unauthorized_2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Unauthorized
+    BadRequest_2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Bad Request
+    Unauthorized_3:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Unauthorized
+    BadRequest_3:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIErrorResponse'
+      description: Bad Request
+  parameters:
+    v1Region:
+      description: The STACKIT Region of the resources.
+      in: path
+      name: region
+      required: true
+      schema:
+        $ref: '#/components/schemas/v1RegionName'
+    regionId:
+      description: region name
+      example: eu01
+      in: path
+      name: regionId
+      required: true
+      schema:
+        type: string
+      style: simple
+    modelId:
+      description: model id
+      example: 550e8400-e29b-41d4-a716-446655440000
+      in: path
+      name: modelId
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
+    regionId_2:
+      description: The STACKIT region name the resource is located in.
+      in: path
+      name: regionId
+      required: true
+      schema:
+        enum:
+        - eu01
+        - eu02
+        type: string
+    regionId_3:
+      description: The STACKIT region name the resource is located in.
+      in: path
+      name: regionId
+      required: true
+      schema:
+        enum:
+        - eu01
+        - eu02
+        type: string
+x-refined-from:
+- stackit-alb-v2.json
+- stackit-iaas-v2.json
+- stackit-model-serving-v1.json
+- stackit-sfs-v1.json
+- stackit-ske-v2.json
+- stackit-ufw-v1.json
+- stackit-vpn-v1.json
+- stackit-alb-openapi.yml
+- stackit-iaas-openapi.yml
+- stackit-load-balancer-openapi.yml
+- stackit-model-serving-openapi.yml
+- stackit-sfs-openapi.yml
+- stackit-ske-openapi.yml
+- stackit-ufw-openapi.yml
+- stackit-vpn-openapi.yml

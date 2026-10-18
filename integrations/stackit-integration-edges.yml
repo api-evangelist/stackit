@@ -1,0 +1,16 @@
+generated: '2026-10-18'
+method: none
+source:
+- https://zapier.com/apps/stackit/integrations
+- https://n8n.io/integrations/stackit/
+- https://composio.dev/toolkits/stackit
+- https://monid.ai/tools/stackit
+checked:
+- https://composio.dev/toolkits/stackit
+- https://monid.ai/tools/stackit
+- https://n8n.io/integrations/stackit/
+- https://zapier.com/apps/stackit/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []

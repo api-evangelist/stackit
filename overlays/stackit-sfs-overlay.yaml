@@ -1,0 +1,110 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT File Storage (SFS) overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-sfs-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: sfs
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_resource_pools
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_resource_pool
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}/shares'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_shares
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}/shares/{shareId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}/shares/{shareId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_share
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}/snapshots'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_resource_pool_snapshots
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}/snapshots/{snapshotName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/resourcePools/{resourcePoolId}/snapshots/{snapshotName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_resource_pool_snapshot
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/shareExportPolicies'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_share_export_policies
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/shareExportPolicies/{policyId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{region}/shareExportPolicies/{policyId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_share_export_policy
+- target: $.paths['/v1/projects/{projectId}/schedules'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_schedules
+- target: $.paths['/v1/projects/{projectId}/schedules/{id}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_schedule
+- target: $.paths['/v1/projects/{projectId}/snapshotPolicies'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_snapshot_policies
+- target: $.paths['/v1/projects/{projectId}/snapshotPolicies/{id}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_snapshot_policy
+- target: $.paths['/v1/regions/{region}/project/{projectId}/locks'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/regions/{region}/project/{projectId}/locks'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_get_lock
+- target: $.paths['/v1/resourcePoolPerformanceClasses'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: sfs_list_performance_classes

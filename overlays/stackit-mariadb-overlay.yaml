@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT MariaDB API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-mariadb-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: mariadb
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_list_instances
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_get_instance
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/backups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_list_backups
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/backups/{backupId}/download'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_download_backup
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/credentials'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_list_credentials
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/credentials/{credentialsId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/credentials/{credentialsId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_get_credentials
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/metrics'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_get_metrics
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/restores'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_list_restores
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/instances/{instanceId}/updates'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_get_updates
+- target: $.paths['/v2/projects/{projectId}/regions/{regionId}/offerings'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mariadb_list_offerings

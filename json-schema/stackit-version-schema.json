@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-version-schema.json",
+  "title": "version",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-kms-openapi.yml#/components/schemas/version",
+  "properties": {
+    "createdAt": {
+      "description": "The date and time the creation of the key was triggered.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "destroyDate": {
+      "description": "The scheduled date when a version's key material will be erased completely from the backend",
+      "format": "date-time",
+      "type": "string"
+    },
+    "disabled": {
+      "default": false,
+      "description": "States whether versions is enabled or disabled.",
+      "type": "boolean"
+    },
+    "keyId": {
+      "description": "The unique id of the key this version is assigned to.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "keyRingId": {
+      "description": "The unique id of the key ring the key of this version is assigned to.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "number": {
+      "description": "A sequential number which identifies the key versions.",
+      "format": "int64",
+      "type": "integer"
+    },
+    "publicKey": {
+      "description": "The public key of the key version. Only present in asymmetric keys.",
+      "type": "string"
+    },
+    "state": {
+      "description": "The current state of the key.",
+      "enum": [
+        "active",
+        "creating",
+        "key_material_invalid",
+        "key_material_unavailable",
+        "disabled",
+        "destroyed"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "number",
+    "state",
+    "createdAt",
+    "keyId",
+    "keyRingId",
+    "disabled"
+  ]
+}

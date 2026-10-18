@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Key Management Service API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-kms-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: kms
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_list_key_rings
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_get_key_ring
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/keys'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_list_keys
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/keys/{keyId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/keys/{keyId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_get_key
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/keys/{keyId}/versions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_list_versions
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/keys/{keyId}/versions/{versionNumber}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_get_version
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/wrappingkeys'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_list_wrapping_keys
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/wrappingkeys/{wrappingKeyId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/keyrings/{keyRingId}/wrappingkeys/{wrappingKeyId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: kms_get_wrapping_key

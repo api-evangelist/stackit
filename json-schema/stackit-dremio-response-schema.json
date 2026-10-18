@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-dremio-response-schema.json",
+  "title": "dremioResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-dremio-openapi.yml#/components/schemas/dremioResponse",
+  "properties": {
+    "acl": {
+      "$ref": "#/$defs/acl"
+    },
+    "authentication": {
+      "$ref": "#/$defs/authentication"
+    },
+    "create_time": {
+      "description": "The point in time the resource was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description is a longer text chosen by the user to provide more context for the resource.",
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "displayName": {
+      "description": "The display name is a short name chosen by the user to identify the resource.",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9 ]*$",
+      "type": "string"
+    },
+    "endpoints": {
+      "$ref": "#/$defs/endpoints"
+    },
+    "errorMessage": {
+      "description": "A message describing an actionable error the user can resolve. This field is empty if no such error exists.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "id": {
+      "description": "A auto generated unique id which identifies the resource.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "state": {
+      "description": "The current state of the resource.",
+      "enum": [
+        "reconciling",
+        "active",
+        "deleting",
+        "error"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "displayName",
+    "state",
+    "create_time",
+    "endpoints",
+    "authentication",
+    "acl"
+  ],
+  "$defs": {
+    "acl": {
+      "description": "The Access Control List (ACL) defining the IPv4 or IPv6 CIDR ranges allowed to connect to the Dremio instance. An empty list allows access from any address. Omitting this field on creation allows access from any address. Omitting it on update preserves the current list. Updates replace the entire list and take effect asynchronously.",
+      "items": {
+        "format": "cidr",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "authParameters": {
+      "description": "An additional parameter the Identity Provider requires.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "authentication": {
+      "description": "Dremio instance authentication settings. A change here triggers a Dremio restart and will incur downtime.",
+      "properties": {
+        "azuread": {
+          "$ref": "#/$defs/azuread"
+        },
+        "oauth": {
+          "$ref": "#/$defs/oauth"
+        },
+        "type": {
+          "enum": [
+            "local-only",
+            "azuread",
+            "oauth"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "azuread": {
+      "description": "Azure Active Directory authentication configuration.",
+      "properties": {
+        "authorityUrl": {
+          "description": "The Azure AD authority URL.",
+          "type": "string"
+        },
+        "clientId": {
+          "description": "The Azure AD client ID.",
+          "type": "string"
+        },
+        "clientSecret": {
+          "description": "The Azure AD client secret.",
+          "type": "string",
+          "writeOnly": true
+        },
+        "redirectUrl": {
+          "description": "The Azure AD redirect URL.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "authorityUrl",
+        "clientId"
+      ],
+      "type": "object"
+    },
+    "endpoints": {
+      "description": "A collection of endpoints offered by the Dremio instance.",
+      "properties": {
+        "arrowFlight": {
+          "description": "The URL for the Arrow Flight endpoint of the Dremio instance.",
+          "type": "string"
+        },
+        "catalog": {
+          "description": "The URL for the Catalog endpoint of the Dremio instance.",
+          "type": "string"
+        },
+        "ui": {
+          "description": "The URL for the UI of the Dremio instance.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ui",
+        "arrowFlight",
+        "catalog"
+      ]
+    },
+    "oauth": {
+      "description": "OIDC authentication configuration.",
+      "properties": {
+        "authorityUrl": {
+          "description": "The Issuer location URI, where the OIDC provider configuration can be found.",
+          "type": "string"
+        },
+        "clientId": {
+          "description": "The client ID assigned by the Identity Provider.",
+          "type": "string"
+        },
+        "clientSecret": {
+          "description": "The client secret generated by the Identity Provider.",
+          "type": "string",
+          "writeOnly": true
+        },
+        "jwtClaims": {
+          "description": "Maps fields from the JWT token to fields Dremio requires.",
+          "properties": {
+            "userName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "userName"
+          ],
+          "type": "object"
+        },
+        "parameters": {
+          "description": "Any additional parameters the Identity Provider requires.",
+          "items": {
+            "$ref": "#/$defs/authParameters"
+          },
+          "type": "array",
+          "x-go-type-skip-optional-pointer": true
+        },
+        "redirectUrl": {
+          "description": "The URL where the Dremio instance is hosted. The URL must match the redirect URL set in the Identity Provider.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "scope": {
+          "default": "openid profile",
+          "description": "A list of space-separated scopes. The `openid` scope is always required; other scopes can vary by provider.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "authorityUrl",
+        "clientId",
+        "jwtClaims"
+      ],
+      "type": "object"
+    }
+  }
+}

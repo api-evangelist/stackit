@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Cost API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-cost-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: cost
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v3/costs/{customerAccountId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cost_list_costs_for_customer
+- target: $.paths['/v3/costs/{customerAccountId}/customers'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cost_list_costs_for_reseller
+- target: $.paths['/v3/costs/{customerAccountId}/projects/{projectId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: cost_get_costs_for_project

@@ -1,0 +1,90 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT MongoDB Service API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-mongodb-flex-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: mongodb-flex
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/flavors'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_flavors
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_instances
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_get_instance
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/advisor/slow-queries'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_advisor_slow_queries
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/advisor/suggested-indexes'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_suggested_indexes
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/backups'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_backups
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/backups/{backupId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_get_backup
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/metrics/{metric}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_metrics
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/restores'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_restore_jobs
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/users'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_users
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/users/{userId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/instances/{instanceId}/users/{userId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_get_user
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/storages/{flavor}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_storages
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/versions'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: mongodb_flex_list_versions

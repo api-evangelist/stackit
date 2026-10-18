@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT Kubernetes Engine API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-ske-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: ske
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/clusters'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ske_list_clusters
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ske_get_cluster
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/kubeconfig/idp'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ske_get_i_d_p_kubeconfig
+- target: $.paths['/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/kubeconfig/login'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ske_get_login_kubeconfig
+- target: $.paths['/v2/regions/{region}/provider-options'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: ske_list_provider_options

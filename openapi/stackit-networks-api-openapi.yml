@@ -1,0 +1,267 @@
+openapi: 3.2.0
+info:
+  title: Stackit Networks API
+  contact:
+    email: stackit-iaas@mail.schwarz
+    name: STACKIT IaaS Teams
+    url: https://support.stackit.cloud/servicedesk
+  termsOfService: https://stackit.de/en/imprint
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Networks across 3 of this provider''s published API definitions: stackit-iaas-v1.json, stackit-iaas-v2.json, stackit-iaas-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://iaas.api.{region}stackit.cloud
+  variables:
+    region:
+      default: eu01.
+      enum:
+      - eu01.
+- url: https://iaas.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Networks
+paths:
+  /v1/networks/public-ip-ranges:
+    get:
+      deprecated: true
+      description: Get a list of all public IP ranges that STACKIT uses.
+      operationId: ListPublicIPRanges
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicNetworkListResponse'
+          description: List public IP ranges.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all public IP ranges
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Networks
+    servers:
+    - url: https://iaas.api.{region}stackit.cloud
+      variables:
+        region:
+          default: eu01.
+          enum:
+          - eu01.
+  /v2/networks/public-ip-ranges:
+    get:
+      description: Get a list of all public IP ranges that STACKIT uses.
+      operationId: getV2NetworksPublicIpRanges
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicNetworkListResponse'
+          description: List public IP ranges.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: List all public IP ranges
+      x-stackit-authorization:
+        disabled: true
+      tags:
+      - Networks
+      x-operation-id-source: normalized
+      x-operation-id-original: ListPublicIPRanges
+    servers:
+    - url: https://iaas.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          example:
+            code: 403
+            msg: Forbidden
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A request which was forbidden.
+    Unauthorized:
+      content:
+        application/json:
+          example:
+            code: 401
+            msg: Unauthorized
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A request which was not authorized.
+    BadRequest:
+      content:
+        application/json:
+          examples:
+            InvalidAffinityGroupPolicy:
+              value:
+                code: 400
+                msg: The affinity group policy is not supported
+            InvalidBootDeviceSize:
+              value:
+                code: 400
+                msg: boot device size is not valid or missing
+            InvalidMachineType:
+              value:
+                code: 400
+                msg: machine type is not valid
+            InvalidParameter:
+              value:
+                code: 400
+                msg: 'request body has an error: doesn''t match schema: Error at "/name": value must be a string'
+            InvalidPublicKey:
+              value:
+                code: 400
+                msg: invalid pubkey
+            InvalidUUID:
+              value:
+                code: 400
+                msg: invalid uuid
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: A bad request.
+    InternalServerError:
+      content:
+        application/json:
+          example:
+            code: 500
+            msg: internal server error
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal Server Error, returns a 500 if something is broken on IaaS API Side.
+    NotFound:
+      content:
+        application/json:
+          examples:
+            AreaNotFound:
+              value:
+                code: 404
+                msg: area not found
+            KeypairNotFound:
+              value:
+                code: 404
+                msg: keypair not found
+            NetworkNotFound:
+              value:
+                code: 404
+                msg: network not found
+            NetworkRangeNotFound:
+              value:
+                code: 404
+                msg: network range not found
+            OrganizationNotFound:
+              value:
+                code: 404
+                msg: organization not found
+            ProjectNotFound:
+              value:
+                code: 404
+                msg: project not found
+            RequestNotFound:
+              value:
+                code: 404
+                msg: request not found
+            RouteNotFound:
+              value:
+                code: 404
+                msg: route not found
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The object was not found.
+  schemas:
+    CIDR:
+      description: Classless Inter-Domain Routing (CIDR).
+      example: 192.168.0.0/24
+      pattern: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/(3[0-2]|2[0-9]|1[0-9]|[0-9]))$|^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(\/((1(1[0-9]|2[0-8]))|([0-9][0-9])|([0-9])))?$
+      type: string
+    PublicNetworkList:
+      description: A list of public networks.
+      items:
+        $ref: '#/components/schemas/PublicNetwork'
+      type: array
+    Error:
+      description: Error with HTTP error code and an error message.
+      properties:
+        code:
+          example: 404
+          format: int64
+          type: integer
+          x-stackit-logging: true
+        msg:
+          $ref: '#/components/schemas/errorMessage'
+      required:
+      - code
+      - msg
+      type: object
+    errorMessage:
+      description: An error message.
+      example: Project not found
+      type: string
+    PublicNetworkListResponse:
+      description: Public network list response.
+      properties:
+        items:
+          $ref: '#/components/schemas/PublicNetworkList'
+      required:
+      - items
+      type: object
+    PublicNetwork:
+      description: Public network.
+      properties:
+        cidr:
+          $ref: '#/components/schemas/CIDR'
+      required:
+      - cidr
+      type: object
+    v1RegionName:
+      description: Name of the region.
+      example: eu01
+      type: string
+    PublicNetwork_2:
+      description: Public network.
+      properties:
+        cidr:
+          $ref: '#/components/schemas/CIDR'
+        region:
+          $ref: '#/components/schemas/v1RegionName'
+      required:
+      - cidr
+      - region
+      type: object
+    PublicNetwork_3:
+      description: Public network.
+      properties:
+        cidr:
+          $ref: '#/components/schemas/CIDR'
+        region:
+          $ref: '#/components/schemas/v1RegionName'
+      required:
+      - cidr
+      - region
+      type: object
+x-refined-from:
+- stackit-iaas-v1.json
+- stackit-iaas-v2.json
+- stackit-iaas-openapi.yml

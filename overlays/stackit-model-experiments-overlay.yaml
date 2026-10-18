@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: STACKIT STACKIT AI Model Experiments API overlay
+  version: 1.0.0
+extends: ../openapi/_original/stackit-model-experiments-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+actions:
+- target: $.info
+  description: Add API Evangelist provenance metadata
+  update:
+    x-provider: stackit
+    x-api-evangelist-key: model-experiments
+    x-docs: https://docs.api.stackit.cloud/
+    x-generated: '2026-10-18'
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/instances'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: model_experiments_list_instances
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/instances/{instanceId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: model_experiments_get_instance
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/instances/{instanceId}/tokens'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: model_experiments_list_instance_tokens
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/instances/{instanceId}/tokens/{tokenId}'].delete
+  description: Flag destructive operation for human confirmation
+  update:
+    x-agent-confirm: true
+    x-destructive: true
+- target: $.paths['/v1/projects/{projectId}/regions/{regionId}/instances/{instanceId}/tokens/{tokenId}'].get
+  description: Mark read-only operation as safe for agents
+  update:
+    x-agent-safe: true
+    x-mcp-tool: model_experiments_get_instance_token

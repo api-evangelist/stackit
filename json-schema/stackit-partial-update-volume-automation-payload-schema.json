@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stackit/main/json-schema/stackit-partial-update-volume-automation-payload-schema.json",
+  "title": "PartialUpdateVolumeAutomationPayload",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/stackit-automation-openapi.yml#/components/schemas/PartialUpdateVolumeAutomationPayload",
+  "properties": {
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "input": {
+      "$ref": "#/$defs/VolumeAutomationInput"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "triggers": {
+      "$ref": "#/$defs/AutomationTriggers"
+    }
+  },
+  "$defs": {
+    "AutomationScheduleTrigger": {
+      "properties": {
+        "rrule": {
+          "description": "An rrule (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rrule"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "AutomationTriggers": {
+      "properties": {
+        "schedule": {
+          "$ref": "#/$defs/AutomationScheduleTrigger"
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "VolumeAutomationInput": {
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  }
+}

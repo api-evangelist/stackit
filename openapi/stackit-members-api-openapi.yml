@@ -1,0 +1,311 @@
+openapi: 3.2.0
+info:
+  title: Stackit Members API
+  version: '2.0'
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Members across 2 of this provider''s published API definitions: stackit-authorization-v2.json, stackit-authorization-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://authorization.api.stackit.cloud
+  variables:
+    region:
+      default: global
+tags:
+- name: Members
+paths:
+  /v2/{resourceId}/members:
+    patch:
+      description: Add members to the given resource with specified roles.
+      operationId: AddMembers
+      parameters:
+      - in: path
+        name: resourceId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddMembersPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembersResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Malformed input
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+      summary: Add members to a resource
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - iam.member.add
+      tags:
+      - Members
+    servers:
+    - url: https://authorization.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/{resourceId}/members/remove:
+    post:
+      description: Remove members from the given resource with specified roles.
+      operationId: RemoveMembers
+      parameters:
+      - in: path
+        name: resourceId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveMembersPayload'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembersResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Malformed input
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+      summary: Remove members from a resource
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - iam.member.remove
+      tags:
+      - Members
+    servers:
+    - url: https://authorization.api.stackit.cloud
+      variables:
+        region:
+          default: global
+  /v2/{resourceType}/{resourceId}/members:
+    get:
+      description: List members of the given resource.
+      operationId: ListMembers
+      parameters:
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: subject
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMembersResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Malformed input
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+      summary: Get members to a resource
+      x-stackit-authorization:
+        disabled: true
+        implicit-actions:
+        - iam.member.get
+      tags:
+      - Members
+    servers:
+    - url: https://authorization.api.stackit.cloud
+      variables:
+        region:
+          default: global
+components:
+  schemas:
+    ErrorResponse:
+      example:
+        error: Bad Request
+        message: Some information about what caused the Error
+        path: /v1/path/which/returned/error
+        status: 400
+        timeStamp: '2019-08-24T14:15:22Z'
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        status:
+          type: integer
+        timeStamp:
+          format: date-time
+          type: string
+      required:
+      - timeStamp
+      - path
+      - status
+      - error
+      - message
+      type: object
+    RemoveMembersPayload:
+      properties:
+        forceRemove:
+          title: When true, removes other memberships of the subject that would stop the removal of the requested membership
+          type: boolean
+        members:
+          items:
+            $ref: '#/components/schemas/Member'
+          title: The list of members
+          type: array
+        resourceType:
+          example: organization
+          pattern: ^[a-z](?:-?[a-z]){1,63}$
+          title: Resource type
+          type: string
+      required:
+      - resourceType
+      - members
+      type: object
+    AddMembersPayload:
+      properties:
+        members:
+          items:
+            $ref: '#/components/schemas/Member'
+          title: The list of members
+          type: array
+        resourceType:
+          example: organization
+          pattern: ^[a-z](?:-?[a-z]){1,63}$
+          title: Resource type
+          type: string
+      required:
+      - resourceType
+      - members
+      type: object
+    ListMembersResponse:
+      properties:
+        members:
+          items:
+            $ref: '#/components/schemas/Member'
+          title: The list of members who should be added to this resource
+          type: array
+        resourceId:
+          example: schwarz-it-kg-WJACUK1
+          pattern: ^([a-zA-Z0-9/_|\-=+@.]{1,})$
+          title: The ID of the resource, where the members should be updated
+          type: string
+        resourceType:
+          example: organization
+          pattern: ^[a-z](?:-?[a-z]){1,63}$
+          title: Resource type
+          type: string
+      required:
+      - resourceId
+      - resourceType
+      - members
+      type: object
+    MembersResponse:
+      properties:
+        members:
+          items:
+            $ref: '#/components/schemas/Member'
+          title: The list of members who should be added to this resource
+          type: array
+        resourceId:
+          example: schwarz-it-kg-WJACUK1
+          pattern: ^([a-zA-Z0-9/_|\-=+@.]{1,})$
+          title: The ID of the resource, where the members should be updated
+          type: string
+        resourceType:
+          example: organization
+          pattern: ^[a-z](?:-?[a-z]){1,63}$
+          title: Resource type
+          type: string
+        writtenAt:
+          $ref: '#/components/schemas/Zookie'
+      required:
+      - resourceId
+      - resourceType
+      - members
+      type: object
+    Zookie:
+      properties:
+        zookie:
+          type: string
+      type: object
+    Member:
+      properties:
+        role:
+          example: owner
+          pattern: ^[a-z](?:[-.]?[a-z]){1,63}$
+          title: A valid role defined for the resource.
+          type: string
+        subject:
+          example: user@mail.schwarz
+          maxLength: 255
+          minLength: 1
+          title: Identifier of user, service account, client or user group. Usually email address or name in case of clients.
+          type: string
+      required:
+      - subject
+      - role
+      type: object
+x-refined-from:
+- stackit-authorization-v2.json
+- stackit-authorization-openapi.yml

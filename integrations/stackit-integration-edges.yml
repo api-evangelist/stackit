@@ -7,9 +7,14 @@ source:
 - https://monid.ai/tools/stackit
 checked:
 - https://api.nuget.org/v3
+- https://cdn.winget.microsoft.com/cache
 - https://composio.dev/toolkits/stackit
 - https://crates.io/api/v1
 - https://focus.finops.org/data-generators/
+- https://formulae.brew.sh/api/cask.json
+- https://formulae.brew.sh/api/formula.json
+- https://github.com/ScoopInstaller/Extras
+- https://github.com/ScoopInstaller/Main
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
 - https://monid.ai/tools/stackit
@@ -127,5 +132,35 @@ edges:
     detected_by: sweep-official-sdks.py
     detected: '2026-10-20'
   detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-20'
+- partner_name: Scoop
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official CLI (Scoop)
+  evidence: https://github.com/ScoopInstaller/Main/blob/master/bucket/stackit.json
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Scoop (public package index)
+    spec_file: null
+    packages:
+    - name: stackit
+      kind: main
+      version: 0.75.0
+      released: null
+      lapsed: false
+      page: https://github.com/ScoopInstaller/Main/blob/master/bucket/stackit.json
+      cli: 'scoop description: STACKIT Command Line Interface (CLI) to manage STACKIT resources.'
+      repo_leg: domain:stackit.com
+      publisher_leg: artifact-github-org:stackitcloud
+      matched_by: domain
+    current: true
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  detected_by: sweep-official-clis.py
   first_seen: '2026-10-20'
 templates: []

@@ -1,16 +1,131 @@
 generated: '2026-10-18'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/stackit/integrations
 - https://n8n.io/integrations/stackit/
 - https://composio.dev/toolkits/stackit
 - https://monid.ai/tools/stackit
 checked:
+- https://api.nuget.org/v3
 - https://composio.dev/toolkits/stackit
+- https://crates.io/api/v1
+- https://focus.finops.org/data-generators/
+- https://github.com/cncf/k8s-conformance
+- https://github.com/cncf/landscape
 - https://monid.ai/tools/stackit
 - https://n8n.io/integrations/stackit/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/apps/stackit/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: CNCF Certified Kubernetes
+  partner: cncf
+  partner_match: register
+  type: register
+  direction: partner-built
+  evidence: https://github.com/cncf/k8s-conformance/tree/621a55d41c23eab137118626e941b72fb8d32f89/v1.36/stackit-kubernetes-engine
+  category: Certified Kubernetes
+  channel: standard-directory
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Certified Kubernetes (github.com/cncf/k8s-conformance @621a55d41c)
+    spec_file: null
+    standard: Kubernetes conformance
+    role: certified-kubernetes
+    registered_name: STACKIT
+    website: https://stackit.com/en
+    matched_domain: stackit.com
+    matched_by: domain
+    certified_products:
+    - product: hosted platform
+      newest_version: v1.36
+      lapsed: false
+    versions_certified:
+    - v1.31
+    - v1.32
+    - v1.33
+    - v1.34
+    - v1.35
+    - v1.36
+    products:
+    - STACKIT Kubernetes Engine (SKE)
+    - STACKIT Kubernetes Engine SKE
+    current_window: v1.34+ (newest 4 minors in the register)
+    signal_note: certified_products = one entry per product TYPE (distribution/hosted/installer), lapsed when its
+      newest certified minor is outside the current window; products and versions are context, never read
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-19'
+  detected_by: sweep-cloud-native.py
+  first_seen: '2026-10-19'
+- partner_name: CNCF Certified Kubernetes
+  partner: cncf
+  partner_match: register
+  type: register
+  direction: partner-built
+  evidence: https://github.com/cncf/k8s-conformance/tree/621a55d41c23eab137118626e941b72fb8d32f89/v1.36/stackit-kubernetes-engine
+  category: Certified Kubernetes
+  channel: standard-directory
+  relationship: compatible
+  shape: kubernetes-api
+  evidence_kind: conformance-register
+  degree: certified
+  report_only: true
+  note: the Kubernetes conformance suite was run against this product and the result merged into the CNCF register
+    (anchor kubernetes)
+  contract_reference:
+    register: CNCF Certified Kubernetes (github.com/cncf/k8s-conformance @621a55d41c)
+    spec_file: null
+    standard: Kubernetes API
+    role: kubernetes-conformance
+    registered_name: STACKIT
+    matched_domain: stackit.com
+    newest_version: v1.36
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-19'
+  detected_by: sweep-cloud-native.py
+  first_seen: '2026-10-19'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@stackitcloud/n8n-nodes-stackit-ai-model-serving
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@stackitcloud/n8n-nodes-stackit-ai-model-serving'
+      version: 1.1.0
+      released: '2025-11-03'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@stackitcloud/n8n-nodes-stackit-ai-model-serving
+      repo_leg: github-org:stackitcloud
+      publisher_leg: org:stackitcloud
+      matched_by: github-org
+    - name: '@stackitcloud/pulumi-stackit'
+      version: 0.0.8
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@stackitcloud/pulumi-stackit
+      repo_leg: github-org:stackitcloud
+      publisher_leg: org:stackitcloud
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-20'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-20'
 templates: []
